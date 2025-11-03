@@ -1,0 +1,201 @@
+.hero.pengajuan-hero {
+    background: url('/img/icon/Document.jpg') center/cover no-repeat;
+    text-align: center;
+    padding: 160px 20px;
+    position: relative;
+    min-height: 300px;
+}
+
+.form-container {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0 10px 10px 10px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: -5px;
+    z-index: 5;
+}
+
+.tab-section {
+    display: flex;
+    margin-bottom: 3rem;
+    margin-left: -20px; 
+    margin-right: -20px;
+    padding-left: 20px;
+}
+
+.custom-tab {
+    padding: 15px 30px;
+    border-radius: 30px 30px 0 0; 
+    width: 470px;
+    font-weight: 600;
+    color: #003366;
+    cursor: pointer;
+    background-color: #e9ecef;
+    border: none;
+    transition: all 0.3s;
+    margin-right:0;
+    margin-top: -30px;
+    z-index: 6;
+    position: relative;
+}
+
+.custom-tab.active {
+    background-color: #003366;
+    color: white;
+    box-shadow: none;
+}
+
+.custom-tab:hover:not(.active) {
+    background-color: #d0d0d0;
+}
+
+.form-title-group h4 {
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+}
+
+.form-control {
+    border-radius: 5px;
+    height: 45px;
+}
+
+button.btn.btn-primary.btn-lg{
+    background-color: green;
+    border-color: green;
+}
+.mt-4{
+    align-items: center;
+}
+
+.d-flex {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.upload-section {
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.upload-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}
+
+.file-group {
+    margin-bottom: 20px;
+}
+
+.file-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.custom-file-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.custom-file-input-group input[type="file"] {
+    display: none; 
+}
+
+.custom-file-input-group .btn-choose-file {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-file-input-group .btn-choose-file:hover {
+    background-color: #e0e0e0;
+}
+
+.file-name-display {
+    margin-left: 10px;
+    color: #555;
+    font-style: italic;
+}
+
+.riwayat-table-container {
+    padding: 30px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    
+}
+
+.filter-controls .form-control,
+.filter-controls .form-select {
+    border-radius: 30px;
+    height: 40px;
+    background-color:white;
+    box-shadow: 0 4px 20px rgba(0, 5, 60, 0.1);
+}
+
+.search-input {
+    flex-grow: 1;
+}
+
+.table-riwayat {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.table-riwayat th {
+    background-color: #003366;
+    color: white;
+    font-weight: 600;
+    padding: 15px 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table-riwayat tbody tr {
+    transition: background-color 0.2s;
+}
+
+.table-riwayat tbody tr:nth-child(even) {
+    background-color: #f7f9fc;
+}
+
+.table-riwayat td {
+    padding: 15px 10px;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+.table-riwayat .aksi a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 3rem;
+}
