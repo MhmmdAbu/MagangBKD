@@ -1,0 +1,93 @@
+/* Container Utama */
+.container {
+    /* Hapus flexbox di sini, karena panel-panel harus diapit oleh div lain 
+       atau flexbox diimplementasikan di Layout/panduan jika menggunakan @yield. 
+       Namun, jika kita asumsikan Anda ingin ini bekerja sebagai unit tunggal: */
+    display: flex; /* <-- Tetap pertahankan ini agar panel berjejer */
+    max-width: 950px;
+    margin: 40px auto;
+    /* Hapus box-shadow dan border-radius dari .container,
+       karena shadow dan border-radius sudah ada di panel individual. */
+    background-color: transparent; /* Ubah menjadi transparan */
+    box-shadow: none; /* Hapus shadow utama */
+    border-radius: 0;
+    overflow: visible; /* Penting agar shadow panel tidak terpotong */
+    gap: 15px; /* Tambahkan sedikit jarak antar panel */
+}
+
+/* Panel Kiri (Persyaratan) */
+.left-panel {
+    width: 35%; 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(8, 52, 88, 0.2); /* Shadow disederhanakan agar lebih halus */
+    /* Hapus border-right yang mungkin bertabrakan */
+}
+
+/* Panel Kanan (Langkah-Langkah) */
+.right-panel {
+    width: 65%; /* Sesuaikan agar total width (35% + 65%) sekitar 100% */
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(8, 52, 88, 0.2); /* Shadow disederhanakan agar lebih halus */
+}
+
+/* Judul */
+h2, h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Dropdown */
+.dropdown-container {
+    margin-bottom: 20px;
+}
+.dropdown {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    /* Custom Dropdown Styling (Panah) */
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23333" d="M8 11.5L3 6.5h10z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    font-size: 1em;
+}
+
+/* Kotak Hasil Persyaratan */
+.service-list-box {
+    min-height: 200px; /* Tinggi minimum untuk area output */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 15px;
+    line-height: 1.6;
+    background-color: #fff;
+}
+.service-list-box ul {
+    margin-top: 0;
+    padding-left: 20px;
+}
+
+/* Langkah-Langkah */
+.step {
+    margin-bottom: 25px;
+}
+.step-number {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #007bff; /* Memberi warna pada nomor langkah */
+}
+.step-description {
+    line-height: 1.6;
+    font-size: 0.95em;
+}
