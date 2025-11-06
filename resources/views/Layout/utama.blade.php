@@ -12,15 +12,15 @@
     
     {{-- CSS Kustom --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/panduan.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
     <style>
-        /* CSS Wajib untuk Sidebar Fix */
         .main-content-wrapper {
+            margin-top: 1rem;
             margin-left: 250px;
-            padding: 20px;
-            min-height: 100vh;
-            background-color: #f8f9fa;
+            padding: 0 10px 10px;
+            min-height: 96%;
             position: relative;
         }
         
@@ -34,10 +34,20 @@
             color: #6c757d;
             padding: 10px 0;
         }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+        .filter-controls .form-control,
+        .filter-controls .form-select {
+            height: 45px;
+        }
     </style>
 </head>
 <body>
-    
     @include('navigation.sidebar')
     <div class="main-content-wrapper">
         
@@ -49,6 +59,5 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/persyaratan.js') }}"></script>
 </body>
 </html>

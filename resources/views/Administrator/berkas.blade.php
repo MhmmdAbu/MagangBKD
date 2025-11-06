@@ -1,6 +1,9 @@
-@extends('Layout.berkas_terdaftar')
+@extends('Layout.utama')
 
 @section('title','Berkas Terdaftar')
+
+<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('js/modal.js') }}">
 
 @section('content')
 <div class="container-fluid">
@@ -44,7 +47,17 @@
                                     <td>22 Oktober 2025</td>
                                     <td>St. Nur Aisyah. S</td>
                                     <td>Pendaftaran</td>
-                                    <td class="aksi"><a href="#" class="btn btn-warning btn-sm">Lihat</a></td>
+                                    <td class="aksi">
+                                        <button type="button" class="btn btn-warning btn-sm" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#detailModal"
+                                                data-nomor-surat="001/A/SURAT/X/2025"
+                                                data-tanggal="22 Oktober 2025"
+                                                data-nama="St. Nur Aisyah. S"
+                                                data-status="Pendaftaran">
+                                            Lihat
+                                        </button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2.</td>
@@ -52,16 +65,68 @@
                                     <td>22 Oktober 2025</td>
                                     <td>Muh. Abubakar</td>
                                     <td>Survey</td>
-                                    <td class="aksi"><a href="#" class="btn btn-warning btn-sm">Lihat</a></td>
+                                    <td class="aksi">
+                                        <button type="button" class="btn btn-warning btn-sm" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#detailModal"
+                                                data-nomor-surat="002/A/SURAT/X/2025"
+                                                data-tanggal="22 Oktober 2025"
+                                                data-nama="Muh. Abubakar"
+                                                data-status="Survey">
+                                            Lihat
+                                        </button>
+                                    </td>
                                 </tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">Detail Berkas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nomor Surat:</strong> <span id="modal-nomor-surat"></span></p>
+                    <p><strong>Tanggal Dikirim:</strong> <span id="modal-tanggal"></span></p>
+                    <p><strong>Nama Wajib Pajak:</strong> <span id="modal-nama"></span></p>
+                    <p><strong>Status Surat:</strong> <span id="modal-status"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
+                    <button type="button" class="btn btn-Tdkvalid" data-bs-dismiss="modal">Tidak Valid</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">Detail Berkas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nomor Surat:</strong> <span id="modal-nomor-surat"></span></p>
+                    <p><strong>Tanggal Dikirim:</strong> <span id="modal-tanggal"></span></p>
+                    <p><strong>Nama Wajib Pajak:</strong> <span id="modal-nama"></span></p>
+                    <p><strong>Status Surat:</strong> <span id="modal-status"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
+                    <button type="button" class="btn btn-Tdkvalid" data-bs-dismiss="modal">Tidak Valid</button>
                 </div>
             </div>
         </div>

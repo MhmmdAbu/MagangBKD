@@ -1,0 +1,16 @@
+.modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-footer .btn-valid{
+    border: 1rem #000;
+}
+
+.modal-footer .btn-Tdkvalid{
+    background-color: #083458;
+    color: white;
+}

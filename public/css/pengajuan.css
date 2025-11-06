@@ -149,6 +149,15 @@ button.btn.btn-primary.btn-lg{
     box-shadow: 0 4px 20px rgba(0, 5, 60, 0.1);
 }
 
+.button {
+    color: white;
+     border-radius: 30px;
+    height: 40px;
+    width: 20rem;
+    background-color:#083458;
+    box-shadow: 0 4px 20px rgba(0, 5, 60, 0.1);
+}
+
 .search-input {
     flex-grow: 1;
 }

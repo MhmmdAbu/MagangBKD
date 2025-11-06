@@ -38,3 +38,6 @@ Route::get('/panduan_KTU', function () {
 Route::get('/profile', function () {
     return view('KTU.profile');
 })->name('profile');
+Route::get('/kelola_pengguna', function () {
+    return view('Admin.kelola_pengguna');
+})->name('kelola_pengguna');
