@@ -2,7 +2,6 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Hero Section */
 .hero {
     background: url('/img/icon/Document.jpg') center/cover no-repeat;
     color: white;

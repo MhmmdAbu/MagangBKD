@@ -1,6 +1,8 @@
-@extends('Layout.berkas_terdaftar')
+@extends('Layout.utama')
 
 @section('title','Berkas Terdaftar')
+
+<link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
 @section('content')
 <div class="container-fluid">
@@ -26,7 +28,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover table-riwayat mb-0">
+                        <table class="table table-hover table-riwayat">
                             <thead>
                                 <tr>
                                     <th style="width: 10%;">No</th>
@@ -54,11 +56,12 @@
                                     <td>Survey</td>
                                     <td class="aksi"><a href="#" class="btn btn-warning btn-sm">Lihat</a></td>
                                 </tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
+                                <tr><td colspan="6">&nbsp;</td></tr>
                             </tbody>
                         </table>
                     </div>

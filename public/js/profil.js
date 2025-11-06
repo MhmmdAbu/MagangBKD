@@ -39,22 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showTab(tabName) {
-        // Sembunyikan semua konten tab
         tabContents.forEach(content => {
             content.style.display = 'none';
             content.classList.remove('active');
         });
-        // Hapus class 'active' dari semua link tab
         tabLinks.forEach(link => {
             link.classList.remove('active');
         });
-        // Tampilkan konten tab yang dipilih
         const activeContent = document.getElementById(tabName + '-tab');
         if (activeContent) {
             activeContent.style.display = 'block';
             activeContent.classList.add('active');
         }
-        // Tambahkan class 'active' pada link tab yang diklik
         const activeLink = document.querySelector(`[data-tab="${tabName}"]`);
         if (activeLink) {
             activeLink.classList.add('active');
@@ -63,12 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     tabLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+            e.preventDefault();
             const tabName = this.getAttribute('data-tab');
             showTab(tabName);
         });
     });
-    // Set tab default (Edit Profile) saat halaman load
     showTab('edit-profile');
 
     function resetProfileImage() {

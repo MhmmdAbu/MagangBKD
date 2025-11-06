@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\KtuController;
+use App\Http\Controllers\AdminController;
 
 // Halaman umum
 Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
@@ -28,6 +29,11 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/ktu/berkas', [KtuController::class, 'daftarBerkas']);
     Route::get('/ktu/arsip', [KtuController::class, 'arsipBerkas']);
     Route::get('/ktu/requirement', [KtuController::class, 'requirement']);
+// })
+
+// Halaman Admin
+// Route::middleware(['auth', 'role:admin'])->prefix('admin')->group( function() {
+    Route::get('/admin/kelola_pengguna', [AdminController::class, 'kelola_pengguna']);
 // })
 
 Route::get('/profile', function () {
