@@ -14,11 +14,11 @@
 
 .tab-content {
     margin-top: 20px;
-    display: none; /* Sembunyikan semua tab content secara default */
+    display: none;
 }
 
 .tab-content.active {
-    display: block; /* Tampilkan hanya tab yang aktif */
+    display: block;
 }
 
 .content-area {
@@ -68,7 +68,7 @@
     border-bottom: 1px solid #ddd;
 }
 
-.tab-nav .tab-link { /* Menggunakan class .tab-link seperti di HTML yang disarankan */
+.tab-nav .tab-link {
     text-decoration: none;
     color: #555;
     padding: 10px 15px;
@@ -93,7 +93,7 @@
 }
 
 .edit-profile-form,
-.change-password-form { /* Tambahkan styling untuk form Ubah Password, mirip dengan edit-profile-form */
+.change-password-form {
     max-width: 500px;
 }
 

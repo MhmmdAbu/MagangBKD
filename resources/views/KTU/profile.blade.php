@@ -1,6 +1,8 @@
-@extends('Layout.profile')
+@extends('Layout.utama')
 
 @section('title','Profile')
+
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}"> 
 
 @section('content')
 <div class="content-area">       
