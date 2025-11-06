@@ -13,7 +13,7 @@
 
     <!-- Form -->
     <div class="form-side">
-        <h2>Welcome Back</h2>
+        <h2>Selamat Datang</h2>
         
         <form method="POST" action="{{ route('login') }}">
             @csrf 

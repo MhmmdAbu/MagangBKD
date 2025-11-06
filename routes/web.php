@@ -1,40 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdministratorController;
+use App\Http\Controllers\KtuController;
 
-Route::get('/', function () {
-    return view('LandingPage');
-})->name('LandingPage');
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-Route::get('/s&k', function () {
-    return view('s&k');
-})->name('s&k');
-Route::get('/kontak', function () {
-    return view('kontak');
-})->name('kontak');
-Route::get('/pengajuan', function () {
-    return view('PPAT.pengajuan');
-})->name('pengajuan');
-Route::get('/berkas_terdaftar', function () {
-    return view('Administrator.berkas');
-})->name('berkas_terdaftar');
-Route::get('/arsip_berkas', function () {
-    return view('Administrator.arsip');
-})->name('arsip_berkas');
-Route::get('/panduan_administrator', function () {
-    return view('Administrator.panduan');
-})->name('panduan_administrator');
-Route::get('/berkas_terdaftar_KTU', function () {
-    return view('KTU.berkas_terdaftar');
-})->name('berkas_terdaftar_KTU');
-Route::get('/arsip_berkas_KTU', function () {
-    return view('KTU.arsip');
-})->name('arsip_berkas_KTU');
-Route::get('/panduan_KTU', function () {
-    return view('KTU.panduan');
-})->name('panduan_KTU');
+// Halaman umum
+Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
+Route::get('/requirement', [LandingController::class, 'requirement'])->name('s&k');
+Route::get('/kontak', [LandingController::class, 'kontak'])->name('kontak');
+
+// Auth
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+
+// Halaman Administrator
+// Route::middleware(['auth', 'role:administrator'])->prefix('administrator')->group(function(){    
+    Route::get('/administrator', [AdministratorController::class, 'index']);
+    Route::get('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('berkas_terdaftar');
+    Route::get('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('arsip_berkas');
+    Route::get('/administrator/requirement', [AdministratorController::class, 'requirement'])->name('panduan_administrator');
+// });
+
+// Halaman KTU
+// Route::middleware(['auth', 'role:ktu'])->prefix('ktu')->group(function() {
+    Route::get('/ktu', [KtuController::class, 'index']);
+    Route::get('/ktu/berkas', [KtuController::class, 'daftarBerkas']);
+    Route::get('/ktu/arsip', [KtuController::class, 'arsipBerkas']);
+    Route::get('/ktu/requirement', [KtuController::class, 'requirement']);
+// })
+
 Route::get('/profile', function () {
     return view('KTU.profile');
 })->name('profile');
