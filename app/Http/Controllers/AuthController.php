@@ -3,20 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Menampilkan halaman registrasi
+    // // Menampilkan halaman registrasi
+    // public function showRegister()
+    // {
+    //     return view('auth.register');
+    // }
+
+    // // Proses registrasi
+    // public function register(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'alamat' => 'required|string|max:255',
+    //         'instansi' => 'required|string|max:255',
+    //         'role' => 'required|string|max:50',
+    //         'email' => 'required|email|unique:users,email',
+    //         'password' => 'required|min:8|confirmed',
+    //     ]);
+
+    //     // Simpan data user
+    //     User::create([
+    //         'name' => $request->name,
+    //         'alamat' => $request->alamat,
+    //         'instansi' => $request->instansi,
+    //         'role' => $request->role,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
+
+    //     return redirect()->route('berkas_terdaftar')->with('success', 'Registrasi berhasil, silakan login.');
+    // }
+
+    // Menampilkan halaman register
     public function showRegister()
     {
-        return view('auth.register');
+        return view('auth.contoh');
     }
 
-    // Proses registrasi
+    // Proses register
     public function register(Request $request)
     {
         $request->validate([
@@ -26,16 +57,9 @@ class AuthController extends Controller
             'role' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // tambahkan validasi foto
         ]);
 
-        // Simpan foto jika ada
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('profile_photos', 'public');
-        }
-
-        // Simpan data user
+        // Simpan user
         User::create([
             'name' => $request->name,
             'alamat' => $request->alamat,
@@ -43,10 +67,9 @@ class AuthController extends Controller
             'role' => $request->role,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'foto' => $fotoPath, // simpan path foto
         ]);
 
-        return redirect('/login')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     // Menampilkan halaman login
