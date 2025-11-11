@@ -1,9 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* HERO SECTION */
 .hero.pengajuan-hero {
-    background: url('/img/icon/Document.jpg') center/cover no-repeat;
-    text-align: center;
-    padding: 160px 20px;
     position: relative;
-    min-height: 300px;
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+    background: url('/img/icon/Document.jpg') center center / cover no-repeat;
+    background-attachment: scroll; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero.pengajuan-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero.pengajuan-hero .hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero.pengajuan-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero.pengajuan-hero p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1rem;
 }
 
 .form-container {
@@ -150,12 +189,23 @@ button.btn.btn-primary.btn-lg{
 }
 
 .button {
-    color: white;
-     border-radius: 30px;
-    height: 40px;
-    width: 20rem;
-    background-color:#083458;
-    box-shadow: 0 4px 20px rgba(0, 5, 60, 0.1);
+    background-color: #0B2C56;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 0 24px;
+    height: 45px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #133b73;
+    transform: translateY(-1px);
 }
 
 .search-input {
@@ -168,6 +218,7 @@ button.btn.btn-primary.btn-lg{
     border-spacing: 0;
     overflow: hidden;
     border-radius: 1rem;
+    text-align: center;
 }
 
 .table-riwayat th {
@@ -175,36 +226,86 @@ button.btn.btn-primary.btn-lg{
     color: white;
     font-weight: 600;
     padding: 15px 10px;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
-}
-
-.table-riwayat tbody tr {
-    transition: background-color 0.2s;
-}
-
-.table-riwayat tbody tr:nth-child(even) {
-    background-color: #f7f9fc;
 }
 
 .table-riwayat td {
     padding: 15px 10px;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.table-riwayat tbody tr:nth-child(even) {
+    background-color: #f7f9fc;
+}
+
+.table-riwayat tbody tr {
+    transition: background-color 0.2s;
 }
 
 .table-riwayat .aksi a {
     color: white;
     text-decoration: none;
     font-weight: 500;
+    margin: 0 3px;
 }
 
-.mb-4 {
-    margin-bottom: 1.5rem !important;
+.btn-edit {
+    background-color: #ffc107;
+    border: none;
 }
 
-.col-12 {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 3rem;
+.btn-delete {
+    background-color: #dc3545;
+    border: none;
 }
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Hilangkan tampilan default "Choose File" */
+input[type="file"] {
+    border: none;
+    background: none;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Hilangkan shape abu-abu bawaan browser */
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+/* Tambahkan tombol custom */
+input[type="file"]::before {
+    content: 'Pilih File';
+    display: inline-block;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 12px;
+    outline: none;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Efek hover */
+input[type="file"]:hover::before {
+    background: #e6e6e6;
+}
+
+/* Saat klik */
+input[type="file"]:active::before {
+    background: #dcdcdc;
+}
+
