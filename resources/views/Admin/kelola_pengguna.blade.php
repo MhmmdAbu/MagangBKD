@@ -1,4 +1,4 @@
-@extends('Layout.tabel')
+@extends('Layout.utama')
 
 @section('title','Kelola Pengguna')
 

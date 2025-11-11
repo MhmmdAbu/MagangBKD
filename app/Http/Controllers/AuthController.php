@@ -10,44 +10,13 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // // Menampilkan halaman registrasi
-    // public function showRegister()
-    // {
-    //     return view('auth.register');
-    // }
-
-    // // Proses registrasi
-    // public function register(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'alamat' => 'required|string|max:255',
-    //         'instansi' => 'required|string|max:255',
-    //         'role' => 'required|string|max:50',
-    //         'email' => 'required|email|unique:users,email',
-    //         'password' => 'required|min:8|confirmed',
-    //     ]);
-
-    //     // Simpan data user
-    //     User::create([
-    //         'name' => $request->name,
-    //         'alamat' => $request->alamat,
-    //         'instansi' => $request->instansi,
-    //         'role' => $request->role,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-
-    //     return redirect()->route('berkas_terdaftar')->with('success', 'Registrasi berhasil, silakan login.');
-    // }
-
-    // Menampilkan halaman register
+    // Menampilkan halaman registrasi
     public function showRegister()
     {
-        return view('auth.contoh');
+        return view('auth.register');
     }
 
-    // Proses register
+    // Proses registrasi
     public function register(Request $request)
     {
         $request->validate([
@@ -59,7 +28,7 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        // Simpan user
+        // Simpan data user
         User::create([
             'name' => $request->name,
             'alamat' => $request->alamat,
@@ -69,7 +38,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->route('berkas_terdaftar')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     // Menampilkan halaman login

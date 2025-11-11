@@ -27,6 +27,7 @@
         <div class="form-group">
             <label for="role">Jabatan</label>
             <select id="role" name="role">
+                <option value="">-- Pilih Role --</option>
                 <option value="administrator">Administrator</option>
                 <option value="ppat">PPAT/PPATS</option>
                 <option value="ktu">KTU</option>

@@ -7,13 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            
             $table->string('name');
+            $table->string('alamat')->nullable();
+            $table->string('instansi')->nullable();
+            $table->string('nomor_hp')->nullable();
+            $table->string('role')->default('ppat');
+            $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -21,12 +27,14 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // 🔑 Reset password
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // 💻 Sesi login pengguna
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -38,12 +46,12 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Rollback migrasi.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };
