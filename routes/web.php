@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\KtuController;
+use App\Http\Controllers\PPATController;
 
 // Halaman umum
 Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
@@ -28,7 +29,12 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/ktu/berkas', [KtuController::class, 'daftarBerkas']);
     Route::get('/ktu/arsip', [KtuController::class, 'arsipBerkas']);
     Route::get('/ktu/requirement', [KtuController::class, 'requirement']);
-// })
+// });
+
+// Halaman PPAT
+// Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
+    Route::get('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
+// });
 
 Route::get('/profile', function () {
     return view('KTU.profile');

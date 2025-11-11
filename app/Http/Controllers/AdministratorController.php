@@ -8,21 +8,21 @@ class AdministratorController extends Controller
 {
     // Dashboard
     public function index() {
-        return view('administrator.dashboard');
+        return view('Administrator.dashboard');
     }
 
     // Daftar Berkas
     public function daftarBerkas() {
-        return view('administrator.berkas');
+        return view('Administrator.berkas');
     }
 
     // Arsip Berkas
     public function arsipBerkas() {
-        return view('administrator.arsip');
+        return view('Administrator.arsip');
     }
 
     // Requirement
     Public function requirement() {
-        return view('administrator.panduan');
+        return view('Administrator.panduan');
     }
 }
