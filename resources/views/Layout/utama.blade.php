@@ -20,15 +20,18 @@
             margin-top: 1rem;
             margin-left: 250px;
             padding: 0 10px 10px;
-            min-height: 96%;
-            position: relative;
+            min-height: 100vh; /* Ubah dari 96% ke 100vh untuk memastikan tinggi penuh viewport */
+            display: flex; /* Tambahkan flexbox */
+            flex-direction: column; /* Susun elemen secara vertikal */
+        }
+        
+        .content {
+            flex: 1; /* Konten utama akan mengisi ruang yang tersedia, mendorong footer ke bawah */
         }
         
         .page-footer {
-            position: absolute; 
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            /* Hapus position: absolute; bottom: 0; left: 0; width: 100%; */
+            /* Footer sekarang akan menempel di bawah secara alami berkat flexbox */
             text-align: center;
             font-size: 0.8rem;
             color: #6c757d;
@@ -50,9 +53,10 @@
 <body>
     @include('navigation.sidebar')
     <div class="main-content-wrapper">
+        <div class="content">
+            @yield('content')
+        </div>
         
-        @yield('content')
-
         <div class="page-footer">
             <p>© Copyright Abu dan Icha. Design by Icha aja</p>
         </div>

@@ -110,26 +110,5 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailModalLabel">Detail Berkas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Nomor Surat:</strong> <span id="modal-nomor-surat"></span></p>
-                    <p><strong>Tanggal Dikirim:</strong> <span id="modal-tanggal"></span></p>
-                    <p><strong>Nama Wajib Pajak:</strong> <span id="modal-nama"></span></p>
-                    <p><strong>Status Surat:</strong> <span id="modal-status"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
-                    <button type="button" class="btn btn-Tdkvalid" data-bs-dismiss="modal">Tidak Valid</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection

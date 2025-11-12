@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -23,9 +23,11 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'instansi' => 'required|string|max:255',
+            'nomor_hp'=> 'required',
             'role' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+            // 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         // Simpan data user
@@ -33,12 +35,12 @@ class AuthController extends Controller
             'name' => $request->name,
             'alamat' => $request->alamat,
             'instansi' => $request->instansi,
+            'nomor_hp' => $request->nomor_hp,
             'role' => $request->role,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), 
         ]);
-
-        return redirect()->route('berkas_terdaftar')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('kelola_pengguna')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     // Menampilkan halaman login
