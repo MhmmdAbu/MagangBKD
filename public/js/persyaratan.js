@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const editPersyaratanTextarea = document.getElementById('editPersyaratan');
   const formPersyaratanEdit = document.getElementById('formPersyaratanEdit');
 
-  // Data persyaratan (HTML), kita ubah ke array string agar mudah edit
   const persyaratanData = {
     layanan1: [
       'Scan KTP dan Kartu Keluarga (Penjual dan Pembeli)',
