@@ -1,65 +1,121 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const select = document.getElementById('layanan-select');
-    const outputDiv = document.getElementById('syarat-output');
-    const persyaratanData = {
-        // Jual Beli
-        layanan1: `
-            <h4>Dokumen Layanan Jual Beli:</h4>
-            <ul>
-                <li>Scan KTP dan Kartu Keluarga (Penjual dan Pembeli)</li>
-                <li>Scan Sertifikat Induk/Hasil Pemecahan</li>
-                <li>Scan PBB Tahun Terakhir</li>
-                <li>Scan Kwitansi Asli</li>
-                <li>Scan Surat Pernyataan Bermaterai</li>
-            </ul>
-        `,
-        // Hibah
-        layanan2: `
-            <h4>Dokumen Layanan Hibah:</h4>
-            <ul>
-                <li>Scan KTP, Kartu Keluarga Pemberi dan Penerima Hibah</li>
-                <li>Scan Sertifikat</li>
-                <li>Scan PBB 2022</li>
-                <li>Scan Surat Pernyataan Bermaterai</li>
-            </ul>
-        `,
-        // Ahli Waris
-        layanan3: `
-            <h4>Dokumen Layanan Ahli Waris:</h4>
-            <ul>
-                <li>Scan Keterangan Ahli Waris Asli/Dilegalisir</li>
-                <li>Scan Pernyataan Ahli Waris Asli/Dilegalisir</li>
-                <li>Scan Kuasa Ahli Waris Asli/Dilegalisir</li>
-                <li>Scan KTP dan Kartu Keluarga (Semua Ahli Waris)</li>
-                <li>Scan Surat Kematian (Bagi yang Meninggal)</li>
-                <li>Scan KIA (Bagi yang dibawah umur)</li>
-                <li>Scan Sertifikat</li>
-                <li>Scan PBB Tahun Terakhir</li>
-                <li>Scan Surat Pernyataan Bermaterai</li>
-            </ul>
-        `,
-        // PTSL/PRONA
-        layanan4: `
-            <h4>Dokumen Layanan PTSL/PRONA:</h4>
-            <ul>
-                <li>Scan KTP dan Kartu Keluarga</li>
-                <li>Scan Sertifikat PTSL/PRONA</li>
-                <li>Scan PBB Tahun Terakhir</li>
-                <li>Scan Surat Pernyataan Bermaterai</li>
-            </ul>
-        `
-    };
+  const select = document.getElementById('layanan-select');
+  const outputDiv = document.getElementById('syarat-output');
+  const editLayananBtn = document.getElementById('editLayananBtn');
+  
+  const modalEditLayanan = new bootstrap.Modal(document.getElementById('modalEditLayanan'));
+  const formEditLayanan = document.getElementById('formEditLayanan');
+  const modalLayananSelect = document.getElementById('modalLayananSelect');
 
-    if (select) {
-        select.addEventListener('change', function() {
-            const selectedValue = this.value;
-            const syaratHTML = persyaratanData[selectedValue];
+  const modalFormEdit = new bootstrap.Modal(document.getElementById('modalFormEdit'));
+  const editLayananNameInput = document.getElementById('editLayananName');
+  const editPersyaratanTextarea = document.getElementById('editPersyaratan');
+  const formPersyaratanEdit = document.getElementById('formPersyaratanEdit');
 
-            if (syaratHTML) {
-                outputDiv.innerHTML = syaratHTML;
-            } else {
-                outputDiv.innerHTML = "Pilih layanan di atas untuk melihat daftar dokumen persyaratan.";
-            }
-        });
+  // Data persyaratan (HTML), kita ubah ke array string agar mudah edit
+  const persyaratanData = {
+    layanan1: [
+      'Scan KTP dan Kartu Keluarga (Penjual dan Pembeli)',
+      'Scan Sertifikat Induk/Hasil Pemecahan',
+      'Scan PBB Tahun Terakhir',
+      'Scan Kwitansi Asli',
+      'Scan Surat Pernyataan Bermaterai'
+    ],
+    layanan2: [
+      'Scan KTP, Kartu Keluarga Pemberi dan Penerima Hibah',
+      'Scan Sertifikat',
+      'Scan PBB 2022',
+      'Scan Surat Pernyataan Bermaterai'
+    ],
+    layanan3: [
+      'Scan Keterangan Ahli Waris Asli/Dilegalisir',
+      'Scan Pernyataan Ahli Waris Asli/Dilegalisir',
+      'Scan Kuasa Ahli Waris Asli/Dilegalisir',
+      'Scan KTP dan Kartu Keluarga (Semua Ahli Waris)',
+      'Scan Surat Kematian (Bagi yang Meninggal)',
+      'Scan KIA (Bagi yang dibawah umur)',
+      'Scan Sertifikat',
+      'Scan PBB Tahun Terakhir',
+      'Scan Surat Pernyataan Bermaterai'
+    ],
+    layanan4: [
+      'Scan KTP dan Kartu Keluarga',
+      'Scan Sertifikat PTSL/PRONA',
+      'Scan PBB Tahun Terakhir',
+      'Scan Surat Pernyataan Bermaterai'
+    ]
+  };
+
+  function updatePersyaratanView(key) {
+    if(!key || !persyaratanData[key]) {
+      outputDiv.innerHTML = 'Pilih layanan di atas untuk melihat daftar dokumen persyaratan.';
+      return;
     }
+    const listHTML = persyaratanData[key].map(item => `<li>${item}</li>`).join('');
+    outputDiv.innerHTML = `<h4>Dokumen Layanan ${document.querySelector(`#layanan-select option[value="${key}"]`).textContent}:</h4><ul>${listHTML}</ul>`;
+  }
+
+  if (select) {
+    select.addEventListener('change', function() {
+      updatePersyaratanView(this.value);
+    });
+  }
+
+  editLayananBtn.addEventListener('click', () => {
+    modalEditLayanan.show();
+  });
+
+  formEditLayanan.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const key = modalLayananSelect.value;
+    if (!key) {
+      alert('Silakan pilih layanan yang ingin diedit.');
+      return;
+    }
+
+    editLayananNameInput.value = modalLayananSelect.options[modalLayananSelect.selectedIndex].text;
+    editPersyaratanTextarea.value = persyaratanData[key].map(item => '- ' + item).join('\n');
+
+    modalEditLayanan.hide();
+    modalFormEdit.show();
+
+    formPersyaratanEdit.setAttribute('data-edit-key', key);
+  });
+
+  formPersyaratanEdit.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const key = formPersyaratanEdit.getAttribute('data-edit-key');
+    if (!key) {
+      alert('Terjadi kesalahan: data layanan tidak ditemukan.');
+      return;
+    }
+
+    const editedText = editPersyaratanTextarea.value.trim();
+    if (!editedText) {
+      alert('Persyaratan tidak boleh kosong.');
+      return;
+    }
+
+    const updatedItems = editedText.split('\n')
+      .map(line => line.trim())
+      .filter(line => line.startsWith('-'))
+      .map(line => line.replace(/^-/, '').trim());
+
+    if(updatedItems.length === 0){
+      alert('Format persyaratan tidak valid. Gunakan tanda "-" diawal setiap item.');
+      return;
+    }
+
+    persyaratanData[key] = updatedItems;
+
+    if(select.value === key) {
+      updatePersyaratanView(key);
+    }
+
+    alert('Persyaratan berhasil disimpan.');
+
+    modalFormEdit.hide();
+  });
 });
