@@ -9,7 +9,7 @@ use App\Http\Controllers\PPATController;
 
 // Halaman umum
 Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
-Route::get('/requirement', [LandingController::class, 'requirement'])->name('s&k');
+Route::get('/requirement', [LandingController::class, 'requirement'])->name('requirement');
 Route::get('/kontak', [LandingController::class, 'kontak'])->name('kontak');
 
 // Auth
@@ -20,7 +20,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/administrator', [AdministratorController::class, 'index']);
     Route::get('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('berkas_terdaftar');
     Route::get('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('arsip_berkas');
-    Route::get('/administrator/requirement', [AdministratorController::class, 'requirement'])->name('panduan_administrator');
+    Route::get('/administrator/requirement', [AdministratorController::class, 'requirement'])->name('panduan');  // Jika ada duplikasi, pastikan unik
 // });
 
 // Halaman KTU

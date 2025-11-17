@@ -12,9 +12,7 @@
     
     {{-- CSS Kustom --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/kelola_s&k.css') }}">
 
     <style>
         .main-content-wrapper {

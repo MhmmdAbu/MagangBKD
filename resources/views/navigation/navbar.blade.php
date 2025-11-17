@@ -20,7 +20,7 @@
                     <a class="nav-link {{ Route::currentRouteNamed('LandingPage') ? 'active' : '' }}" href="{{ route('LandingPage') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteNamed('syarat') || Route::currentRouteNamed('s&k') ? 'active' : '' }}" href="{{ route('s&k') }}">Panduan & Persyaratan</a>
+                    <a class="nav-link {{ Route::currentRouteNamed('requirement') ? 'active' : '' }}" href="{{ route('requirement') }}">Panduan & Persyaratan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::currentRouteNamed('pengajuan') ? 'active' : '' }}" href="{{ route('pengajuan') }}">Pengajuan</a>

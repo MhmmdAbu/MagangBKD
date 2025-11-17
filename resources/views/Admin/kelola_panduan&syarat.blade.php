@@ -2,6 +2,8 @@
 
 @section('title', 'Kelola Syarat dan Ketentuan')
 
+<link rel="stylesheet" href="{{ asset('css/kelola_s&k.css') }}">
+
 @section('content')
 <div class="dashboard-wrapper d-flex">
   <!-- Main Content -->
@@ -94,7 +96,32 @@
             </div>
         </div>
     </div>
+    <!-- Modal Edit Panduan -->
+    <div class="modal fade" id="modalEditPanduan" tabindex="-1" aria-labelledby="modalEditPanduanLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="formEditPanduan">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditPanduanLabel">Edit Langkah-Langkah Permohonan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="editPanduanTextarea" class="form-label">Langkah-Langkah Permohonan</label>
+                            <textarea id="editPanduanTextarea" class="form-control" rows="15" required style="font-family: monospace;"></textarea>
+                            <small class="form-text text-muted">Edit panduan dalam format HTML. Pastikan struktur <ol> dan <li> tetap terjaga.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/persyaratan.js') }}"></script>
+<script src="{{ asset('js/persyaratanAdmin.js') }}"></script>
 @endsection
