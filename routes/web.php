@@ -44,6 +44,9 @@ Route::GET('/register', function () {
 // });
 
 // Halaman Admin
+Route::get('/dashAdministrator', function () {
+    return view('Administrator.Dashboard');
+})->name('dashAdministrator');
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
     // Kelola Panduan
     Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');
