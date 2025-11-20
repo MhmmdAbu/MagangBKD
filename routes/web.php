@@ -17,6 +17,9 @@ Route::get('/kontak', [LandingController::class, 'kontak'])->name('kontak');
 Route::GET('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::POST('/login-proses', [AuthController::class, 'login'])->name('login.proses');
 Route::POST('/register-proses', [AuthController::class, 'register'])->name('register.proses');
+Route::GET('/register', function () {
+    return view('auth.register');
+});
 
 
 // Halaman Administrator
@@ -42,6 +45,10 @@ Route::POST('/register-proses', [AuthController::class, 'register'])->name('regi
 
 // Halaman Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
+    // Kelola Panduan
+    Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');
+
+    // Kelola Pengguna
     Route::GET('/kelola-pengguna', [AdminController::class, 'kelola_pengguna'])->name('kelola_pengguna');
     Route::PUT('/kelola-pengguna/update/{id}', [AdminController::class, 'update'])->name('admin.user.update');
     Route::DELETE('/kelola-pengguna/delete/{id}', [AdminController::class, 'destroy'])->name('admin.user.delete');
