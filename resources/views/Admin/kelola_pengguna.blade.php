@@ -59,14 +59,19 @@
                                     <td>{{ $user->role }}</td>
                                     <td>{{ $user->nomor_hp }}</td>
                                     <td class="aksi">
-                                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-edit btn-sm btn-primary">Edit</a>
-                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-delete btn-sm btn-danger">Hapus</button>
-                                        </form>
+                                        <button type="button" class="btn btn-edit btn-sm btn-primary btnEditUser" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-role="{{ $user->role }}" data-telepon="{{ $user->nomor_hp }}" data-bs-toggle="modal" data-bs-target="#modalEditPengguna">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-delete btn-sm btn-danger btnHapusUser" data-id="{{ $user->id }}">
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada pengguna ditemukan.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -150,7 +155,7 @@
         <h5 class="modal-title fw-bold mx-auto" id="modalEditPenggunaLabel">Edit Pengguna</h5>
       </div>
 
-      <form id="formEditPengguna">
+      <form id="formEditPengguna" method="POST">
         <div class="modal-body px-5 pb-4">
           <input type="hidden" id="editIndex">
           <div class="row">
@@ -171,8 +176,8 @@
               </select>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="editTelepon" class="form-label fw-semibold">Nomor Telepon</label>
-              <input type="tel" class="form-control" id="editTelepon">
+              <label for="nomor_hp" class="form-label fw-semibold">Nomor Telepon</label>
+              <input type="tel" name="nomor_hp" class="form-control" id="editTelepon">
             </div>
           </div>
         </div>
@@ -185,4 +190,88 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // 🔹 Ketika tombol Edit diklik
+    $(document).on('click', '.btnEditUser', function() {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+        let role = $(this).data('role');
+        let telepon = $(this).data('telepon');
+
+        // Isi data ke form edit modal
+        $('#editNama').val(name);
+        $('#editRole').val(role);
+        $('#editTelepon').val(telepon);
+        $('#formEditPengguna').attr('data-id', id);
+
+        // Tampilkan modal
+        $('#modalEditPengguna').modal('show');
+    });
+
+    // 🔹 Proses update via AJAX
+    $('#formEditPengguna').on('submit', function(e) {
+        e.preventDefault();
+
+        let id = $(this).attr('data-id');
+        let nama = $('#editNama').val();
+        let role = $('#editRole').val();
+        let telepon = $('#editTelepon').val();
+
+        $.ajax({
+            url: `/admin/kelola-pengguna/update/${id}`,
+            type: 'PUT',
+            data: {
+                _token: '{{ csrf_token() }}',
+                name: nama,
+                role: role,
+                nomor_hp: telepon
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Data pengguna berhasil diperbarui!');
+                    $('#modalEditPengguna').modal('hide');
+                    location.reload(); // reload tabel
+                } else {
+                    alert('Gagal memperbarui data pengguna!');
+                }
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+                alert('Terjadi kesalahan saat memperbarui data.');
+            }
+        });
+    });
+
+    $(document).on('click', '.btnHapusUser', function () {
+        let id = $(this).data('id');
+
+        if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
+
+            $.ajax({
+                url: `/admin/kelola-pengguna/delete/${id}`,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    alert('Terjadi kesalahan saat menghapus data.');
+                }
+            });
+
+        }
+    });
+});
+</script>
 @endsection

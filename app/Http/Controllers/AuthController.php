@@ -62,24 +62,24 @@ class AuthController extends Controller
             $user = Auth::user();
 
             switch ($user->role) {
-                case 'administrator':
-                    return redirect()->route('/');
-                case 'admin':
-                    return redirect()->route('/');
+                case 'Administrator':
+                    return redirect()->route('administrator');
+                case 'Admin':
+                    return redirect()->route('kelola_pengguna');
                 case 'ppat':
-                    return redirect()->route('/');
+                    return redirect()->route('/ppat');
                 case 'ktu':
-                    return redirect()->route('/');
+                    return redirect()->route('/ktu');
                 case 'kepala_uptd':
-                    return redirect()->route('/');
+                    return redirect()->route('/kepala-uptd');
                 case 'koordinator_survey':
-                    return redirect()->route('/');
+                    return redirect()->route('/koordinator-survey');
                 case 'anggota_survey':
-                    return redirect()->route('/');
+                    return redirect()->route('/anggota-survey');
                 case 'kepala_badan':
-                    return redirect()->route('/');
+                    return redirect()->route('/kepala-badan');
                 default:
-                    return redirect()->route('/');
+                    return redirect()->route('LandingPage');
             }
         }
 
