@@ -1,4 +1,4 @@
-@extends('Layout.Administrator')
+@extends('Layout.LayoutKorSur')
 
 @section('title','Berkas Terdaftar')
 
@@ -13,12 +13,6 @@
                     <input type="date" class="form-control border-start-0" placeholder="Tanggal">
                 </div>
                 <input type="search" class="form-control search-input" placeholder="Cari ...">
-                <select class="form-select" aria-label="Status Filter" style="max-width: 150px;">
-                    <option selected>Status</option>
-                    <option value="1">Pendaftaran</option>
-                    <option value="2">Survey</option>
-                    <option value="3">Selesai</option>
-                </select>
             </div>
         </div>
     </div>

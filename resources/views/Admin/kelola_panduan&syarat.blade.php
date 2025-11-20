@@ -1,4 +1,4 @@
-@extends('Layout.utama')
+@extends('Layout.layoutAdmin')
 
 @section('title', 'Kelola Syarat dan Ketentuan')
 

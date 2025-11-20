@@ -20,7 +20,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/administrator', [AdministratorController::class, 'index']);
     Route::get('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('berkas_terdaftar');
     Route::get('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('arsip_berkas');
-    Route::get('/administrator/requirement', [AdministratorController::class, 'requirement'])->name('panduan');  // Jika ada duplikasi, pastikan unik
+    Route::get('/administrator/requirement', [AdministratorController::class, 'AdministratorPanduan'])->name('AdministratorPanduan');  // Jika ada duplikasi, pastikan unik
 // });
 
 // Halaman KTU
@@ -36,6 +36,9 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
 // });
 
+Route::get('/dashAdministrator', function () {
+    return view('Administrator.Dashboard');
+})->name('dashAdministrator');
 Route::get('/profile', function () {
     return view('KTU.profile');
 })->name('profile');

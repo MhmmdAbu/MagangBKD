@@ -1,4 +1,4 @@
-@extends('Layout.utama')
+@extends('Layout.layoutAdmin')
 
 @section('title','Kelola Pengguna')
 
@@ -179,4 +179,105 @@
     </div>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    let users = [
+        { id: 1, nama: 'St. Nur Aisyah. S', role: 'PPAT', telepon: '0812345678910' },
+        { id: 2, nama: 'Muh. Abubakar T', role: 'Admin', telepon: '0812345678922' }
+    ];
+
+    function renderTable(filteredUsers = users) {
+        const tbody = $('#userTableBody');
+        tbody.empty();
+        filteredUsers.forEach((user, index) => {
+            const row = `
+                <tr>
+                    <td>${index + 1}.</td>
+                    <td>${user.nama}</td>
+                    <td>${user.role}</td>
+                    <td>${user.telepon}</td>
+                    <td class="aksi">
+                        <a href="#" class="btn btn-edit btn-sm btn-primary" data-id="${user.id}">Edit</a>
+                        <a href="#" class="btn btn-delete btn-sm btn-danger" data-id="${user.id}">Hapus</a>
+                    </td>
+                </tr>
+            `;
+            tbody.append(row);
+        });
+    }
+
+    renderTable();
+
+    $('.filter-controls select').change(function() {
+        const selectedRole = $(this).val();
+        let filteredUsers;
+        if (selectedRole === 'Role') {
+            filteredUsers = users;
+        } else {
+            filteredUsers = users.filter(user => user.role === selectedRole);
+        }
+        renderTable(filteredUsers);
+    });
+
+    $('.search-input').on('input', function() {
+        const searchTerm = $(this).val().toLowerCase();
+        const filteredUsers = users.filter(user => user.nama.toLowerCase().includes(searchTerm));
+        renderTable(filteredUsers);
+    });
+
+    $('#formTambahPengguna').submit(function(e) {
+        e.preventDefault();
+        const newUser = {
+            id: users.length + 1,
+            nama: $('#nama').val(),
+            role: $('#role').val(),
+            telepon: $('#telepon').val(),
+        };
+        users.push(newUser);
+        renderTable();
+        $('#modalTambahPengguna').modal('hide');
+        $('#formTambahPengguna')[0].reset();
+        alert('Pengguna berhasil ditambahkan!');
+    });
+
+    $(document).on('click', '.btn-edit', function(e) {
+        e.preventDefault();
+        const userId = $(this).data('id');
+        const user = users.find(u => u.id === userId);
+        if (user) {
+            $('#editIndex').val(userId);
+            $('#editNama').val(user.nama);
+            $('#editRole').val(user.role);
+            $('#editTelepon').val(user.telepon);
+            $('#modalEditPengguna').modal('show');
+        }
+    });
+
+    $('#formEditPengguna').submit(function(e) {
+        e.preventDefault();
+        const userId = $('#editIndex').val();
+        const userIndex = users.findIndex(u => u.id == userId);
+        if (userIndex !== -1) {
+            users[userIndex].nama = $('#editNama').val();
+            users[userIndex].role = $('#editRole').val();
+            users[userIndex].telepon = $('#editTelepon').val();
+            renderTable();
+            $('#modalEditPengguna').modal('hide');
+            alert('Pengguna berhasil diupdate!');
+        }
+    });
+
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const userId = $(this).data('id');
+        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+            users = users.filter(u => u.id !== userId);
+            renderTable();
+            alert('Pengguna berhasil dihapus!');
+        }
+    });
+});
+</script>
 @endsection

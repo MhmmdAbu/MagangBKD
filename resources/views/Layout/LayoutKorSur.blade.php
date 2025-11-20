@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-    @include('navigation.sidebar')
+    @include('navigation.sidebarKorSurv')
     <div class="main-content-wrapper">
         <div class="content">
             @yield('content')
