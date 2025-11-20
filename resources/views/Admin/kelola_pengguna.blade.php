@@ -25,6 +25,16 @@
         </div>
     </div>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Tabel -->
     <div class="row">
         <div class="col-12">
@@ -42,26 +52,26 @@
                                 </tr>
                             </thead>
                             <tbody id="userTableBody">
+                                @forelse($users as $index => $user)
                                 <tr>
-                                    <td>1.</td>
-                                    <td>St. Nur Aisyah. S</td>
-                                    <td>PPAT</td>
-                                    <td>0812345678910</td>
+                                    <td>{{ $index+1 }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->role }}</td>
+                                    <td>{{ $user->nomor_hp }}</td>
                                     <td class="aksi">
-                                        <a href="#" class="btn btn-edit btn-sm btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-delete btn-sm btn-danger">Hapus</a>
+                                        <button type="button" class="btn btn-edit btn-sm btn-primary btnEditUser" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-role="{{ $user->role }}" data-telepon="{{ $user->nomor_hp }}" data-bs-toggle="modal" data-bs-target="#modalEditPengguna">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-delete btn-sm btn-danger btnHapusUser" data-id="{{ $user->id }}">
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
+                                @empty
                                 <tr>
-                                    <td>2.</td>
-                                    <td>Muh. Abubakar T</td>
-                                    <td>Admin</td>
-                                    <td>0812345678922</td>
-                                    <td class="aksi">
-                                        <a href="#" class="btn btn-edit btn-sm btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-delete btn-sm btn-danger">Hapus</a>
-                                    </td>
+                                    <td colspan="5" class="text-center">Tidak ada pengguna ditemukan.</td>
                                 </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +89,8 @@
             <h5 class="modal-title fw-bold mx-auto" id="modalTambahPenggunaLabel">Tambah Pengguna</h5>
         </div>
 
-        <form id="formTambahPengguna"> 
+        <form action="{{ route('register.proses') }}" method="POST" id="formTambahPengguna"> 
+            @csrf
             <div class="modal-body px-5 pb-4"> 
                 <div class="mb-3"> 
                     <label for="role" class="form-label fw-semibold">Pilih Role</label> 
@@ -94,36 +105,36 @@
                         <option value="Administrator">Administrator</option> 
                     </select> </div> <div class="row"> 
                         <div class="col-md-6 mb-3"> 
-                            <label for="nama" class="form-label fw-semibold">Nama Lengkap</label> 
-                            <input type="text" class="form-control" id="nama" placeholder="Masukkan nama lengkap"> 
+                            <label for="name" class="form-label fw-semibold">Nama Lengkap</label> 
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama lengkap"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
                             <label for="instansi" class="form-label fw-semibold">Nama Instansi</label> 
-                            <input type="text" class="form-control" id="instansi" placeholder="Masukkan nama instansi"> 
+                            <input type="text" name="instansi" class="form-control" id="instansi" placeholder="Masukkan nama instansi"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
                             <label for="alamat" class="form-label fw-semibold">Alamat Instansi</label> 
-                            <input type="text" class="form-control" id="alamat" placeholder="Masukkan alamat instansi"> 
+                            <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan alamat instansi"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
-                            <label for="telepon" class="form-label fw-semibold">Nomor Telepon</label> 
-                            <input type="tel" class="form-control" id="telepon" placeholder="08xxxxxxxxxx"> 
+                            <label for="nomor_hp" class="form-label fw-semibold">Nomor Telepon</label> 
+                            <input type="tel" name="nomor_hp" class="form-control" id="telepon" placeholder="08xxxxxxxxxx"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
                             <label for="email" class="form-label fw-semibold">Email</label> 
-                            <input type="email" class="form-control" id="email" placeholder="contoh@email.com"> 
+                            <input type="email" name="email" class="form-control" id="email" placeholder="contoh@email.com"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
                             <label for="foto" class="form-label fw-semibold">Foto</label> 
-                            <input type="file" class="form-control" id="foto" accept="image/*"> 
+                            <input type="file" name="foto" class="form-control" id="foto" accept="image/*"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
                             <label for="password" class="form-label fw-semibold">Password</label> 
-                            <input type="password" class="form-control" id="password" placeholder="Masukkan password"> 
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan password"> 
                         </div> 
                         <div class="col-md-6 mb-3"> 
-                            <label for="konfirmasi" class="form-label fw-semibold">Konfirmasi Password</label> 
-                            <input type="password" class="form-control" id="konfirmasi" placeholder="Ulangi password"> 
+                            <label for="password_confirmation" class="form-label fw-semibold">Konfirmasi Password</label> 
+                            <input type="password" name="password_confirmation" class="form-control" id="konfirmasi" placeholder="Ulangi password"> 
                         </div> 
                     </div> 
                 </div> 
@@ -144,7 +155,7 @@
         <h5 class="modal-title fw-bold mx-auto" id="modalEditPenggunaLabel">Edit Pengguna</h5>
       </div>
 
-      <form id="formEditPengguna">
+      <form id="formEditPengguna" method="POST">
         <div class="modal-body px-5 pb-4">
           <input type="hidden" id="editIndex">
           <div class="row">
@@ -165,8 +176,8 @@
               </select>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="editTelepon" class="form-label fw-semibold">Nomor Telepon</label>
-              <input type="tel" class="form-control" id="editTelepon">
+              <label for="nomor_hp" class="form-label fw-semibold">Nomor Telepon</label>
+              <input type="tel" name="nomor_hp" class="form-control" id="editTelepon">
             </div>
           </div>
         </div>
@@ -180,102 +191,85 @@
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    let users = [
-        { id: 1, nama: 'St. Nur Aisyah. S', role: 'PPAT', telepon: '0812345678910' },
-        { id: 2, nama: 'Muh. Abubakar T', role: 'Admin', telepon: '0812345678922' }
-    ];
+document.addEventListener('DOMContentLoaded', function() {
 
-    function renderTable(filteredUsers = users) {
-        const tbody = $('#userTableBody');
-        tbody.empty();
-        filteredUsers.forEach((user, index) => {
-            const row = `
-                <tr>
-                    <td>${index + 1}.</td>
-                    <td>${user.nama}</td>
-                    <td>${user.role}</td>
-                    <td>${user.telepon}</td>
-                    <td class="aksi">
-                        <a href="#" class="btn btn-edit btn-sm btn-primary" data-id="${user.id}">Edit</a>
-                        <a href="#" class="btn btn-delete btn-sm btn-danger" data-id="${user.id}">Hapus</a>
-                    </td>
-                </tr>
-            `;
-            tbody.append(row);
+    // 🔹 Ketika tombol Edit diklik
+    $(document).on('click', '.btnEditUser', function() {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+        let role = $(this).data('role');
+        let telepon = $(this).data('telepon');
+
+        // Isi data ke form edit modal
+        $('#editNama').val(name);
+        $('#editRole').val(role);
+        $('#editTelepon').val(telepon);
+        $('#formEditPengguna').attr('data-id', id);
+
+        // Tampilkan modal
+        $('#modalEditPengguna').modal('show');
+    });
+
+    // 🔹 Proses update via AJAX
+    $('#formEditPengguna').on('submit', function(e) {
+        e.preventDefault();
+
+        let id = $(this).attr('data-id');
+        let nama = $('#editNama').val();
+        let role = $('#editRole').val();
+        let telepon = $('#editTelepon').val();
+
+        $.ajax({
+            url: `/admin/kelola-pengguna/update/${id}`,
+            type: 'PUT',
+            data: {
+                _token: '{{ csrf_token() }}',
+                name: nama,
+                role: role,
+                nomor_hp: telepon
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Data pengguna berhasil diperbarui!');
+                    $('#modalEditPengguna').modal('hide');
+                    location.reload(); // reload tabel
+                } else {
+                    alert('Gagal memperbarui data pengguna!');
+                }
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+                alert('Terjadi kesalahan saat memperbarui data.');
+            }
         });
-    }
-
-    renderTable();
-
-    $('.filter-controls select').change(function() {
-        const selectedRole = $(this).val();
-        let filteredUsers;
-        if (selectedRole === 'Role') {
-            filteredUsers = users;
-        } else {
-            filteredUsers = users.filter(user => user.role === selectedRole);
-        }
-        renderTable(filteredUsers);
     });
 
-    $('.search-input').on('input', function() {
-        const searchTerm = $(this).val().toLowerCase();
-        const filteredUsers = users.filter(user => user.nama.toLowerCase().includes(searchTerm));
-        renderTable(filteredUsers);
-    });
+    $(document).on('click', '.btnHapusUser', function () {
+        let id = $(this).data('id');
 
-    $('#formTambahPengguna').submit(function(e) {
-        e.preventDefault();
-        const newUser = {
-            id: users.length + 1,
-            nama: $('#nama').val(),
-            role: $('#role').val(),
-            telepon: $('#telepon').val(),
-        };
-        users.push(newUser);
-        renderTable();
-        $('#modalTambahPengguna').modal('hide');
-        $('#formTambahPengguna')[0].reset();
-        alert('Pengguna berhasil ditambahkan!');
-    });
+        if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
 
-    $(document).on('click', '.btn-edit', function(e) {
-        e.preventDefault();
-        const userId = $(this).data('id');
-        const user = users.find(u => u.id === userId);
-        if (user) {
-            $('#editIndex').val(userId);
-            $('#editNama').val(user.nama);
-            $('#editRole').val(user.role);
-            $('#editTelepon').val(user.telepon);
-            $('#modalEditPengguna').modal('show');
-        }
-    });
+            $.ajax({
+                url: `/admin/kelola-pengguna/delete/${id}`,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    alert('Terjadi kesalahan saat menghapus data.');
+                }
+            });
 
-    $('#formEditPengguna').submit(function(e) {
-        e.preventDefault();
-        const userId = $('#editIndex').val();
-        const userIndex = users.findIndex(u => u.id == userId);
-        if (userIndex !== -1) {
-            users[userIndex].nama = $('#editNama').val();
-            users[userIndex].role = $('#editRole').val();
-            users[userIndex].telepon = $('#editTelepon').val();
-            renderTable();
-            $('#modalEditPengguna').modal('hide');
-            alert('Pengguna berhasil diupdate!');
-        }
-    });
-
-    $(document).on('click', '.btn-delete', function(e) {
-        e.preventDefault();
-        const userId = $(this).data('id');
-        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
-            users = users.filter(u => u.id !== userId);
-            renderTable();
-            alert('Pengguna berhasil dihapus!');
         }
     });
 });
