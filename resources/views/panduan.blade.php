@@ -1,6 +1,9 @@
-@extends('Layout.panduan')
+@extends('Layout.utama')
 
 @section('title','Panduan')
+
+<link rel="stylesheet" href="{{ asset('css/panduan.css') }}">
+<link rel="stylesheet" href="{{ asset('js/persyaratan.js') }}">
 
 @section('content')
     {{-- PASTIKAN KEDUA PANEL DIBUNGKUS OLEH DIV DENGAN CLASS "CONTAINER" --}}

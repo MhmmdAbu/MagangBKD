@@ -13,19 +13,19 @@
         <li class="nav-item">
             <a href="{{ route('berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('berkas_terdaftar') ? 'active' : '' }}">
                 <i class="fas fa-folder"></i>
-                Berkas Terdaftar
+                Kelola Berkas
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('arsip_berkas') }}" class="nav-link {{ Route::currentRouteNamed('arsip_berkas') ? 'active' : '' }}">
                 <i class="fas fa-archive"></i>
-                Arsip Berkas
+                Panduan & Syarat
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('panduan') }}" class="nav-link {{ Route::currentRouteNamed('panduan') ? 'active' : '' }}">
+            <a href="{{ route('panduan_administrator') }}" class="nav-link {{ Route::currentRouteNamed('panduan_administrator') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
-                Panduan dan Syarat
+                Kelola Pengguna
             </a>
         </li>
     </ul>

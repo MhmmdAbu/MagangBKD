@@ -12,7 +12,6 @@
     
     {{-- CSS Kustom --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
     <style>
@@ -20,18 +19,16 @@
             margin-top: 1rem;
             margin-left: 250px;
             padding: 0 10px 10px;
-            min-height: 100vh; /* Ubah dari 96% ke 100vh untuk memastikan tinggi penuh viewport */
-            display: flex; /* Tambahkan flexbox */
-            flex-direction: column; /* Susun elemen secara vertikal */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .content {
-            flex: 1; /* Konten utama akan mengisi ruang yang tersedia, mendorong footer ke bawah */
+            flex: 1;
         }
         
         .page-footer {
-            /* Hapus position: absolute; bottom: 0; left: 0; width: 100%; */
-            /* Footer sekarang akan menempel di bawah secara alami berkat flexbox */
             text-align: center;
             font-size: 0.8rem;
             color: #6c757d;

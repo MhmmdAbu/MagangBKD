@@ -23,6 +23,6 @@ class AdministratorController extends Controller
 
     // Requirement
     Public function requirement() {
-        return view('Administrator.panduan');
+        return view('panduan');
     }
 }

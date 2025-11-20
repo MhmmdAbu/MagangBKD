@@ -1,0 +1,95 @@
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Control panel (left side in content) */
+.control-panel {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Dropdown */
+.control-panel select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  outline: none;
+}
+
+/* Berkas box */
+.syarat-text-area {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  min-height: 130px;
+  color: #1f1f1f;
+  font-size: 0.95rem;
+  box-shadow: 0 7px 15px rgb(0 0 0 / 0.1);
+  white-space: pre-line;
+  margin-top: 1.5rem;
+}
+
+/* Buttons */
+.control-panel .btn {
+  background-color: #2563eb;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#editLayananBtn {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+#editPanduanBtn {
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.control-panel .btn:hover {
+  background-color: #1e40af;
+}
+
+/* Steps box */
+.steps-box {
+  flex-grow: 1;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 7px 15px rgb(0 0 0 / 0.1);
+  font-size: 1rem;
+  color: #1f1f1f;
+}
+
+.steps-box h2 {
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.steps-box ol {
+  padding-left: 1.5rem;
+}
+
+.steps-box li {
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.steps-box li strong {
+  font-weight: 700;
+}

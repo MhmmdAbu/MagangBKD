@@ -3,7 +3,6 @@
 @section('title','Berkas Terdaftar')
 
 <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
-<link rel="stylesheet" href="{{ asset('js/modal.js') }}">
 
 @section('content')
 <div class="container-fluid">
@@ -90,6 +89,7 @@
         </div>
     </div>
 
+    <!-- Modal Detail Berkas -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -105,10 +105,83 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
-                    <button type="button" class="btn btn-Tdkvalid" data-bs-dismiss="modal">Tidak Valid</button>
+                    <button type="button" class="btn btn-Tdkvalid" id="btnTidakValid" data-bs-dismiss="modal">Tidak Valid</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Alasan Tidak Valid -->
+    <div class="modal fade" id="invalidReasonModal" tabindex="-1" aria-labelledby="invalidReasonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="invalidReasonModalLabel">Alasan Tidak Valid</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="invalidReasonForm">
+                        <div class="mb-3">
+                            <label for="alasanTextarea" class="form-label">Masukkan Alasan:</label>
+                            <textarea class="form-control" id="alasanTextarea" rows="4" placeholder="Jelaskan alasan berkas tidak valid..." required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btnKirimAlasan">Kirim</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Event listener untuk mengisi modal detail saat dibuka
+    const detailModal = document.getElementById('detailModal');
+    detailModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        
+        const nomorSurat = button.getAttribute('data-nomor-surat');
+        const tanggal = button.getAttribute('data-tanggal');
+        const nama = button.getAttribute('data-nama');
+        const status = button.getAttribute('data-status');
+        
+        document.getElementById('modal-nomor-surat').textContent = nomorSurat;
+        document.getElementById('modal-tanggal').textContent = tanggal;
+        document.getElementById('modal-nama').textContent = nama;
+        document.getElementById('modal-status').textContent = status;
+    });
+
+    // Event listener untuk tombol "Tidak Valid"
+    document.getElementById('btnTidakValid').addEventListener('click', function() {
+        // Tutup modal detail
+        var detailModalInstance = bootstrap.Modal.getInstance(document.getElementById('detailModal'));
+        detailModalInstance.hide();
+        
+        // Buka modal alasan tidak valid
+        var invalidModal = new bootstrap.Modal(document.getElementById('invalidReasonModal'));
+        invalidModal.show();
+    });
+
+    // Event listener untuk tombol "Kirim" di modal alasan
+    document.getElementById('btnKirimAlasan').addEventListener('click', function() {
+        var alasan = document.getElementById('alasanTextarea').value.trim();
+        if (alasan === '') {
+            alert('Alasan tidak boleh kosong!');
+            return;
+        }
+        
+        // Di sini Anda bisa menambahkan logika untuk mengirim data ke server, misalnya via AJAX
+        // Untuk contoh, kita tampilkan alert dan tutup modal
+        alert('Alasan dikirim: ' + alasan);
+        
+        // Tutup modal
+        var invalidModalInstance = bootstrap.Modal.getInstance(document.getElementById('invalidReasonModal'));
+        invalidModalInstance.hide();
+        
+        // Reset form
+        document.getElementById('invalidReasonForm').reset();
+    });
+</script>
 @endsection
