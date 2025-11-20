@@ -11,7 +11,7 @@ class LandingController extends Controller
     }
 
     public function requirement() {
-        return view('s&k');
+        return view('requirement');
     }
 
     public function kontak(){

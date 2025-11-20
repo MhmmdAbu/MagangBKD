@@ -9,9 +9,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PPATController;
 
 // Halaman umum
-Route::GET('/', [LandingController::class, 'index'])->name('LandingPage');
-Route::GET('/requirement', [LandingController::class, 'requirement'])->name('s&k');
-Route::GET('/kontak', [LandingController::class, 'kontak'])->name('kontak');
+Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
+Route::get('/requirement', [LandingController::class, 'requirement'])->name('requirement');
+Route::get('/kontak', [LandingController::class, 'kontak'])->name('kontak');
 
 // Auth
 Route::GET('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -50,3 +50,9 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
 Route::GET('/profile', function () {
     return view('KTU.profile');
 })->name('profile');
+Route::get('/kelola_pengguna', function () {
+    return view('Admin.kelola_pengguna');
+})->name('kelola_pengguna');
+Route::get('/kelolaS&K', function () {
+    return view('Admin.kelola_panduan&syarat');
+})->name('kelolaS&K');
