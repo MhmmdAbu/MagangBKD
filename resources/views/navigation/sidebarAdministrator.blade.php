@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('AdministratorPanduan') }}" class="nav-link {{ Route::currentRouteNamed('AdministratorPanduan') ? 'active' : '' }}">
+            <a href="{{ route('panduan') }}" class="nav-link {{ Route::currentRouteNamed('panduan') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 Panduan dan Syarat
             </a>

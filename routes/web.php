@@ -59,3 +59,6 @@ Route::get('/kelola_pengguna', function () {
 Route::get('/kelolaS&K', function () {
     return view('Admin.kelola_panduan&syarat');
 })->name('kelolaS&K');
+Route::GET('/panduan', function () {
+    return view('panduan');
+})->name('panduan');

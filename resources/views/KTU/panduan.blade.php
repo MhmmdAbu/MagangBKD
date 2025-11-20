@@ -1,4 +1,4 @@
-@extends('Layout.Administrator')
+@extends($layout ?? 'layouts.default')
 
 @section('title','Panduan')
 

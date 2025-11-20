@@ -8,7 +8,7 @@ class AdministratorController extends Controller
 {
     // Dashboard
     public function index() {
-        return view('Administrator.dashboard');
+        return view('Administrator.Dashboard');
     }
 
     // Daftar Berkas
@@ -22,7 +22,7 @@ class AdministratorController extends Controller
     }
 
     // Requirement
-    Public function AdministratorPanduan() {
+    Public function requirement() {
         return view('Administrator.panduan');
     }
 }
