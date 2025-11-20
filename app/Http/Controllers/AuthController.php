@@ -23,30 +23,24 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'instansi' => 'required|string|max:255',
+            'nomor_hp'=> 'required',
             'role' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // tambahkan validasi foto
+            // 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-
-        // Simpan foto jika ada
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('profile_photos', 'public');
-        }
 
         // Simpan data user
         User::create([
             'name' => $request->name,
             'alamat' => $request->alamat,
             'instansi' => $request->instansi,
+            'nomor_hp' => $request->nomor_hp,
             'role' => $request->role,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'foto' => $fotoPath, // simpan path foto
+            'password' => Hash::make($request->password), 
         ]);
-
-        return redirect('/login')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('kelola_pengguna')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     // Menampilkan halaman login
@@ -68,24 +62,24 @@ class AuthController extends Controller
             $user = Auth::user();
 
             switch ($user->role) {
-                case 'administrator':
-                    return redirect()->route('/');
-                case 'admin':
-                    return redirect()->route('/');
+                case 'Administrator':
+                    return redirect()->route('administrator');
+                case 'Admin':
+                    return redirect()->route('kelola_pengguna');
                 case 'ppat':
-                    return redirect()->route('/');
+                    return redirect()->route('/ppat');
                 case 'ktu':
-                    return redirect()->route('/');
+                    return redirect()->route('/ktu');
                 case 'kepala_uptd':
-                    return redirect()->route('/');
+                    return redirect()->route('/kepala-uptd');
                 case 'koordinator_survey':
-                    return redirect()->route('/');
+                    return redirect()->route('/koordinator-survey');
                 case 'anggota_survey':
-                    return redirect()->route('/');
+                    return redirect()->route('/anggota-survey');
                 case 'kepala_badan':
-                    return redirect()->route('/');
+                    return redirect()->route('/kepala-badan');
                 default:
-                    return redirect()->route('/');
+                    return redirect()->route('LandingPage');
             }
         }
 

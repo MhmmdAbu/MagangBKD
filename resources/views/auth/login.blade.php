@@ -15,12 +15,12 @@
     <div class="form-side">
         <h2>Selamat Datang</h2>
         
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login.proses') }}">
             @csrf 
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required autofocus>
-                {{-- error message Laravel: @error('username') <span class="text-danger">{{ $message }}</span> @enderror --}}
+                <label for="email">Email</label>
+                <input type="text" id="username" name="email" placeholder="Enter your email" required autofocus>
+                {{-- error message Laravel: @error('email') <span class="text-danger">{{ $message }}</span> @enderror --}}
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
