@@ -41,6 +41,9 @@ Route::POST('/register-proses', [AuthController::class, 'register'])->name('regi
 // });
 
 // Halaman Admin
+Route::get('/dashAdministrator', function () {
+    return view('Administrator.Dashboard');
+})->name('dashAdministrator');
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
     Route::GET('/kelola-pengguna', [AdminController::class, 'kelola_pengguna'])->name('kelola_pengguna');
     Route::PUT('/kelola-pengguna/update/{id}', [AdminController::class, 'update'])->name('admin.user.update');

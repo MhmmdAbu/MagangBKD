@@ -1,4 +1,4 @@
-@extends('Layout.utama')
+@extends('Layout.Administrator')
 
 @section('title','Berkas Terdaftar')
 
