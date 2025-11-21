@@ -5,25 +5,25 @@
     </div>
     <ul class="nav-menu">
         <li class="nav-item">
-            <a href="{{ route('dashAdministrator') }}" class="nav-link {{ Route::currentRouteNamed('dashAdministrator') ? 'active' : '' }}">
+            <a href="{{ route('administrator.dashboard') }}" class="nav-link {{ Route::currentRouteNamed('administrator.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-th-large"></i>
                 Dashboard
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('berkas_terdaftar') ? 'active' : '' }}">
+            <a href="{{ route('administrator.berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('administrator.berkas_terdaftar') ? 'active' : '' }}">
                 <i class="fas fa-folder"></i>
                 Berkas Terdaftar
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('arsip_berkas') }}" class="nav-link {{ Route::currentRouteNamed('arsip_berkas') ? 'active' : '' }}">
+            <a href="{{ route('administrator.arsip_berkas') }}" class="nav-link {{ Route::currentRouteNamed('administrator.arsip_berkas') ? 'active' : '' }}">
                 <i class="fas fa-archive"></i>
                 Arsip Berkas
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('panduan') }}" class="nav-link {{ Route::currentRouteNamed('panduan') ? 'active' : '' }}">
+            <a href="{{ route('administrator.panduan') }}" class="nav-link {{ Route::currentRouteNamed('administrator.panduan') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 Panduan dan Syarat
             </a>
@@ -31,7 +31,7 @@
     </ul>
     <div class="user-profile-section">
         <div class="nav-item mb-2">
-            <a href="{{ route('profile') }}" class="nav-link {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
+            <a href="{{ route('administrator.profile') }}" class="nav-link {{ Route::currentRouteNamed('administrator.profile') ? 'active' : '' }}">
                 <span class="profile-icon">
                     <i class="fas fa-user"></i>
                 </span>

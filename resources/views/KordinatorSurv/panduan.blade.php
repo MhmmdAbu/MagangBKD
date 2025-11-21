@@ -1,4 +1,4 @@
-@extends('Layout.Administrator')
+@extends('Layout.LayoutKorSur')
 
 @section('title','Panduan')
 

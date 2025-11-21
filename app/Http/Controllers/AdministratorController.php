@@ -22,7 +22,12 @@ class AdministratorController extends Controller
     }
 
     // Requirement
-    Public function requirement() {
+    Public function panduan() {
         return view('Administrator.panduan');
+    }
+
+    // Requirement
+    Public function profile() {
+        return view('Administrator.profile');
     }
 }

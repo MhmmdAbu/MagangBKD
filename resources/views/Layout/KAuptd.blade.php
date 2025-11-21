@@ -12,6 +12,9 @@
     
     {{-- CSS Kustom --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/panduan.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
     <style>

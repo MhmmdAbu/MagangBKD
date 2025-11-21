@@ -1,9 +1,6 @@
-@extends($layout ?? 'layouts.default')
+@extends("layout.ktu")
 
 @section('title','Panduan')
-
-<link rel="stylesheet" href="{{ asset('css/panduan.css') }}">
-<link rel="stylesheet" href="{{ asset('js/persyaratan.js') }}">
 
 @section('content')
     <div class="container">
@@ -65,4 +62,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/persyaratan.js') }}"></script>
 @endsection

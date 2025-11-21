@@ -1,4 +1,4 @@
-@extends('Layout.ktu')
+@extends('Layout.KAuptd')
 
 @section('title','Profile')
 
