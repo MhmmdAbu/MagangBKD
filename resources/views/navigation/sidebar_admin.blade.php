@@ -4,6 +4,23 @@
         LOGO
     </div>
     <ul class="nav-menu">
+        @if(Auth::user()->role == 'Admin')
+            <!-- <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+            </li> -->
+            <li class="nav-item">
+                <a href="{{ route('kelola_pengguna') }}" class="nav-link">
+                    <i class="fas fa-users"></i> Kelola Pengguna
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a href="{{ route('berkas_terdaftar') }}" class="nav-link">
+                    <i class="fas fa-folder"></i> Berkas Terdaftar
+                </a>
+            </li> -->
+        @endif
         <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="fas fa-th-large"></i>
