@@ -5,25 +5,25 @@
     </div>
     <ul class="nav-menu">
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('kordinator.dashboard') }}" class="nav-link {{ Route::currentRouteNamed('kordinator.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-th-large"></i>
                 Dashboard
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('berkas_terdaftar') ? 'active' : '' }}">
+            <a href="{{ route('kordinator.berkas') }}" class="nav-link {{ Route::currentRouteNamed('kordinator.berkas') ? 'active' : '' }}">
                 <i class="fas fa-folder"></i>
                 Berkas
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('survey') }}" class="nav-link {{ Route::currentRouteNamed('survey') ? 'active' : '' }}">
+            <a href="{{ route('kordinator.survey') }}" class="nav-link {{ Route::currentRouteNamed('kordinator.survey') ? 'active' : '' }}">
                 <i class="fas fa-archive"></i>
                 Survey
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('panduan') }}" class="nav-link {{ Route::currentRouteNamed('panduan') ? 'active' : '' }}">
+            <a href="{{ route('kordinator.panduan') }}" class="nav-link {{ Route::currentRouteNamed('kordinator.panduan') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 Panduan dan Syarat
             </a>
@@ -31,7 +31,7 @@
     </ul>
     <div class="user-profile-section">
         <div class="nav-item mb-2">
-            <a href="{{ route('profile') }}" class="nav-link {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
+            <a href="{{ route('kordinator.profile') }}" class="nav-link {{ Route::currentRouteNamed('kordinator.profile') ? 'active' : '' }}">
                 <span class="profile-icon">
                     <i class="fas fa-user"></i>
                 </span>
