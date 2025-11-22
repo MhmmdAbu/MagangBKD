@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class KtuController extends Controller
+class KepalaUPTDController extends Controller
 {
     public function index() {
         $summary = [
@@ -12,6 +12,7 @@ class KtuController extends Controller
             'menunggu_disposisi' => 21,
             'proses_disposisi' => 9,
         ];
+
         // Data permohonan pertahun (tahun => jumlah)
         $permohonanPerTahun = [
             2019 => 8,
@@ -20,26 +21,27 @@ class KtuController extends Controller
             2022 => 18,
             2023 => 30,
         ];
+        
         // Data permohonan masuk untuk pie chart
         $permohonanMasuk = [
             'Selesai' => 10,
             'Proses' => 20,
             'Menunggu' => 15,
         ];
-        return view('KTU.dashboard', compact('summary', 'permohonanPerTahun', 'permohonanMasuk'));
+        return view('kepala_uptd.dashboard', compact('summary', 'permohonanPerTahun', 'permohonanMasuk'));
     }
 
     public function daftarBerkas() {
-        return view('KTU.berkas_terdaftar');
+        return view('kepala_uptd.berkas');
     }
 
     public function arsipBerkas() {
-        return view('KTU.berkas_arsip');
+        return view('kepala_uptd.arsip');
     }
     public function panduan() {
-        return view('KTU.panduan');
+        return view('kepala_uptd.panduan');
     }
      public function profile() {
-        return view('KTU.profile');
+        return view('kepala_uptd.profile');
     }
 }

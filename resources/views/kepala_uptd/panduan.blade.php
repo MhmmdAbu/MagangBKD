@@ -1,8 +1,6 @@
-@extends('Layout.Administrator')
+@extends("layout.KAuptd")
 
 @section('title','Panduan')
-
-<link rel="stylesheet" href="{{ asset('css/panduan.css') }}">
 
 @section('content')
     <div class="container">
@@ -64,5 +62,6 @@
             </div>
         </div>
     </div>
+
     <script src="{{ asset('js/persyaratan.js') }}"></script>
 @endsection

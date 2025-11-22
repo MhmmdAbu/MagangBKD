@@ -12,6 +12,7 @@
     
     {{-- CSS Kustom --}}
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
     <style>
@@ -48,7 +49,7 @@
     </style>
 </head>
 <body>
-    @include('navigation.sidebarKorSurv')
+    @include('navigation.sidebarKoSurv')
     <div class="main-content-wrapper">
         <div class="content">
             @yield('content')

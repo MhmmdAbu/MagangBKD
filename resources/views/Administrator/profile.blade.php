@@ -1,25 +1,19 @@
-@extends('Layout.ktu')
+@extends('Layout.Administrator')
 
 @section('title','Profile')
 
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}"> 
+
 @section('content')
 <div class="content-area">       
-    <div class="profile-image-box" id="profile-image-container">
-        @if(Auth::user()->foto) 
-            <img id="profile-preview-image" 
-                 src="{{ asset('storage/profile/' . Auth::user()->foto) }}" 
-                 alt="Profile Picture"
-                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-        @else
-            <i class="fas fa-user-circle avatar" id="default-avatar-icon"></i>
-        @endif
+    <div class="profile-card">
+        <div class="profile-image-box" id="profile-image-container">
+            <img id="profile-preview-image" src="" alt="Profile Picture" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            <i class="fas fa-user-circle avatar" id="default-avatar-icon"></i> 
+        </div>
+        <h3>St. Nur Aisyah. S</h3>
+        <p>Web Designer</p>
     </div>
-
-    {{-- NAMA USER --}}
-    <h3>{{ Auth::user()->name }}</h3>
-
-    {{-- ROLE / JABATAN --}}
-    <p>{{ Auth::user()->role }}</p>
     
     <div class="settings-panel">
         <div class="tab-nav">
@@ -30,10 +24,10 @@
 
         <!-- Overview -->
         <div id="overview-tab" class="tab-content" style="display: none;">
-            <p><strong>Nama Lengkap:</strong> <span id="overview-nama">{{ Auth::user()->name }}</span></p>
-            <p><strong>Alamat Instansi:</strong> <span id="overview-alamat">{{ Auth::user()->alamat }}</span></p>
-            <p><strong>Telepon:</strong> <span id="overview-telepon">{{ Auth::user()->nomor_hp }}</span></p>
-            <p><strong>Email:</strong> <span id="overview-email">{{ Auth::user()->email }}</span></p>
+            <p><strong>Nama Lengkap:</strong> <span id="overview-nama">St. Nur Aisyah. S</span></p>
+            <p><strong>Alamat:</strong> <span id="overview-alamat">Alamat pengguna</span></p>
+            <p><strong>Telepon:</strong> <span id="overview-telepon">Nomor telepon</span></p>
+            <p><strong>Email:</strong> <span id="overview-email">Email pengguna</span></p>
         </div>
 
         <!-- Edit Profile -->
@@ -58,12 +52,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="alamat">Alamat Instansi</label>
+                    <label for="alamat">Alamat</label>
                     <input type="text" id="alamat" name="alamat">
                 </div>
                 
                 <div class="form-group">
-                    <label for="telepon">Nomor Telepon</label>
+                    <label for="telepon">Telepon</label>
                     <input type="tel" id="telepon" name="telepon">
                 </div>
                 

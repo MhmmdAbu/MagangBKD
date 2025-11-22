@@ -98,10 +98,11 @@
                         <option value="" disabled selected>Role</option> 
                         <option value="Admin">Admin</option> 
                         <option value="PPAT">PPAT</option> 
-                        <option value="KABAN">KABAN</option> 
-                        <option value="KABID">KABID</option> 
+                        <option value="kepala_uptd">Kepala UPTD</option> 
+                        <option value="kepala_badan">Kepala Badan</option> 
                         <option value="KTU">KTU</option> 
-                        <option value="Survey">Survey</option> 
+                        <option value="koordinator_survey">Koordinator Survey</option> 
+                        <option value="anggota_survey">Survey</option> 
                         <option value="Administrator">Administrator</option> 
                     </select> </div> <div class="row"> 
                         <div class="col-md-6 mb-3"> 
@@ -166,13 +167,15 @@
             <div class="col-md-6 mb-3">
               <label for="editRole" class="form-label fw-semibold">Role</label>
               <select class="form-select" id="editRole">
-                <option value="Admin">Admin</option>
-                <option value="PPAT">PPAT</option>
-                <option value="KABAN">KABAN</option>
-                <option value="KABID">KABID</option>
-                <option value="KTU">KTU</option>
-                <option value="Survey">Survey</option>
-                <option value="Administrator">Administrator</option>
+                <option value="" disabled selected>Role</option> 
+                <option value="Admin">Admin</option> 
+                <option value="PPAT">PPAT</option> 
+                <option value="kepala_uptd">Kepala UPTD</option> 
+                <option value="kepala_badan">Kepala Badan</option> 
+                <option value="KTU">KTU</option> 
+                <option value="koordinator_survey">Koordinator Survey</option> 
+                <option value="anggota_survey">Survey</option> 
+                <option value="Administrator">Administrator</option> 
               </select>
             </div>
             <div class="col-md-6 mb-3">

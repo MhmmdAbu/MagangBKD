@@ -7,6 +7,8 @@ use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\KtuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PPATController;
+use App\Http\Controllers\KepalaUPTDController;
+use App\Http\Controllers\kordinatorController;
 
 // Halaman umum
 Route::get('/', [LandingController::class, 'index'])->name('LandingPage');
@@ -23,20 +25,31 @@ Route::GET('/register', function () {
 
 
 // Halaman Administrator
-// Route::middleware(['auth', 'role:administrator'])->prefix('administrator')->group(function(){    
-    Route::GET('/administrator', [AdministratorController::class, 'index']);
-    Route::GET('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('berkas_terdaftar');
-    Route::GET('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('arsip_berkas');
-    Route::GET('/administrator/requirement', [AdministratorController::class, 'requirement'])->name('panduan_administrator');
-// });
+Route::middleware(['auth', 'role:administrator'])->prefix('administrator')->group(function(){    
+    Route::GET('/administrator', [AdministratorController::class, 'index'])->name('administrator.dashboard');
+    Route::GET('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('administrator.berkas_terdaftar');
+    Route::GET('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('administrator.arsip_berkas');
+    Route::GET('/administrator/panduan', [AdministratorController::class, 'panduan'])->name('administrator.panduan');
+    Route::GET('/administrator/profile', [AdministratorController::class, 'profile'])->name('administrator.profile');
+});
+
+// Halaman KA UPTD
+Route::middleware(['auth', 'role:kepala_uptd'])->prefix('kepala_uptd')->group(function(){    
+    Route::GET('/kepala_uptd', [KepalaUPTDController::class, 'index'])->name('kepala_uptd.dashboard');
+    Route::GET('/kepala_uptd/berkas', [KepalaUPTDController::class, 'daftarBerkas'])->name('kepala_uptd.berkas_terdaftar');
+    Route::GET('/kepala_uptd/arsip', [KepalaUPTDController::class, 'arsipBerkas'])->name('kepala_uptd.arsip_berkas');
+    Route::GET('/kepala_uptd/panduan', [KepalaUPTDController::class, 'panduan'])->name('kepala_uptd.panduan');
+    Route::GET('/kepala_uptd/profile', [KepalaUPTDController::class, 'profile'])->name('kepala_uptd.profile');
+});
 
 // Halaman KTU
-// Route::middleware(['auth', 'role:ktu'])->prefix('ktu')->group(function() {
-    Route::GET('/ktu', [KtuController::class, 'index']);
-    Route::GET('/ktu/berkas', [KtuController::class, 'daftarBerkas']);
-    Route::GET('/ktu/arsip', [KtuController::class, 'arsipBerkas']);
-    Route::GET('/ktu/requirement', [KtuController::class, 'requirement']);
-// });
+Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
+    Route::GET('/ktu', [KtuController::class, 'index'])->name('ktu.dashboard');
+    Route::GET('/ktu/berkas', [KtuController::class, 'daftarBerkas'])->name('ktu.berkas');
+    Route::GET('/ktu/arsip', [KtuController::class, 'arsipBerkas'])->name('ktu.arsip');
+    Route::GET('/ktu/panduan', [KtuController::class, 'panduan'])->name('ktu.panduan');
+    Route::GET('/ktu/profile', [KtuController::class, 'profile'])->name('ktu.profile');
+});
 
 // Halaman PPAT
 // Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
@@ -44,25 +57,21 @@ Route::GET('/register', function () {
 // });
 
 // Halaman Admin
-Route::get('/dashAdministrator', function () {
-    return view('Administrator.Dashboard');
-})->name('dashAdministrator');
+Route::GET('/Admin/berkas', [KtuController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
+Route::GET('/Admin/profile', [KtuController::class, 'profile'])->name('admin.profile');
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
-    // Kelola Panduan
+    Route::GET('/Admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');
-
-    // Kelola Pengguna
     Route::GET('/kelola-pengguna', [AdminController::class, 'kelola_pengguna'])->name('kelola_pengguna');
     Route::PUT('/kelola-pengguna/update/{id}', [AdminController::class, 'update'])->name('admin.user.update');
     Route::DELETE('/kelola-pengguna/delete/{id}', [AdminController::class, 'destroy'])->name('admin.user.delete');
 });
 
-Route::GET('/profile', function () {
-    return view('KTU.profile');
-})->name('profile');
-Route::get('/kelola_pengguna', function () {
-    return view('Admin.kelola_pengguna');
-})->name('kelola_pengguna');
-Route::get('/kelolaS&K', function () {
-    return view('Admin.kelola_panduan&syarat');
-})->name('kelolaS&K');
+// Halaman Kordinator survey
+Route::middleware(['auth', 'role:koordinator_survey'])->prefix('koordinator_survey')->group(function(){    
+    Route::GET('/kordinator', [kordinatorController::class, 'index'])->name('kordinator.dashboard');
+    Route::GET('/kordinator/berkas', [kordinatorController::class, 'daftarBerkas'])->name('kordinator.berkas');
+    Route::GET('/kordinator/survey', [kordinatorController::class, 'surveyBerkas'])->name('kordinator.survey');
+    Route::GET('/kordinator/panduan', [kordinatorController::class, 'panduan'])->name('kordinator.panduan');
+    Route::GET('/kordinator/profile', [kordinatorController::class, 'profile'])->name('kordinator.profile');
+});

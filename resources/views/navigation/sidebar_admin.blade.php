@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 <div class="sidebar">
     <div class="logo-section">
         LOGO
@@ -22,44 +21,36 @@
             </li> -->
         @endif
         <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="fas fa-th-large"></i>
-                Dashboard
+            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::currentRouteNamed('admin.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-th-large"></i> Dashboard
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('berkas_terdaftar') ? 'active' : '' }}">
-                <i class="fas fa-folder"></i>
-                Berkas
+            <a href="{{ route('admin.berkas_terdaftar') }}" class="nav-link {{ Route::currentRouteNamed('admin.berkas_terdaftar') ? 'active' : '' }}">
+                <i class="fas fa-folder"></i> Kelola Berkas
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('kelolaS&K') }}" class="nav-link {{ Route::currentRouteNamed('kelolaS&K') ? 'active' : '' }}">
-                <i class="fas fa-file-alt"></i>
-                Panduan dan Syarat
+            <a href="{{ route('kelola_panduan') }}" class="nav-link {{ Route::currentRouteNamed('kelola_panduan') ? 'active' : '' }}">
+                <i class="fas fa-file-alt"></i> Panduan & Syarat
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('kelola_pengguna') }}" class="nav-link {{ Route::currentRouteNamed('kelola_pengguna') ? 'active' : '' }}">
-                <i class="fas fa-archive"></i>
-                Kelola Pengguna
+                <i class="fas fa-archive"></i> Kelola Pengguna
             </a>
         </li>
     </ul>
+
     <div class="user-profile-section">
         <div class="nav-item mb-2">
-            <a href="{{ route('profile') }}" class="nav-link {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
-                <span class="profile-icon">
-                    <i class="fas fa-user"></i>
-                </span>
-                Aisyah
+            <a href="{{ route('admin.profile') }}" class="nav-link {{ Route::currentRouteNamed('admin.profile') ? 'active' : '' }}">
+                <span class="profile-icon"><i class="fas fa-user"></i></span> Aisyah
             </a>
         </div>
         <div class="nav-item">
-            <a href="{{ route('login') }}" class="nav-link {{ Route::currentRouteNamed('login') ? 'active' : '' }}">
-                <span class="profile-icon">
-                <i class="fas fa-sign-out-alt  "></i>
-                  Keluar
+            <a href="{{ route('login') }}" class="nav-link">
+                <span class="profile-icon"><i class="fas fa-sign-out-alt"></i></span> Keluar
             </a>
         </div>
     </div>

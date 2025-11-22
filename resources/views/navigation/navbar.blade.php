@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         

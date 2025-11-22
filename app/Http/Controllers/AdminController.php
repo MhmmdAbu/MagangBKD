@@ -16,6 +16,22 @@ class AdminController extends Controller
         return view('Admin.kelola_pengguna', compact('users'));
     }
 
+    public function daftarBerkas() {
+        return view('Admin.berkas');
+    }
+
+    public function index() {
+        return view('Admin.dashboard');
+    }
+
+    public function kelola_panduan() {
+        return view('Admin.kelola_panduan&syarat');
+    }
+
+    public function profile() {
+        return view('Admin.profile');
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
