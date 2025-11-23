@@ -1,4 +1,4 @@
-@extends('Layout.Administrator')
+@extends('Layout.AnggotaSurvey')
 
 @section('title','Berkas Terdaftar')
 
@@ -104,8 +104,8 @@
                     <p><strong>Status Surat:</strong> <span id="modal-status"></span></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-Tdkvalid" id="btnTidakValid" data-bs-dismiss="modal">Tidak Valid</button>
                     <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
+                    <button type="button" class="btn btn-Tdkvalid" id="btnTidakValid" data-bs-dismiss="modal">Tidak Valid</button>
                 </div>
             </div>
         </div>

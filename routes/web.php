@@ -25,7 +25,7 @@ Route::GET('/register', function () {
 
 
 // Halaman Administrator
-Route::middleware(['auth', 'role:administrator'])->prefix('administrator')->group(function(){    
+Route::middleware(['auth', 'role:Administrator'])->prefix('Administrator')->group(function(){    
     Route::GET('/administrator', [AdministratorController::class, 'index'])->name('administrator.dashboard');
     Route::GET('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('administrator.berkas_terdaftar');
     Route::GET('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('administrator.arsip_berkas');
@@ -53,12 +53,13 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 
 // Halaman PPAT
 // Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
-    Route::GET('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
+    Route::match(['get', 'post'], '/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
+
 // });
 
 // Halaman Admin
-Route::GET('/Admin/berkas', [KtuController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
-Route::GET('/Admin/profile', [KtuController::class, 'profile'])->name('admin.profile');
+Route::GET('/Admin/berkas', [AdminController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
+Route::GET('/Admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
     Route::GET('/Admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');

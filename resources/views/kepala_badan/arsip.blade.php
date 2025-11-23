@@ -1,8 +1,6 @@
-@extends('Layout.Administrator')
+@extends('Layout.KAuptd')
 
 @section('title','Berkas Terdaftar')
-
-<link rel="stylesheet" href="{{ asset('css/pengajuan.css') }}">
 
 @section('content')
 <div class="container-fluid">
@@ -44,32 +42,14 @@
                                     <td>001/A/SURAT/X/2025</td>
                                     <td>22 Oktober 2025</td>
                                     <td>St. Nur Aisyah. S</td>
-                                    <td class="aksi">
-                                        <button 
-                                            class="btn btn-warning btn-sm btn-detail"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetail"
-                                            data-nomor="001/A/SURAT/X/2025"
-                                            data-tanggal="22 Oktober 2025"
-                                            data-nama="St. Nur Aisyah. S"
-                                        >Lihat</button>
-                                    </td>
+                                    <td class="aksi"><a href="#" class="btn btn-warning btn-sm">Lihat</a></td>
                                 </tr>
                                 <tr>
                                     <td>2.</td>
                                     <td>002/A/SURAT/X/2025</td>
                                     <td>22 Oktober 2025</td>
                                     <td>Muh. Abubakar</td>
-                                    <td class="aksi">
-                                        <button 
-                                            class="btn btn-warning btn-sm btn-detail"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetail"
-                                            data-nomor="002/A/SURAT/X/2025"
-                                            data-tanggal="22 Oktober 2025"
-                                            data-nama="Muh. Abubakar"
-                                        >Lihat</button>
-                                    </td>
+                                    <td class="aksi"><a href="#" class="btn btn-warning btn-sm">Lihat</a></td>
                                 </tr>
                                 <tr><td colspan="5">&nbsp;</td></tr>
                                 <tr><td colspan="5">&nbsp;</td></tr>
@@ -83,36 +63,4 @@
         </div>
     </div>
 </div>
-<!-- Modal Detail -->
-<div class="modal fade" id="modalDetail" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Detail Berkas</h5>
-      </div>
-      <div class="modal-body">
-        <p><strong>Nomor Surat:</strong> <span id="detailNomor"></span></p>
-        <p><strong>Tanggal Dikirim:</strong> <span id="detailTanggal"></span></p>
-        <p><strong>Nama Wajib Pajak:</strong> <span id="detailNama"></span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".btn-detail");
-
-    buttons.forEach(btn => {
-        btn.addEventListener("click", function () {
-            document.getElementById("detailNomor").textContent = this.getAttribute("data-nomor");
-            document.getElementById("detailTanggal").textContent = this.getAttribute("data-tanggal");
-            document.getElementById("detailNama").textContent = this.getAttribute("data-nama");
-        });
-    });
-});
-</script>
-
 @endsection
