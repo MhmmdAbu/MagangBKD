@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function kelola_panduan(){
-        return view();
+        return view('Admin.kelola_panduan&syarat');
     }
     
     public function kelola_pengguna() {
@@ -22,10 +22,6 @@ class AdminController extends Controller
 
     public function index() {
         return view('Admin.dashboard');
-    }
-
-    public function kelola_panduan() {
-        return view('Admin.kelola_panduan&syarat');
     }
 
     public function profile() {
