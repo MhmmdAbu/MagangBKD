@@ -52,20 +52,20 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 });
 
 // Halaman PPAT
-// Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
-    Route::match(['get', 'post'], '/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
-
-// });
+Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
+    Route::GET('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
+    Route::POST('/pengajuan-proses', [PPATController::class, 'store'])->name('proses.pengajuan');
+});
 
 // Halaman Admin
-Route::GET('/Admin/berkas', [AdminController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
-Route::GET('/Admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
     Route::GET('/Admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/berkas', [AdminController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
     Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');
     Route::GET('/kelola-pengguna', [AdminController::class, 'kelola_pengguna'])->name('kelola_pengguna');
     Route::PUT('/kelola-pengguna/update/{id}', [AdminController::class, 'update'])->name('admin.user.update');
     Route::DELETE('/kelola-pengguna/delete/{id}', [AdminController::class, 'destroy'])->name('admin.user.delete');
+    Route::GET('/profile', [AdminController::class, 'profile'])->name('admin.profile');
 });
 
 // Halaman Kordinator survey
