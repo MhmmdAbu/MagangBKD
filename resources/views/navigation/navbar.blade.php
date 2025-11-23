@@ -16,16 +16,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteNamed('LandingPage') ? 'active' : '' }}" href="{{ route('LandingPage') }}">Home</a>
+                    <a class="nav-link {{ request()->routeIs('LandingPage') ? 'active' : '' }}" href="{{ route('LandingPage') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteNamed('requirement') ? 'active' : '' }}" href="{{ route('requirement') }}">Panduan & Persyaratan</a>
+                    <a class="nav-link {{ request()->routeIs('requirement') ? 'active' : '' }}" href="{{ route('requirement') }}">Panduan & Persyaratan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteNamed('pengajuan') ? 'active' : '' }}" href="{{ route('pengajuan') }}">Pengajuan</a>
+                    <a class="nav-link {{ request()->routeIs('pengajuan') ? 'active' : '' }}" href="{{ route('pengajuan') }}">Pengajuan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::currentRouteNamed('kontak') ? 'active' : '' }}" href="{{ route('kontak') }}">Kontak</a>
+                    <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}" href="{{ route('kontak') }}">Kontak</a>
                 </li>
             </ul>
             <a href="{{ route('login') }}" class="btn-login ms-3">Login</a>
