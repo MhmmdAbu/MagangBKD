@@ -27,53 +27,53 @@
         </div>
         <!-- Form  -->
         <div class="form-container" id="form-ajukan">
-            <form action="" method="POST" enctype="multipart/form-data">
-           
+            <form action="{{ route('pengajuan') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <!-- Data Pemohon Wajib Pajak -->
                 <h3 class="text-start mb-4">Data Pemohon (Wajib Pajak)</h3><hr>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nama_wajib_pajak" class="form-label">Nama Wajib Pajak:</label>
-                        <input type="text" class="form-control" id="nama_wajib_pajak" placeholder="Masukkan nama lengkap">
+                        <input type="text" class="form-control" id="nama_wajib_pajak" name="nama_wajib_pajak">
                     </div>
                     <div class="col-md-6">
                         <label for="nik" class="form-label">NIK:</label>
-                        <input type="text" class="form-control" id="nik" placeholder="Masukkan NIK">
+                        <input type="text" class="form-control" id="nik" name="nik">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="kelurahan_desa_wp" class="form-label">Kelurahan/Desa:</label>
-                        <input type="text" class="form-control" id="kelurahan_desa_wp" placeholder="Masukkan Kelurahan/Desa">
+                        <input type="text" class="form-control" id="kelurahan_desa_wp" name="kelurahan_desa_wp">
                     </div>
                     <div class="col-md-6">
                         <label for="rt_rw_wp" class="form-label">RT/RW:</label>
-                        <input type="text" class="form-control" id="rt_rw_wp" placeholder="Masukkan RT/RW">
+                        <input type="text" class="form-control" id="rt_rw_wp" name="rt_rw_wp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="kecamatan_wp" class="form-label">Kecamatan:</label>
-                        <input type="text" class="form-control" id="kecamatan_wp" placeholder="Masukkan Kecamatan">
+                        <input type="text" class="form-control" id="kecamatan_wp" name="kecamatan_wp">
                     </div>
                     <div class="col-md-6">
                         <label for="kabupaten_kota_wp" class="form-label">Kabupaten Kota:</label>
-                        <input type="text" class="form-control" id="kabupaten_kota_wp" placeholder="Masukkan Kabupaten Kota">
+                        <input type="text" class="form-control" id="kabupaten_kota_wp" name="kabupaten_kota_wp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="kode_pos" class="form-label">Kode Pos:</label>
-                        <input type="text" class="form-control" id="kode_pos" placeholder="Masukkan Kode Pos">
+                        <input type="text" class="form-control" id="kode_pos" name="kode_pos">
                     </div>
                     <div class="col-md-6">
                         <label for="nomor_tlp" class="form-label">Nomor Tlp/Wa Wajib Pajak:</label>
-                        <input type="text" class="form-control" id="nomor_tlp" placeholder="Masukkan Nomor Telepon/WA">
+                        <input type="text" class="form-control" id="nomor_tlp" name="nomor_tlp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="alamat_wp" class="form-label">Alamat Wajib Pajak:</label>
-                    <input type="text" class="form-control" id="alamat" placeholder="Masukkan Alamat">
+                    <input type="text" class="form-control" id="alamat" name="alamat">
                 </div>
 
                 <!-- Data Subjek PBB -->

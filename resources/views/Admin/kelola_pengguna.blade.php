@@ -104,7 +104,79 @@
                         <option value="koordinator_survey">Koordinator Survey</option> 
                         <option value="anggota_survey">Survey</option> 
                         <option value="Administrator">Administrator</option> 
-                    </select> </div> <div class="row"> 
+                    </select> 
+                </div> 
+                <div class="row"> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="name" class="form-label fw-semibold">Nama Lengkap</label> 
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama lengkap"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="instansi" class="form-label fw-semibold">Nama Instansi</label> 
+                        <input type="text" name="instansi" class="form-control" id="instansi" placeholder="Masukkan nama instansi"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="alamat" class="form-label fw-semibold">Alamat Instansi</label> 
+                        <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan alamat instansi"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="nomor_hp" class="form-label fw-semibold">Nomor Telepon</label> 
+                        <input type="tel" name="nomor_hp" class="form-control" id="telepon" placeholder="08xxxxxxxxxx"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="email" class="form-label fw-semibold">Email</label> 
+                        <input type="email" name="email" class="form-control" id="email" placeholder="contoh@email.com"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="foto" class="form-label fw-semibold">Foto</label> 
+                        <input type="file" name="foto" class="form-control" id="foto" accept="image/*"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="password" class="form-label fw-semibold">Password</label> 
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan password"> 
+                    </div> 
+                    <div class="col-md-6 mb-3"> 
+                        <label for="password_confirmation" class="form-label fw-semibold">Konfirmasi Password</label> 
+                        <input type="password" name="password_confirmation" class="form-control" id="konfirmasi" placeholder="Ulangi password"> 
+                    </div> 
+                </div> 
+            </div> 
+            <div class="modal-footer border-0 justify-content-center pb-4"> 
+                <button type="submit" class="btn btn-light px-5 py-2 border fw-semibold">Simpan</button> 
+                <button type="button" class="btn btn-primary px-5 py-2 fw-semibold" style="background-color:#083458;" data-bs-dismiss="modal">Batal</button> 
+            </div> 
+            </form> 
+        </div> 
+    </div> 
+</div>
+
+<!-- Modal Edit Pengguna -->
+<div class="modal fade" id="modalEditPengguna" tabindex="-1" aria-labelledby="modalEditPenggunaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      <div class="modal-header bg-white border-0">
+        <h5 class="modal-title fw-bold mx-auto" id="modalEditPenggunaLabel">Edit Pengguna</h5>
+      </div>
+
+        <form id="formEditPengguna" method="POST">
+            <div class="modal-body px-5 pb-4">
+                <input type="hidden" id="editIndex">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="editRole" class="form-label fw-semibold">Role</label>
+                        <select class="form-select" id="editRole">
+                            <option value="" disabled selected>Role</option> 
+                            <option value="Admin">Admin</option> 
+                            <option value="PPAT">PPAT</option> 
+                            <option value="kepala_uptd">Kepala UPTD</option> 
+                            <option value="kepala_badan">Kepala Badan</option> 
+                            <option value="KTU">KTU</option> 
+                            <option value="koordinator_survey">Koordinator Survey</option> 
+                            <option value="anggota_survey">Survey</option> 
+                            <option value="Administrator">Administrator</option> 
+                        </select>
+                    </div>
+                    <div class="row"> 
                         <div class="col-md-6 mb-3"> 
                             <label for="name" class="form-label fw-semibold">Nama Lengkap</label> 
                             <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama lengkap"> 
@@ -138,58 +210,13 @@
                             <input type="password" name="password_confirmation" class="form-control" id="konfirmasi" placeholder="Ulangi password"> 
                         </div> 
                     </div> 
-                </div> 
-                <div class="modal-footer border-0 justify-content-center pb-4"> 
-                    <button type="submit" class="btn btn-light px-5 py-2 border fw-semibold">Simpan</button> 
-                    <button type="button" class="btn btn-primary px-5 py-2 fw-semibold" style="background-color:#083458;" data-bs-dismiss="modal">Batal</button> 
-                </div> 
-            </form> 
-        </div> 
-    </div> 
-</div>
-
-<!-- Modal Edit Pengguna -->
-<div class="modal fade" id="modalEditPengguna" tabindex="-1" aria-labelledby="modalEditPenggunaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content border-0 shadow-lg rounded-4">
-      <div class="modal-header bg-white border-0">
-        <h5 class="modal-title fw-bold mx-auto" id="modalEditPenggunaLabel">Edit Pengguna</h5>
-      </div>
-
-      <form id="formEditPengguna" method="POST">
-        <div class="modal-body px-5 pb-4">
-          <input type="hidden" id="editIndex">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="editNama" class="form-label fw-semibold">Nama Lengkap</label>
-              <input type="text" class="form-control" id="editNama">
+                </div>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="editRole" class="form-label fw-semibold">Role</label>
-              <select class="form-select" id="editRole">
-                <option value="" disabled selected>Role</option> 
-                <option value="Admin">Admin</option> 
-                <option value="PPAT">PPAT</option> 
-                <option value="kepala_uptd">Kepala UPTD</option> 
-                <option value="kepala_badan">Kepala Badan</option> 
-                <option value="KTU">KTU</option> 
-                <option value="koordinator_survey">Koordinator Survey</option> 
-                <option value="anggota_survey">Survey</option> 
-                <option value="Administrator">Administrator</option> 
-              </select>
+            <div class="modal-footer border-0 justify-content-center pb-4">
+                <button type="button" class="btn btn-primary px-5 py-2 fw-semibold" style="color:white;" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-light px-5 py-2 border fw-semibold" style="background-color:#083458; color:white;" >Simpan Perubahan</button>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="nomor_hp" class="form-label fw-semibold">Nomor Telepon</label>
-              <input type="tel" name="nomor_hp" class="form-control" id="editTelepon">
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer border-0 justify-content-center pb-4">
-          <button type="submit" class="btn btn-light px-5 py-2 border fw-semibold">Simpan Perubahan</button>
-          <button type="button" class="btn btn-primary px-5 py-2 fw-semibold" style="background-color:#083458;" data-bs-dismiss="modal">Batal</button>
-        </div>
-      </form>
+        </form>
     </div>
   </div>
 </div>
