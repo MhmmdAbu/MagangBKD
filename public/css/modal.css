@@ -6,11 +6,13 @@
     justify-content: center;
 }
 
-.modal-footer .btn-valid{
+.modal-footer .btn-Tdkvalid{
+    color: white;
+    background-color: gray;
     border: 1rem #000;
 }
 
-.modal-footer .btn-Tdkvalid{
+.modal-footer .btn-Valid{
     background-color: #083458;
     color: white;
 }
