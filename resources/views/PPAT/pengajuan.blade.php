@@ -27,7 +27,7 @@
         </div>
         <!-- Form  -->
         <div class="form-container" id="form-ajukan">
-            <form action="{{ route('pengajuan') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('pengajuan.submit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Data Pemohon Wajib Pajak -->
                 <h3 class="text-start mb-4">Data Pemohon (Wajib Pajak)</h3><hr>
@@ -81,36 +81,36 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nama_subjekPBB" class="form-label">Nama Subjek PBB:</label>
-                        <input type="text" class="form-control" id="nama_subjekPBB" placeholder="Masukkan Nama Subjek PBB">
+                        <input type="text" class="form-control" id="nama_subjekPBB" name="nama_subjekPBB">
                     </div>
                     <div class="col-md-6">
                         <label for="nop_PBB" class="form-label">Nomor Objek Pajak (NOP) PBB:</label>
-                        <input type="text" class="form-control" id="nop_PBB" placeholder="Masukkan Objek Pajak PBB">
+                        <input type="text" class="form-control" id="nop_PBB" name="nop_PBB">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="kelurahan_desa_sp" class="form-label">Kelurahan/Desa:</label>
-                        <input type="text" class="form-control" id="kelurahan_desa_sp" placeholder="Masukkan Kelurahan/Desa">
+                        <input type="text" class="form-control" id="kelurahan_desa_sp" name="kelurahan_desa_sp">
                     </div>
                     <div class="col-md-6">
                         <label for="kecamatan_sp" class="form-label">Kecamatan:</label>
-                        <input type="text" class="form-control" id="kecamatan_sp" placeholder="Masukkan Kabupaten Kota">
+                        <input type="text" class="form-control" id="kecamatan_sp" name="kecamatan_sp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="rt_rw_sp" class="form-label">RT/RW:</label>
-                        <input type="text" class="form-control" id="rt_rw_sp" placeholder="Masukkan RT/RW">
+                        <input type="text" class="form-control" id="rt_rw_sp" name="rt_rw_sp">
                     </div>
                     <div class="col-md-6">
                         <label for="kabupaten_kota_sp" class="form-label">Kabupaten Kota:</label>
-                        <input type="text" class="form-control" id="kabupaten_kota_sp" placeholder="Masukkan Kabupaten Kota">
+                        <input type="text" class="form-control" id="kabupaten_kota_sp" name="kabupaten_kota_sp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="letak_tnh" class="form-label">Alamat Wajib Pajak:</label>
-                    <input type="text" class="form-control" id="letak_tnh" placeholder="Masukkan Letak Tanah atau Bangunan">
+                    <input type="text" class="form-control" id="letak_tnh" name="letak_tnh">
                 </div>
                 <h6>Penghitungan NJOP PBB</h6>
                 <div class="row mb-3">
@@ -124,51 +124,51 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="luas_tanah" class="form-label">Luas Tanah:</label>
-                        <input type="text" class="form-control" id="luas_tanah" placeholder="Masukkan Luas Tanah">
+                        <input type="text" class="form-control" id="luas_tanah" name="luas_tanah">
                     </div>
                     <div class="col-md-6">
                         <label for="luas_bangunan" class="form-label">Luas Bangunan:</label>
-                        <input type="text" class="form-control" id="luas_bangunan" placeholder="Masukkan Luas Bangunan">
+                        <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="njop_pbb_tanah" class="form-label">NJOP PBB/m2:</label>
-                        <input type="text" class="form-control" id="njop_pbb_tanah" placeholder="Masukkan NJOP PBB Tanah">
+                        <input type="text" class="form-control" id="njop_pbb_tanah" name="njop_pbb_tanah">
                     </div>
                     <div class="col-md-6">
                         <label for="njop_pbb_bangunan" class="form-label">NJOP PBB/m2:</label>
-                        <input type="text" class="form-control" id="njop_pbb_bangunan" placeholder="Masukkan NJOP PBB Bangunan">
+                        <input type="text" class="form-control" id="njop_pbb_bangunan" name="njop_pbb_bangunan">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="luas*njop_pbb_tanah" class="form-label">Luas x NJOP PBB:</label>
-                        <input type="text" class="form-control" id="luas*njop_pbb_tanah" placeholder="Masukkan Hasil dari Luas x NJOP PBB">
+                        <input type="text" class="form-control" id="luas_njop_pbb_tanah" name="luas_njop_pbb_tanah">
                     </div>
                     <div class="col-md-6">
                         <label for="luas*njop_pbb_bangunan" class="form-label">Luas x NJOP PBB:</label>
-                        <input type="text" class="form-control" id="luas*njop_pbb_bangunan" placeholder="Masukkan Hasil dari Luas x NJOP PBB">
+                        <input type="text" class="form-control" id="luas_njop_pbb_bangunan" name="luas_njop_pbb_bangunan">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="njop_pbb" class="form-label">NJOP PBB/m2:</label>
-                        <input type="text" class="form-control" id="njop_pbb" placeholder="Masukkan Hasil NJOP PBB">
+                        <input type="text" class="form-control" id="njop_pbb" name="njop_pbb">
                     </div>
                     <div class="col-md-6">
                         <label for="harga_transaksi" class="form-label">Harga Transaksi Nilai Pasar</label>
-                        <input type="text" class="form-control" id="harga_transaksi" placeholder="Masukkan Harga Transaksi Nilai Pasar">
+                        <input type="text" class="form-control" id="harga_transaksi" name="harga_transaksi">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="jenis_perolehan_hak" class="form-label">Jenis Perolehan hak atas tanah atau dan bangunan</label>
-                        <input type="text" class="form-control" id="jenis_perolehan_hak" placeholder="">
+                        <input type="text" class="form-control" id="jenis_perolehan_hak" name="jenis_perolehan_hak">
                     </div>
                     <div class="col-md-6">
                         <label for="Nomor Sertifikat" class="form-label">Nomor Sertifikat</label>
-                        <input type="text" class="form-control" id="Nomor Sertifikat" placeholder="Masukkan Nomor Sertifikat">
+                        <input type="text" class="form-control" id="NomorSertifikat" name="NomorSertifikat">
                     </div>
                 </div>
 
@@ -176,27 +176,27 @@
                 <h3 class="text-start mb-4">Penghitungan PBB</h3><hr>
                 <div class="row mb-3">
                     <label for="npop" class="form-label">Nilai Perolehan Objek Pajak (NPOP)</label>
-                    <input type="text" class="form-control" id="npop" placeholder="Masukkan Nilai Perolehan Objek Pajak (NPOP)">
+                    <input type="text" class="form-control" id="npop" name="npop">
                 </div>
                 <div class="row mb-3">
                     <label for="npoptkp" class="form-label">Nilai Perolehan Objek Pajak Tidak Kena Pajak (NPOPTKP)</label>
-                    <input type="text" class="form-control" id="npoptkp" placeholder="Masukkan Nilai Perolehan Objek Pajak Tidak Kena Pajak (NPOPTKP)">
+                    <input type="text" class="form-control" id="npoptkp" name="npoptkp">
                 </div>
                 <div class="row mb-3">
                     <label for="npopkp" class="form-label">Nilai Perolehan Objek Pajak Kena Pajak (NPOPKP)</label>
-                    <input type="text" class="form-control" id="npopkp" placeholder="Masukkan Nilai Perolehan Objek Pajak Kena Pajak (NPOPKP)">
+                    <input type="text" class="form-control" id="npopkp" name="npopkp">
                 </div>
                 <div class="row mb-3">
                     <label for="bphtb_terutang" class="form-label">Bea Perolehan hak atas tanah dan bangunan yang terutang</label>
-                    <input type="text" class="form-control" id="bphtb_terutang" placeholder="Masukkan Nilai Bea Perolehan hak atas tanah dan bangunan yang terutang">
+                    <input type="text" class="form-control" id="bphtb_terutang" name="bphtb_terutang">
                 </div>
                 <div class="row mb-3">
                     <label for="pengenaan15%" class="form-label">Pengenaan 15% karena Wasiat/Hibah Wasiat/Pemberian Hak Pengelolaan</label>
-                    <input type="text" class="form-control" id="pengenaan15%" placeholder="Masukkan Nilai Pengenaan 15% karena Wasiat/Hibah Wasiat/Pemberian Hak Pengelolaan">
+                    <input type="text" class="form-control" id="pengenaan15" name="pengenaan15">
                 </div>
                 <div class="row mb-3">
                     <label for="bphtb_bayar" class="form-label">Bea Perolehan Hak atas Tanah dan Bangunan yang harus dibayar</label>
-                    <input type="text" class="form-control" id="bphtb_bayar" placeholder="Masukkan Nilai Bea Perolehan hak atas tanah dan bangunan yang terutang">
+                    <input type="text" class="form-control" id="bphtb_bayar" name="bphtb_bayar">
                 </div>
                 
                 <!-- Jumlah Setoran -->
@@ -204,11 +204,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="jumlah_setor_angka" class="form-label">Jumlah yang disetor (dengan angka)</label>
-                        <input type="text" class="form-control" id="jumlah_setor_angka" placeholder="">
+                        <input type="text" class="form-control" id="jumlah_setor_angka" name="jumlah_setor_angka">
                     </div>
                     <div class="col-md-6">
                         <label for="jumlah_setor_huruf" class="form-label">Jumlah yang disetor (dengan huruf)</label>
-                        <input type="text" class="form-control" id="jumlah_setor_huruf" placeholder="">
+                        <input type="text" class="form-control" id="jumlah_setor_huruf" name="jumlah_setor_huruf">
                     </div>
                 </div>
 
@@ -370,9 +370,115 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>   
 </section> 
+@if(session('show_modal'))
+<div class="modal fade show" id="modalSSPD" style="display:block;">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview Blanko SSPD BPHTB</h5>
+                <a href="{{ url()->current() }}" class="btn-close"></a>
+            </div>
+            <div class="modal-body">
+                @php $data = session('data'); @endphp
+
+                <h5>Nama Wajib Pajak: <strong>{{ $data['nama_wajib_pajak'] }}</strong></h5>
+                <p>NIK: {{ $data['nik'] }}</p>
+                <p>Alamat: {{ $data['alamat'] }}</p>
+                <hr>
+                <p>Nama Subjek PBB: {{ $data['nama_subjekPBB'] }}</p>
+                <p>NOP: {{ $data['nop_PBB'] }}</p>
+                <p>Letak Tanah/Bangunan: {{ $data['letak_tnh'] }}</p>
+                <!-- Lanjutkan semua data sesuai kebutuhan -->
+            </div>
+            <div class="modal-footer">
+                <form action="{{ route('pdf.pengajuan_bphtb') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="data" value="{{ json_encode($data) }}">
+                    <button type="submit" class="btn btn-success">Download PDF</button>
+                </form>
+                <a href="{{ url()->current() }}" class="btn btn-secondary">Tutup</a>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+<!-- Modal Preview -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Preview File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" style="max-width:100%; display:none;">
+                <iframe id="previewPDF" style="width:100%;height:500px; display:none;" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('js/pengajuan.js') }}"></script>
-</body>
-</html>
+<script>
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function() {
+        const fileName = this.files.length > 0 ? this.files[0].name : 'No File Choosen';
+        const previewUrl = URL.createObjectURL(this.files[0]);
+        const displayId = 'name_' + this.name.replace('file_', '');
+        const displayElement = document.getElementById(displayId);
+
+        if (displayElement) {
+            displayElement.textContent = fileName;
+            displayElement.style.cursor = "pointer";
+
+            // Klik pada nama file untuk preview
+            displayElement.onclick = () => {
+                const ext = this.files[0].type;
+
+                document.getElementById("previewImage").style.display = "none";
+                document.getElementById("previewPDF").style.display = "none";
+
+                // tampilkan preview gambar
+                if (ext.startsWith("image/")) {
+                    document.getElementById("previewImage").src = previewUrl;
+                    document.getElementById("previewImage").style.display = "block";
+                }
+                // tampilkan preview PDF
+                else if (ext === "application/pdf") {
+                    document.getElementById("previewPDF").src = previewUrl;
+                    document.getElementById("previewPDF").style.display = "block";
+                } else {
+                    alert("Preview tidak tersedia selain gambar atau PDF.");
+                    return;
+                }
+
+                new bootstrap.Modal(document.getElementById("previewModal")).show();
+            };
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const tabAjukan = document.getElementById('tab-ajukan');
+    const tabRiwayat = document.getElementById('tab-riwayat');
+    const formAjukan = document.getElementById('form-ajukan');
+    const formRiwayat = document.getElementById('form-riwayat');
+
+    function activateTab(activeTab, activeForm, inactiveTab, inactiveForm) {
+        activeTab.classList.add('active');
+        inactiveTab.classList.remove('active');
+        activeForm.style.display = 'block';
+        inactiveForm.style.display = 'none';
+    }
+
+    tabAjukan.addEventListener('click', () => {
+        activateTab(tabAjukan, formAjukan, tabRiwayat, formRiwayat);
+    });
+
+    tabRiwayat.addEventListener('click', () => {
+        activateTab(tabRiwayat, formRiwayat, tabAjukan, formAjukan);
+    });
+});
+
+</script>

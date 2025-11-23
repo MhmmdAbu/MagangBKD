@@ -53,7 +53,14 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 
 // Halaman PPAT
 // Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
-    Route::match(['get', 'post'], '/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan');
+    Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
+    Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
+    Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
+
+
+
+
+    
 
 // });
 
