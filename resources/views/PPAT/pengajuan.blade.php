@@ -372,33 +372,40 @@
         </div>
     </div>   
 </section> 
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 @if(session('show_modal'))
-<div class="modal fade show" id="modalSSPD" style="display:block;">
+<div class="modal fade show" id="modalSSPD" style="display:block;" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Preview Blanko SSPD BPHTB</h5>
-                <a href="{{ url()->current() }}" class="btn-close"></a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @php $data = session('data'); @endphp
-
-                <h5>Nama Wajib Pajak: <strong>{{ $data['nama_wajib_pajak'] }}</strong></h5>
-                <p>NIK: {{ $data['nik'] }}</p>
-                <p>Alamat: {{ $data['alamat'] }}</p>
-                <hr>
-                <p>Nama Subjek PBB: {{ $data['nama_subjekPBB'] }}</p>
-                <p>NOP: {{ $data['nop_PBB'] }}</p>
-                <p>Letak Tanah/Bangunan: {{ $data['letak_tnh'] }}</p>
-                <!-- Lanjutkan semua data sesuai kebutuhan -->
+                <!-- Embed PDF untuk preview -->
+                <iframe src="{{ route('pdf.preview') }}" width="100%" height="600px" frameborder="0"></iframe>
             </div>
             <div class="modal-footer">
-                <form action="{{ route('pdf.pengajuan_bphtb') }}" method="POST">
+                <form action="{{ route('pdf.pengajuan_bphtb') }}" method="POST" target="_blank">
                     @csrf
-                    <input type="hidden" name="data" value="{{ json_encode($data) }}">
+                    <input type="hidden" name="data" value="{{ json_encode(session('pengajuan_data')) }}">
                     <button type="submit" class="btn btn-success">Download PDF</button>
                 </form>
-                <a href="{{ url()->current() }}" class="btn btn-secondary">Tutup</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kirim</button>
             </div>
         </div>
     </div>
@@ -422,6 +429,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('modalSSPD');
+    const btnClose = modal.querySelector('.btn-close');
+    if (btnClose) {
+        btnClose.addEventListener('click', function() {
+            // Tutup modal secara manual (meskipun data-bs-dismiss sudah ada)
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.hide();
+            // Redirect ke halaman saat ini untuk menghapus session 'show_modal'
+            // Ini akan memuat ulang halaman tanpa modal
+            window.location.href = window.location.href;  // Redirect ke URL saat ini
+        });
+    }
+    // Opsional: Jika tombol "Kirim" di footer juga ingin menutup modal setelah aksi
+    const btnKirim = modal.querySelector('.btn-secondary');  // Asumsi tombol "Kirim" adalah btn-secondary
+    if (btnKirim) {
+        btnKirim.addEventListener('click', function() {
+            // Sama seperti btn-close
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.hide();
+            window.location.href = window.location.href;
+        });
+    }
+});
 document.querySelectorAll('input[type="file"]').forEach(input => {
     input.addEventListener('change', function() {
         const fileName = this.files.length > 0 ? this.files[0].name : 'No File Choosen';
