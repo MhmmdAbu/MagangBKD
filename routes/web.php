@@ -55,15 +55,9 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 // Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
     Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
+    Route::get('/pengajuan/preview-pdf', [PPATController::class, 'previewPDF'])->name('pdf.preview');  // Baru: untuk iframe modal
     Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
-
-
-
-
-    
-
 // });
-
 // Halaman Admin
 Route::GET('/Admin/berkas', [AdminController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
 Route::GET('/Admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
