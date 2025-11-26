@@ -150,6 +150,45 @@
 <br><br>
 <p>Jumlah Setoran (angka): <strong>{{ $data['jumlah_setor_angka'] }}</strong></p>
 <p>Jumlah Setoran (huruf): <strong>{{ $data['jumlah_setor_huruf'] }}</strong></p>
-
+<br><br>
+<h4>Berkas Persyaratan yang Diupload:</h4>
+<table>
+    <tr>
+        <td>Keterangan Ahli Waris</td>
+        <td class="box">{{ basename($data['file_keterangan_waris_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Pernyataan Ahli Waris</td>
+        <td class="box">{{ basename($data['file_pernyataan_waris_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Kuasa Ahli Waris</td>
+        <td class="box">{{ basename($data['file_kuasa_waris_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>KTP dan KK</td>
+        <td class="box">{{ basename($data['file_ktp_kk_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Surat Keterangan Kematian</td>
+        <td class="box">{{ basename($data['file_kematian_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>KIA</td>
+        <td class="box">{{ basename($data['file_kia_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Sertifikat</td>
+        <td class="box">{{ basename($data['file_sertifikat_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>PBB Tahun Terakhir</td>
+        <td class="box">{{ basename($data['file_pbb_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Surat Pernyataan Bermaterai</td>
+        <td class="box">{{ basename($data['file_pernyataan_materai_path'] ?? 'Tidak ada') }}</td>
+    </tr>
+</table>
 </body>
 </html>

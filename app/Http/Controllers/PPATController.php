@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 use App\Models\Pengajuan;
 
 class PPATController extends Controller
@@ -111,12 +112,11 @@ class PPATController extends Controller
     public function downloadPDF(Request $request)
     {
         $data = json_decode($request->data, true);
-        $namaWajibPajak = $data['nama_wajib_pajak'];
-        $namaFile = 'Pengajuan-BPHTB-'. $namaWajibPajak . time() . '.pdf';
-        $filePath = storage_path('app/public/' . $namaFile);
-        $pdf = PDF::loadView('pdf.sspd_bphtb', compact('data'));
-        $pdf->save($filePath);
-    
-        return response()->download($filePath, $namaFile)->deleteFileAfterSend(false);
+        if (!$data) {
+            return back()->withErrors('Data tidak valid.');
+        }
+
+        $pdf = Pdf::loadView('pdf.sspd_bphtb', compact('data'));
+        return $pdf->download('Pengajuan-BPHTB.pdf');
     }
 }

@@ -111,73 +111,162 @@
             </div>
         </div>
     </div>
-    <!-- Modal Detail -->
-    <div class="modal fade" id="modalDetail" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal Baru: Form SSPD-BPHTB -->
+    <div class="modal fade" id="modalFormSSPD" tabindex="-1" aria-labelledby="modalFormSSPDLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Detail Berkas</h5>
+                    <h3 class="modal-title" id="modalFormSSPDLabel">Formulir SSPD-BPHTB</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Nama Wajib Pajak:</strong> <span id="dtNama"></span></p>
-                    <p><strong>Alamat:</strong> <span id="dtAlamat"></span></p>
-                    <p><strong>Status:</strong> <span id="dtStatus"></span></p>
-                    <p><strong>Tanggal:</strong> <span id="dtTanggal"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <form action="{{ route('pengajuan.submit') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="tgl_terima" class="form-label">Tanggal Terima</label>
+                                <input type="text" class="form-control" id="tgl_terima" name="tgl_terima" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nama_wajib_pajak" class="form-label">Nama Wajib Pajak</label>
+                                <input type="text" class="form-control" id="nama_wajib_pajak" name="nama_wajib_pajak" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="nik" class="form-label">NIK</label>
+                                <input type="text" class="form-control" id="nik" name="nik">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nop" class="form-label">NOP</label>
+                                <input type="text" class="form-control" id="nop" name="nop">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="desa_kelurahan" class="form-label">Desa/Kelurahan</label>
+                                <input type="text" class="form-control" id="desa_kelurahan" name="desa_kelurahan">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="kecamatan" class="form-label">Kecamatan</label>
+                                <input type="text" class="form-control" id="kecamatan" name="kecamatan">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ppatk_ppats" class="form-label">PPATK/PPATS</label>
+                                <input type="text" class="form-control" id="ppatk_ppats" name="ppatk_ppats">
+                            </div>
+                        </div>
+                        <h4>Gambaran Umum Tanah/dan Bangunan</h4><hr>
+                        <h5>Jenis Perolehan/Peralihan Hak</h5>
+                        <h5>Tanah</h5>
+                        <div class="row mb-3">
+                            <label for="luas_tanah" class="form-label">Luas Tanah</label>
+                            <input type="text" class="form-control" id="luas_tanah" name="luas_tanah">
+                        </div>
+                        <div class="row mb-3">
+                            <label for="posisiStrategis" class="form-label">Letak/Posisi Strategis Tanah</label>
+                            <input type="textarea" class="form-control" id="posisiStrategis" name="posisiStrategis">
+                        </div>
+                        <h5 class="text-start mb-4">Bangunan</h5><hr>
+                        <div class="row mb-3">
+                            <label for="luas_bangunan" class="form-label">Luas Bangunan</label>
+                            <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan">
+                        </div>
+                        <div class="row mb-3">
+                            <label for="posisiStrategis" class="form-label">Jenis/Tipe Bangunan</label>
+                            <input type="textarea" class="form-control" id="posisiStrategis" name="posisiStrategis">
+                        </div>
+                        <h5 class="text-start mb-4">Tanah</h5><hr>
+                        <div class="row mb-3">
+                            <label for="kecamatan" class="form-label">Kecamatan</label>
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan">
+                        </div>
+                        <h5 class="text-start mb-4">Catatan</h5><hr>
+                        <div class="row mb-3">
+                            <label for="kecamatan" class="form-label">Kecamatan</label>
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan">
+                        </div>
+                        <div class="file-group">
+                            <label for="file_foto_bangunan">Scan Keterangan Ahli Waris Asli/Dilegalisir:</label>
+                            <div class="custom-file-input-group">
+                                <label class="btn-choose-file" for="file_foto_bangunan">Choose File</label>
+                                <input type="file" name="file_foto_bangunan" id="file_foto_bangunan" required onchange="updateFileName(this, 'name_foto_bangunan')">
+                                <span id="name_foto_bangunan" class="file-name-display">No File Choosen</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    var tombolAksi = document.querySelectorAll(".pilih-aksi");
+    document.addEventListener("DOMContentLoaded", function () {
+        var tombolAksi = document.querySelectorAll(".pilih-aksi");
 
-    tombolAksi.forEach(btn => {
-        btn.addEventListener("click", function () {
-            window.activeRow = this.closest("tr");
+        tombolAksi.forEach(btn => {
+            btn.addEventListener("click", function () {
+                window.activeRow = this.closest("tr");
 
-            let status = this.getAttribute("data-status");
-            let nama = this.getAttribute("data-nama");
-            let alamat = window.activeRow.children[2].innerText;
-            let tanggal = this.getAttribute("data-tanggal");
+                let status = this.getAttribute("data-status");
+                let nama = this.getAttribute("data-nama");
+                let alamat = window.activeRow.children[2].innerText;
+                let tanggal = this.getAttribute("data-tanggal");
 
-            if (status === "Belum Ada Surveyor") {
-                document.getElementById("psNama").textContent = nama;
-                document.getElementById("psAlamat").textContent = alamat;
-                new bootstrap.Modal(document.getElementById("modalPilihSurveyor")).show();
-            } 
-            else if (status === "Menunggu Survey") {
-                document.getElementById("dtNama").textContent = nama;
-                document.getElementById("dtAlamat").textContent = alamat;
-                document.getElementById("dtStatus").textContent = status;
-                document.getElementById("dtTanggal").textContent = tanggal;
-                new bootstrap.Modal(document.getElementById("modalDetail")).show();
-            }
+                if (status === "Belum Ada Surveyor") {
+                    document.getElementById("psNama").textContent = nama;
+                    document.getElementById("psAlamat").textContent = alamat;
+                    new bootstrap.Modal(document.getElementById("modalPilihSurveyor")).show();
+                } 
+                else if (status === "Menunggu Survey") {
+                    new bootstrap.Modal(document.getElementById("modalFormSSPD")).show();
+                }
+            });
         });
-    });
 
-    document.getElementById("btnSimpanSurveyor").addEventListener("click", function () {
-        let dropdown = document.getElementById("dropdownSurveyor");
-        let surveyorDipilih = dropdown.value;
-
-        if (!surveyorDipilih || surveyorDipilih === "-- Pilih Surveyor --") {
-            alert("Silakan pilih surveyor dahulu!");
-            return;
+        function updateFileName(input, displayId) {
+            const fileName = input.files.length > 0 ? input.files[0].name : 'No File Choosen';
+            const displayElement = document.getElementById(displayId);
+            if (displayElement) {
+                displayElement.textContent = fileName;
+            }
         }
 
-        let row = window.activeRow;
-        row.children[3].innerText = surveyorDipilih;
-        row.children[4].innerText = "Menunggu Survey";
-        let btn = row.querySelector(".pilih-aksi");
-        btn.setAttribute("data-status", "Menunggu Survey");
+        document.querySelectorAll('#modalFormSSPD input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const displayId = 'name_' + this.name.replace('file_', '');
+                updateFileName(this, displayId);
+            });
+        });
 
-        let modal = bootstrap.Modal.getInstance(document.getElementById("modalPilihSurveyor"));
-        modal.hide();
-        dropdown.value = "-- Pilih Surveyor --";
+        document.getElementById("btnSimpanSurveyor").addEventListener("click", function () {
+            let dropdown = document.getElementById("dropdownSurveyor");
+            let surveyorDipilih = dropdown.value;
+
+            if (!surveyorDipilih || surveyorDipilih === "-- Pilih Surveyor --") {
+                alert("Silakan pilih surveyor dahulu!");
+                return;
+            }
+
+            let row = window.activeRow;
+            row.children[3].innerText = surveyorDipilih;
+            row.children[4].innerText = "Menunggu Survey";
+            let btn = row.querySelector(".pilih-aksi");
+            btn.setAttribute("data-status", "Menunggu Survey");
+
+            let modal = bootstrap.Modal.getInstance(document.getElementById("modalPilihSurveyor"));
+            modal.hide();
+            dropdown.value = "-- Pilih Surveyor --";
+        });
     });
-});
-</script>
+    </script>
 
 @endsection
