@@ -75,10 +75,9 @@ class PPATController extends Controller
         }
 
         $pdf = Pdf::loadView('pdf.sspd_bphtb', compact('data'));
-        return $pdf->stream('SSPD-BPHTB.pdf');  // Stream untuk preview
+        return $pdf->stream('SSPD-BPHTB.pdf');
     }
 
-    // Method untuk download PDF (POST, dari request)
     public function downloadPDF(Request $request)
     {
         $data = json_decode($request->data, true);
