@@ -10,9 +10,7 @@
     
 </head>
 <body>
-
 @include('navigation.navbar')
-
 <section class="hero pengajuan-hero">
     <div class="hero-content">
     </div>
@@ -86,8 +84,14 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="alamat_wp" class="form-label">Alamat Wajib Pajak:</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat">
+                    <div class="row mb-3">
+                        <label for="alamat_wp" class="form-label">Alamat Wajib Pajak:</label>
+                        <input type="text" class="form-control" id="alamat" name="alamat">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="npwp" class="form-label">NPWP:</label>
+                        <input type="text" class="form-control" id="npwp" name="npwp">
+                    </div>
                 </div>
 
                 <!-- Data Subjek PBB -->
@@ -676,8 +680,6 @@ document.addEventListener('DOMContentLoaded', function() {
         activateTab(tabRiwayat, formRiwayat, tabAjukan, formAjukan);
     });
 });
-
-// Script untuk menampilkan file upload berdasarkan layanan yang dipilih
 document.addEventListener('DOMContentLoaded', function() {
     const layananSelect = document.getElementById('layanan');
     const fileSections = document.querySelectorAll('.file-section');
@@ -687,8 +689,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fileSections.forEach(section => {
             section.style.display = 'none';
         });
-
-        // Tampilkan file section yang sesuai
         if (selectedValue) {
             const targetSection = document.getElementById('files-' + selectedValue);
             if (targetSection) {
@@ -696,13 +696,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-
-    // Event listener untuk perubahan dropdown
     layananSelect.addEventListener('change', function() {
         showFileSection(this.value);
     });
-
-    // Inisialisasi: sembunyikan semua jika belum ada yang dipilih
     showFileSection(layananSelect.value);
 });
 </script>

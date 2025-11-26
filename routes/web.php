@@ -76,4 +76,9 @@ Route::middleware(['auth', 'role:koordinator_survey'])->prefix('koordinator_surv
     Route::GET('/kordinator/survey', [kordinatorController::class, 'surveyBerkas'])->name('kordinator.survey');
     Route::GET('/kordinator/panduan', [kordinatorController::class, 'panduan'])->name('kordinator.panduan');
     Route::GET('/kordinator/profile', [kordinatorController::class, 'profile'])->name('kordinator.profile');
+    Route::post('/survey/submit', [KordinatorController::class, 'submit'])->name('kordinator.submit');
+    Route::post('/survey/save-pdf', [KordinatorController::class, 'savePDF'])->name('kordinator.savePdf');
+    Route::get('/survey/download-pdf', [KordinatorController::class, 'downloadPDF'])->name('kordinator.downloadPdf');
+
+
 });
