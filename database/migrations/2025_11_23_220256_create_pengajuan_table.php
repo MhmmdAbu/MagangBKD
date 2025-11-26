@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('pengajuan', function (Blueprint $table) {
             $table->id();
+        
+            $table->unsignedBigInteger('id_ppat');
+            $table->foreign('id_ppat')->references('id')->on('users')->onDelete('cascade');
 
             // Data Pemohon (Wajib Pajak)
             $table->string('nama_wajib_pajak')->nullable();
@@ -23,40 +26,8 @@ return new class extends Migration
             $table->string('kabupaten_kota_wp')->nullable();
             $table->string('kode_pos')->nullable();
             $table->string('nomor_tlp')->nullable();
+            $table->string('npwp')->nullable();
             $table->text('alamat_wp')->nullable();
-
-            // Data Subjek PBB
-            $table->string('nama_subjekPBB')->nullable();
-            $table->string('nop_PBB')->nullable();
-            $table->string('kelurahan_desa_sp')->nullable();
-            $table->string('kecamatan_sp')->nullable();
-            $table->string('rt_rw_sp')->nullable();
-            $table->string('kabupaten_kota_sp')->nullable();
-            $table->string('letak_tnh')->nullable();
-
-            // NJOP PBB
-            $table->string('luas_tanah')->nullable();
-            $table->string('luas_bangunan')->nullable();
-            $table->string('njop_pbb_tanah')->nullable();
-            $table->string('njop_pbb_bangunan')->nullable();
-            $table->string('luas_njop_tanah')->nullable();
-            $table->string('luas_njop_bangunan')->nullable();
-            $table->string('njop_pbb')->nullable();
-            $table->string('harga_transaksi')->nullable();
-            $table->string('jenis_perolehan_hak')->nullable();
-            $table->string('nomor_sertifikat')->nullable();
-
-            // Penghitungan PBB
-            $table->string('npop')->nullable();
-            $table->string('npoptkp')->nullable();
-            $table->string('npopkp')->nullable();
-            $table->string('bphtb_terutang')->nullable();
-            $table->string('pengenaan_15')->nullable();
-            $table->string('bphtb_bayar')->nullable();
-
-            // Jumlah Setoran
-            $table->string('jumlah_setor_angka')->nullable();
-            $table->string('jumlah_setor_huruf')->nullable();
 
             // Upload File
             $table->string('file_keterangan_waris')->nullable();
@@ -68,6 +39,7 @@ return new class extends Migration
             $table->string('file_sertifikat')->nullable();
             $table->string('file_pbb')->nullable();
             $table->string('file_pernyataan_materai')->nullable();
+            $table->string('file_blanko')->nullable();
 
             $table->timestamps();
         });

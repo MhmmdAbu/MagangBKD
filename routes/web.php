@@ -52,10 +52,17 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 });
 
 // Halaman PPAT
-Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
-    Route::GET('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
-    Route::POST('/pengajuan-proses', [PPATController::class, 'store'])->name('proses.pengajuan');
-});
+// Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
+    Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
+    Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
+    Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
+
+
+
+
+    
+
+// });
 
 // Halaman Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
