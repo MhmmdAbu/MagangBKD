@@ -57,16 +57,11 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
     Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
     Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
 
-
-
-
-    
-
 // });
 
 // Halaman Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
-    Route::GET('/Admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::GET('/berkas', [AdminController::class, 'daftarBerkas'])->name('admin.berkas_terdaftar');
     Route::GET('/kelola-panduan', [AdminController::class, 'kelola_panduan'])->name('kelola_panduan');
     Route::GET('/kelola-pengguna', [AdminController::class, 'kelola_pengguna'])->name('kelola_pengguna');

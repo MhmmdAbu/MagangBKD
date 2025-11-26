@@ -10,14 +10,26 @@ use App\Models\Pengajuan;
 class PPATController extends Controller
 {
     public function showPengajuan() {
+        $Pengajuan = Pengajuan::all();
         return view('PPAT.pengajuan');
     }
 
     public function pengajuan(Request $request)
     {
         $request->validate([
-            'nama_wajib_pajak' => 'required',
-            'nik' => 'required',
+            'nama_wajib_pajak'        => 'required',
+            'nik'                     => 'required',
+            'nomor_surat_masuk'       => 'required',
+            'npwp'                    => 'required',
+            'kelurahan_desa_wp'       => 'required',
+            'rt_rw_wp'                => 'required',
+            'kecamatan_wp'            => 'required',
+            'kabupaten_kota_wp'       => 'required',
+            'kode_pos'                => 'required',
+            'nomor_tlp'               => 'required',
+            'alamat_wp'               => 'required',
+            'nomor_pendaftaran'       => 'required',
+            'status'                  => 'required',
 
             'file_keterangan_waris'   => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'file_pernyataan_waris'   => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
@@ -81,19 +93,15 @@ class PPATController extends Controller
         $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
         $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
 
-        // Pastikan foldernya ada
         if (!file_exists(storage_path('app/public/pdf_pengajuan'))) {
             mkdir(storage_path('app/public/pdf_pengajuan'), 0777, true);
         }
 
-        // Simpan pdf ke storage
         $pdf->save($pdfPath);
-
-        // Update database dengan nama file PDF
         $pengajuan->update([
             'file_blanko' => $pdfName
         ]);
-        // Kirim ke modal preview
+
         return back()->with([
             'show_modal' => true,
             'data' => $data
