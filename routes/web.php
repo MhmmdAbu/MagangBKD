@@ -52,12 +52,13 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 });
 
 // Halaman PPAT
-// Route::middleware(['auth', 'role:ppat'])->prefix('ppat')->group(function() {
+Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
     Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
-    Route::get('/pengajuan/preview-pdf', [PPATController::class, 'previewPDF'])->name('pdf.preview');  // Baru: untuk iframe modal
+    Route::get('/pengajuan/preview-pdf', [PPATController::class, 'previewPDF'])->name('pdf.preview'); 
     Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
-// });
+});
+
 // Halaman Admin
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
     Route::GET('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

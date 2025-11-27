@@ -9,11 +9,40 @@ class Pengajuan extends Model
     protected $table = 'pengajuan';
 
     protected $fillable = [
-        'id_ppat','nama_wajib_pajak', 'nik', 'npwp', 'kelurahan_desa_wp', 'rt_rw_wp', 'kecamatan_wp', 'kabupaten_kota_wp',
-        'kode_pos', 'nomor_tlp', 'alamat_wp',
+        // Data dasar
+        'nomor_surat_masuk',
+        'status',
+        'jenisLayanan',
+        'id_ppat',
 
-        'file_keterangan_waris', 'file_pernyataan_waris', 'file_kuasa_waris',
-        'file_ktp_kk', 'file_kematian', 'file_kia', 'file_sertifikat',
-        'file_pbb', 'file_pernyataan_materai', 'file_blanko',
+        // Data Wajib Pajak
+        'nama_wajib_pajak',
+        'nik',
+        'kelurahan_desa_wp',
+        'rt_rw_wp',
+        'kecamatan_wp',
+        'kabupaten_kota_wp',
+        'kode_pos',
+        'nomor_tlp',
+        'npwp',
+        'alamat_wp',
+
+        // Upload File
+        'file_ktp_pihak_pertama',
+        'file_ktp_pihak_kedua',
+        'file_kk_pihak_pertama',
+        'file_kk_pihak_kedua',
+
+        'file_blanko',
+        'file_pernyataan_materai',
+        'file_sertifikat',
+        'file_pbb',
+        'file_kwitansi',
+
+        'file_keterangan_waris',
+        'file_pernyataan_waris',
+        'file_kuasa_waris',
+        'file_kematian',
+        'file_kia',
     ];
 }

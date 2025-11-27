@@ -16,6 +16,7 @@ return new class extends Migration
         
             $table->string('nomor_surat_masuk');
             $table->string('status');
+            $table->string('jenisLayanan');
             $table->unsignedBigInteger('id_ppat');
             $table->foreign('id_ppat')->references('id')->on('users')->onDelete('cascade');
 
@@ -32,16 +33,22 @@ return new class extends Migration
             $table->text('alamat_wp')->nullable();
 
             // Upload File
+
+            $table->string('file_ktp_pihak_pertama')->nullable();
+            $table->string('file_ktp_pihak_kedua')->nullable();
+            $table->string('file_kk_pihak_pertama')->nullable();
+            $table->string('file_kk_pihak_kedua')->nullable();
+            
+            $table->string('file_blanko')->nullable();
+            $table->string('file_pernyataan_materai')->nullable();
+            $table->string('file_sertifikat')->nullable();
+            $table->string('file_pbb')->nullable();
+            $table->string('file_kwitansi')->nullable();
             $table->string('file_keterangan_waris')->nullable();
             $table->string('file_pernyataan_waris')->nullable();
             $table->string('file_kuasa_waris')->nullable();
-            $table->string('file_ktp_kk')->nullable();
             $table->string('file_kematian')->nullable();
             $table->string('file_kia')->nullable();
-            $table->string('file_sertifikat')->nullable();
-            $table->string('file_pbb')->nullable();
-            $table->string('file_pernyataan_materai')->nullable();
-            $table->string('file_blanko')->nullable();
 
             $table->timestamps();
         });
