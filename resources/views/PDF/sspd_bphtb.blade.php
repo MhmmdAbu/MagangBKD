@@ -16,11 +16,11 @@
 <table>
     <tr>
         <td width="40%">Nama Wajib Pajak</td>
-        <td class="box">{{ $data['nama_wajib_pajak'] }}</td>
+        <td class="box">{{ $data['nama_wajib_pajak'] ?? '-' }}</td>
     </tr>
     <tr>
         <td>NIK</td>
-        <td class="box">{{ $data['nik'] }}</td>
+        <td class="box">{{ $data['nik'] ?? '-' }}</td>
     </tr>
     <tr>
         <td>Kelurahan/Desa</td>
@@ -80,7 +80,7 @@
 <table>
     <tr>
         <td>Luas Tanah</td>
-        <td class="box">{{ $data['luas_tanah'] }} m²</td>
+        <td class="box">{{ $data['luas_tanah'] ?? '-' }} m²</td>
     </tr>
     <tr>
         <td>Luas Bangunan</td>

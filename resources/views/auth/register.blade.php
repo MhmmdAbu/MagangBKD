@@ -54,6 +54,7 @@
                 <select class="form-select" id="role" name="role" required>
                     <option value="">-- Pilih Role --</option>
                     <option value="Admin">Admin</option>
+                    <option value="PPAT">PPAT</option>
                 </select>
             </div>
 

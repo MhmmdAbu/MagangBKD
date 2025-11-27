@@ -40,7 +40,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password), 
         ]);
-        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
+        return redirect()->route('kelola_pengguna')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     // Menampilkan halaman login
@@ -66,8 +66,8 @@ class AuthController extends Controller
                     return redirect()->route('administrator.dashboard');
                 case 'Admin':
                     return redirect()->route('admin.dashboard');
-                case 'ppat':
-                    return redirect()->route('/ppat');
+                case 'PPAT':
+                    return redirect()->route('pengajuan');
                 case 'KTU':
                     return redirect()->route('ktu.dashboard');
                 case 'kepala_uptd':
