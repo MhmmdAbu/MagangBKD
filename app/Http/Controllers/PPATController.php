@@ -20,7 +20,6 @@ class PPATController extends Controller
     {
         $request->validate([
             'nomor_surat_masuk' => 'required|string',
-            'status'            => 'required|string',
             'jenisLayanan'      => 'required|string',
 
             // Data Wajib Pajak
@@ -56,7 +55,7 @@ class PPATController extends Controller
         // SIMPAN DATA
         $pengajuan = new Pengajuan();
         $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
-        $pengajuan->status            = $request->status;
+        $pengajuan->status            = "Menunggu Verifikasi";
         $pengajuan->jenisLayanan      = $request->jenisLayanan;
 
         $pengajuan->id_ppat = Auth::id(); // id user login
@@ -79,7 +78,6 @@ class PPATController extends Controller
             'file_ktp_pihak_kedua',
             'file_kk_pihak_pertama',
             'file_kk_pihak_kedua',
-            'file_blanko',
             'file_pernyataan_materai',
             'file_sertifikat',
             'file_pbb',
@@ -100,7 +98,7 @@ class PPATController extends Controller
 
         $pengajuan->save();
 
-        $pdf = PDF::loadView('pdf.sspd_bphtb', ['data' => $pengajuan]);
+        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
 
         $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
         $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
@@ -116,7 +114,7 @@ class PPATController extends Controller
 
         return back()->with([
             'show_modal' => true,
-            'data' => $data
+            'data' => $pengajuan
         ]);
     }
 
