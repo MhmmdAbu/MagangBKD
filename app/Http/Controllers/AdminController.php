@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function kelola_panduan(){
+        return view('Admin.kelola_panduan&syarat');
+    }
+    
     public function kelola_pengguna() {
         $users = User::all();
         return view('Admin.kelola_pengguna', compact('users'));
@@ -18,10 +22,6 @@ class AdminController extends Controller
 
     public function index() {
         return view('Admin.dashboard');
-    }
-
-    public function kelola_panduan() {
-        return view('Admin.kelola_panduan&syarat');
     }
 
     public function profile() {
@@ -50,7 +50,7 @@ class AdminController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Data pengguna berhasil diperbarui.']);
     }
-    
+
     public function destroy($id)
     {
         $user = User::find($id);

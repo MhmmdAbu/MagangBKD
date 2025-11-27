@@ -35,14 +35,19 @@
                     <div class="col-md-6">
                         <label for="layanan" class="form-label">Jenis Layanan:</label>
                         <select class="form-control" id="layanan" name="layanan" required>
-                            <option value="">Pilih Layanan</option>
+                            <option value="" disabled selected>Pilih Layanan</option>
                             <option value="jual_beli">Jual Beli</option>
                             <option value="hibah">Hibah</option>
                             <option value="waris">Waris</option>
-                            <option value="pemberian_hak">Pemberian Hak Pengelolaan</option>
+                            <option value="ptsl">PTSL</option>
                         </select>
                     </div>
+                    <div class="col-md-6">
+                        <label for="nomor_surat_masuk" class="form-label">Nomor Surat Masuk:</label>
+                        <input type="text" class="form-control" id="nomor_surat_masuk" name="nomor_surat_masuk">
+                    </div>
                 </div>
+
                 <!-- Data Pemohon Wajib Pajak -->
                 <h3 class="text-start mb-4">Data Pemohon (Wajib Pajak)</h3><hr>
                 <div class="row mb-3">
@@ -66,7 +71,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-6">  
                         <label for="kecamatan_wp" class="form-label">Kecamatan:</label>
                         <input type="text" class="form-control" id="kecamatan_wp" name="kecamatan_wp">
                     </div>
@@ -86,8 +91,14 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="alamat_wp" class="form-label">Alamat Wajib Pajak:</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat">
+                    <div class="col-md-6">
+                        <label for="alamat_wp" class="form-label">Alamat Wajib Pajak:</label>
+                        <input type="text" class="form-control" id="alamat" name="alamat_wp">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="npwp" class="form-label">Npwp :</label>
+                        <input type="text" class="form-control" id="npwp" name="npwp">
+                    </div>
                 </div>
 
                 <!-- Data Subjek PBB -->
@@ -126,6 +137,7 @@
                     <label for="letak_tnh" class="form-label">Alamat Wajib Pajak:</label>
                     <input type="text" class="form-control" id="letak_tnh" name="letak_tnh">
                 </div>
+
                 <h6>Penghitungan NJOP PBB</h6>
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -231,266 +243,470 @@
 
                 <!-- File untuk Jual Beli -->
                 <div id="files-jual_beli" class="file-section" style="display: none;">
-                    <div class="file-group">
-                        <label for="file_ktp_kk_jual_beli">Scan KTP dan Kartu Keluarga (Penjual dan Pembeli):</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_ktp_kk_jual_beli">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_ktp_kk_jual_beli" id="file_ktp_kk_jual_beli" 
-                                onchange="updateFileName(this, 'name_ktp_kk_jual_beli')">
-                            <span id="name_ktp_kk_jual_beli" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_penjual">Scan KTP Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_penjual">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_penjual" id="file_ktp_penjual" 
+                                        onchange="updateFileName(this, 'name_ktp_penjual')">
+                                    <span id="name_ktp_penjual" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_pembeli">Scan KTP Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_pembeli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_pembeli" id="file_ktp_pembeli" 
+                                        onchange="updateFileName(this, 'name_ktp_pembeli')">
+                                    <span id="name_ktp_pembeli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_sertifikat_jual_beli">Scan Sertifikat Induk/Hasil Pemecahan:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_sertifikat_jual_beli">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_sertifikat_jual_beli" id="file_sertifikat_jual_beli"
-                                onchange="updateFileName(this, 'name_sertifikat_jual_beli')">
-                            <span id="name_sertifikat_jual_beli" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_penjual">Scan Kartu Keluarga Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_penjual">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_penjual" id="file_kk_penjual" 
+                                        onchange="updateFileName(this, 'name_kk_penjual')">
+                                    <span id="name_kk_penjual" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_pembeli">Scan Kartu Keluarga Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_pembeli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_pembeli" id="file_kk_pembeli" 
+                                        onchange="updateFileName(this, 'name_kk_pembeli')">
+                                    <span id="name_kk_pembeli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pbb_jual_beli">Scan PBB Tahun Terakhir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pbb_jual_beli">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pbb_jual_beli" id="file_pbb_jual_beli"
-                                onchange="updateFileName(this, 'name_pbb_jual_beli')">
-                            <span id="name_pbb_jual_beli" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pernyataan_jual_beli">Scan Surat Pernyataan Bermaterai:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pernyataan_jual_beli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pernyataan_jual_beli" id="file_pernyataan_jual_beli"
+                                        onchange="updateFileName(this, 'name_pernyataan_jual_beli')">
+                                    <span id="name_pernyataan_jual_beli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_sertifikat_jual_beli">Scan Sertifikat Induk/Hasil Pemecahan:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_sertifikat_jual_beli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_sertifikat_jual_beli" id="file_sertifikat_jual_beli"
+                                        onchange="updateFileName(this, 'name_sertifikat_jual_beli')">
+                                    <span id="name_sertifikat_jual_beli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_kwitansi_jual_beli">Scan Kwitansi Asli:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_kwitansi_jual_beli">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_kwitansi_jual_beli" id="file_kwitansi_jual_beli"
-                                onchange="updateFileName(this, 'name_kwitansi_jual_beli')">
-                            <span id="name_kwitansi_jual_beli" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pbb_jual_beli">Scan PBB Tahun Terakhir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pbb_jual_beli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pbb_jual_beli" id="file_pbb_jual_beli"
+                                        onchange="updateFileName(this, 'name_pbb_jual_beli')">
+                                    <span id="name_pbb_jual_beli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="file-group">
-                        <label for="file_pernyataan_jual_beli">Scan Surat Pernyataan Bermaterai:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pernyataan_jual_beli">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pernyataan_jual_beli" id="file_pernyataan_jual_beli"
-                                onchange="updateFileName(this, 'name_pernyataan_jual_beli')">
-                            <span id="name_pernyataan_jual_beli" class="file-name-display">No File Choosen</span>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kwitansi_jual_beli">Scan Kwitansi Asli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kwitansi_jual_beli">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kwitansi_jual_beli" id="file_kwitansi_jual_beli"
+                                        onchange="updateFileName(this, 'name_kwitansi_jual_beli')">
+                                    <span id="name_kwitansi_jual_beli" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- File untuk Hibah -->
                 <div id="files-hibah" class="file-section" style="display: none;">
-                    <div class="file-group">
-                        <label for="file_ktp_kk_hibah">Scan KTP dan Kartu Keluarga Pembeli dan Penerima:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_ktp_kk_hibah">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_ktp_kk_hibah" id="file_ktp_kk_hibah" 
-                                onchange="updateFileName(this, 'name_ktp_kk_hibah')">
-                            <span id="name_ktp_kk_hibah" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_penjual_hibah">Scan KTP Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_penjual_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_penjual_hibah" id="file_ktp_penjual_hibah" 
+                                        onchange="updateFileName(this, 'name_ktp_penjual_hibah')">
+                                    <span id="name_ktp_penjual_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_pembeli_hibah">Scan KTP Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_pembeli_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_pembeli_hibah" id="file_ktp_pembeli_hibah" 
+                                        onchange="updateFileName(this, 'name_ktp_pembeli_hibah')">
+                                    <span id="name_ktp_pembeli_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_sertifikat_hibah">Scan Sertifikat:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_sertifikat_hibah">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_sertifikat_hibah" id="file_sertifikat_hibah"
-                                onchange="updateFileName(this, 'name_sertifikat_hibah')">
-                            <span id="name_sertifikat_hibah" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_penjual_hibah">Scan Kartu Keluarga Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_penjual_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_penjual_hibah" id="file_kk_penjual_hibah" 
+                                        onchange="updateFileName(this, 'name_kk_penjual_hibah')">
+                                    <span id="name_kk_penjual_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_pembeli_hibah">Scan Kartu Keluarga Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_pembeli_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_pembeli_hibah" id="file_kk_pembeli_hibah" 
+                                        onchange="updateFileName(this, 'name_kk_pembeli_hibah')">
+                                    <span id="name_kk_pembeli_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pbb_hibah">Scan PBB 2022:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pbb_hibah">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pbb_hibah" id="file_pbb_hibah"
-                                onchange="updateFileName(this, 'name_pbb_hibah')">
-                            <span id="name_pbb_hibah" class="file-name-display">No File Choosen</span>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_sertifikat_hibah">Scan Sertifikat:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_sertifikat_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_sertifikat_hibah" id="file_sertifikat_hibah"
+                                        onchange="updateFileName(this, 'name_sertifikat_hibah')">
+                                    <span id="name_sertifikat_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pbb_hibah">Scan PBB:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pbb_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pbb_hibah" id="file_pbb_hibah"
+                                        onchange="updateFileName(this, 'name_pbb_hibah')">
+                                    <span id="name_pbb_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pernyataan_hibah">Scan Surat Pernyataan Bermaterai:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pernyataan_hibah">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pernyataan_hibah" id="file_pernyataan_hibah"
-                                onchange="updateFileName(this, 'name_pernyataan_hibah')">
-                            <span id="name_pernyataan_hibah" class="file-name-display">No File Choosen</span>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pernyataan_hibah">Scan Surat Pernyataan Bermaterai:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pernyataan_hibah">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pernyataan_hibah" id="file_pernyataan_hibah"
+                                        onchange="updateFileName(this, 'name_pernyataan_hibah')">
+                                    <span id="name_pernyataan_hibah" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
 
                 <!-- File untuk PTSL/PRONA -->
                 <div id="files-ptsl" class="file-section" style="display: none;">
-                    <div class="file-group">
-                        <label for="file_ktp_kk_ptsl">Scan KTP dan Kartu Keluarga Pembeli dan Penerima:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_ktp_kk_ptsl">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_ktp_kk_ptsl" id="file_ktp_kk_ptsl" 
-                                onchange="updateFileName(this, 'name_ktp_kk_ptsl')">
-                            <span id="name_ktp_kk_ptsl" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_penjual_ptsl">Scan KTP Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_penjual_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_penjual_ptsl" id="file_ktp_penjual_ptsl" 
+                                        onchange="updateFileName(this, 'name_ktp_penjual_ptsl')">
+                                    <span id="name_ktp_penjual_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_pembeli_ptsl">Scan KTP Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_pembeli_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_pembeli_ptsl" id="file_ktp_pembeli_ptsl" 
+                                        onchange="updateFileName(this, 'name_ktp_penjual_ptsl')">
+                                    <span id="name_ktp_penjual_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_sertifikat_ptsl">Scan Sertifikat PTSL/PRONA:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_sertifikat_ptsl">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_sertifikat_ptsl" id="file_sertifikat_ptsl"
-                                onchange="updateFileName(this, 'name_sertifikat_ptsl')">
-                            <span id="name_sertifikat_ptsl" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_penjual_ptsl">Scan Kartu Keluarga Penjual:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_penjual_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_penjual_ptsl" id="file_kk_penjual_ptsl" 
+                                        onchange="updateFileName(this, 'name_kk_penjual_ptsl')">
+                                    <span id="name_kk_penjual_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kk_pembeli_ptsl">Scan Kartu Keluarga Pembeli:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kk_pembeli_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kk_pembeli_ptsl" id="file_kk_pembeli_ptsl" 
+                                        onchange="updateFileName(this, 'name_kk_pembeli_ptsl')">
+                                    <span id="name_kk_pembeli_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pbb_ptsl">Scan PBB Tahun Terakhir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pbb_ptsl">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pbb_ptsl" id="file_pbb_ptsl"
-                                onchange="updateFileName(this, 'name_pbb_ptsl')">
-                            <span id="name_pbb_ptsl" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_sertifikat_ptsl">Scan Sertifikat PTSL/PRONA:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_sertifikat_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_sertifikat_ptsl" id="file_sertifikat_ptsl"
+                                        onchange="updateFileName(this, 'name_sertifikat_ptsl')">
+                                    <span id="name_sertifikat_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pbb_ptsl">Scan PBB Tahun Terakhir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pbb_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pbb_ptsl" id="file_pbb_ptsl"
+                                        onchange="updateFileName(this, 'name_pbb_ptsl')">
+                                    <span id="name_pbb_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pernyataan_ptsl">Scan Surat Pernyataan Bermaterai:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pernyataan_ptsl">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pernyataan_ptsl" id="file_pernyataan_ptsl"
-                                onchange="updateFileName(this, 'name_pernyataan_ptsl')">
-                            <span id="name_pernyataan_ptsl" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pernyataan_ptsl">Scan Surat Pernyataan Bermaterai:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pernyataan_ptsl">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pernyataan_ptsl" id="file_pernyataan_ptsl"
+                                        onchange="updateFileName(this, 'name_pernyataan_ptsl')">
+                                    <span id="name_pernyataan_ptsl" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- File untuk Ahli Waris -->
                 <div id="files-waris" class="file-section" style="display: none;">
-                    <div class="file-group">
-                        <label for="file_keterangan_waris">Scan Keterangan Ahli Waris Asli/Dilegalisir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_keterangan_waris">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_keterangan_waris" id="file_keterangan_waris" required 
-                                onchange="updateFileName(this, 'name_keterangan_waris')">
-                            <span id="name_keterangan_waris" class="file-name-display">No File Choosen</span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_keterangan_waris">Scan Keterangan Ahli Waris Asli Telah Dilegalisir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_keterangan_waris">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_keterangan_waris" id="file_keterangan_waris" required 
+                                        onchange="updateFileName(this, 'name_keterangan_waris')">
+                                    <span id="name_keterangan_waris" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pernyataan_waris">Scan Pernyataan Ahli Waris Asli Telah Dilegalisir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pernyataan_waris">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" required
+                                        onchange="updateFileName(this, 'name_pernyataan_waris')">
+                                    <span id="name_pernyataan_waris" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_pernyataan_waris">Scan Pernyataan Ahli Waris Asli/Dilegalisir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pernyataan_waris">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" required
-                                onchange="updateFileName(this, 'name_pernyataan_waris')">
-                            <span id="name_pernyataan_waris" class="file-name-display">No File Choosen</span>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kuasa_waris">Scan Kuasa Ahli Waris Asli Telah Dilegalisir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kuasa_waris">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kuasa_waris" id="file_kuasa_waris"
+                                        onchange="updateFileName(this, 'name_kuasa_waris')">
+                                    <span id="name_kuasa_waris" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pbb">Scan PBB Tahun Terakhir:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pbb">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pbb" id="file_pbb" required
+                                        onchange="updateFileName(this, 'name_pbb')">
+                                    <span id="name_pbb" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_kuasa_waris">Scan Kuasa Ahli Waris Asli/Dilegalisir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_kuasa_waris">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_kuasa_waris" id="file_kuasa_waris"
-                                onchange="updateFileName(this, 'name_kuasa_waris')">
-                            <span id="name_kuasa_waris" class="file-name-display">No File Choosen</span>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kematian">Scan Surat Keterangan Kematian (Jika Telah Meninggal):</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kematian">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kematian" id="file_kematian"
+                                        onchange="updateFileName(this, 'name_kematian')">
+                                    <span id="name_kematian" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_kia">Scan KIA (Jika Dibawah Umur):</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_kia">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_kia" id="file_kia"
+                                        onchange="updateFileName(this, 'name_kia')">
+                                    <span id="name_kia" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_ktp_kk">Scan KTP dan KK (Semua Ahli Waris):</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_ktp_kk">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_ktp_kk" id="file_ktp_kk" required
-                                onchange="updateFileName(this, 'name_ktp_kk')">
-                            <span id="name_ktp_kk" class="file-name-display">No File Choosen</span>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_sertifikat">Scan Sertifikat:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_sertifikat">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_sertifikat" id="file_sertifikat" required
+                                        onchange="updateFileName(this, 'name_sertifikat')">
+                                    <span id="name_sertifikat" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_pernyataan_materai">Scan Surat Pernyataan Bermaterai:</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_pernyataan_materai">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" required
+                                        onchange="updateFileName(this, 'name_pernyataan_materai')">
+                                    <span id="name_pernyataan_materai" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_kematian">Scan Surat Keterangan Kematian (Bagi yang Meninggal):</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_kematian">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_kematian" id="file_kematian"
-                                onchange="updateFileName(this, 'name_kematian')">
-                            <span id="name_kematian" class="file-name-display">No File Choosen</span>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="file-group">
+                                <label for="file_ktp_kk">Scan KTP dan KK (Semua Ahli Waris):</label>
+                                <div class="custom-file-input-group">
+                                    <label class="btn-choose-file" for="file_ktp_kk">
+                                        Choose File
+                                    </label>
+                                    <input type="file" name="file_ktp_kk" id="file_ktp_kk" required
+                                        onchange="updateFileName(this, 'name_ktp_kk')">
+                                    <span id="name_ktp_kk" class="file-name-display">No File Choosen</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="file-group">
-                        <label for="file_kia">Scan KIA (Bagi yang Dibawah Umur):</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_kia">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_kia" id="file_kia"
-                                onchange="updateFileName(this, 'name_kia')">
-                            <span id="name_kia" class="file-name-display">No File Choosen</span>
-                        </div>
-                    </div>
-                    <div class="file-group">
-                        <label for="file_sertifikat">Scan Sertifikat:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_sertifikat">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_sertifikat" id="file_sertifikat" required
-                                onchange="updateFileName(this, 'name_sertifikat')">
-                            <span id="name_sertifikat" class="file-name-display">No File Choosen</span>
-                        </div>
-                    </div>
-                    <div class="file-group">
-                        <label for="file_pbb">Scan PBB Tahun Terakhir:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pbb">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pbb" id="file_pbb" required
-                                onchange="updateFileName(this, 'name_pbb')">
-                            <span id="name_pbb" class="file-name-display">No File Choosen</span>
-                        </div>
-                    </div>
-                    <div class="file-group">
-                        <label for="file_pernyataan_materai">Scan Surat Pernyataan Bermaterai:</label>
-                        <div class="custom-file-input-group">
-                            <label class="btn-choose-file" for="file_pernyataan_materai">
-                                Choose File
-                            </label>
-                            <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" required
-                                onchange="updateFileName(this, 'name_pernyataan_materai')">
-                            <span id="name_pernyataan_materai" class="file-name-display">No File Choosen</span>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">Ajukan Permohonan</button>
                 </div>
             </form>
         </div>
+
         <!-- Riwayat Permohonan -->
         <div class="form-container" id="form-riwayat" style="display: none;">
             <div class="filter-controls">
@@ -542,7 +758,10 @@
             </div>
         </div>
     </div>   
+
+    
 </section> 
+
 @if($errors->any())
     <div class="alert alert-danger">
         <ul>

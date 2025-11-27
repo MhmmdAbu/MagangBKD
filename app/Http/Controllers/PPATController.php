@@ -5,77 +5,119 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Pengajuan;
 
 class PPATController extends Controller
 {
     public function showPengajuan() {
-        return view('PPAT.pengajuan');
+        $pengajuan = Pengajuan::where('id_ppat', Auth::id())->get();
+        return view('PPAT.pengajuan', compact('pengajuan'));
     }
 
     public function pengajuan(Request $request)
     {
-        try {
-            // Validasi input (hanya field wajib; file opsional sesuai form)
-            $request->validate([
-                'nama_wajib_pajak' => 'required',
-                'nik' => 'required',
-                'file_keterangan_waris' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_pernyataan_waris' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_kuasa_waris' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_ktp_kk' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_kematian' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_kia' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_sertifikat' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_pbb' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-                'file_pernyataan_materai' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            ]);
+        $request->validate([
+            'nomor_surat_masuk' => 'required|string',
+            'status'            => 'required|string',
+            'jenisLayanan'      => 'required|string',
 
-            // Upload file dan simpan path (jangan simpan objek UploadedFile)
-            $uploadedFiles = [];
-            $fileFields = [
-                'file_keterangan_waris', 'file_pernyataan_waris', 'file_kuasa_waris',
-                'file_ktp_kk', 'file_kematian', 'file_kia', 'file_sertifikat',
-                'file_pbb', 'file_pernyataan_materai'
-            ];
-            foreach ($fileFields as $field) {
-                if ($request->hasFile($field)) {
-                    $path = $request->file($field)->store('berkas_pengajuan', 'public');
-                    $uploadedFiles[$field . '_path'] = $path;  // Simpan path
-                }
+            // Data Wajib Pajak
+            'nama_wajib_pajak'  => 'required|string',
+            'nik'               => 'required|string',
+            'kelurahan_desa_wp' => 'nullable|string',
+            'rt_rw_wp'          => 'nullable|string',
+            'kecamatan_wp'      => 'nullable|string',
+            'kabupaten_kota_wp' => 'nullable|string',
+            'kode_pos'          => 'nullable|string',
+            'nomor_tlp'         => 'nullable|string',
+            'npwp'              => 'nullable|string',
+            'alamat_wp'         => 'nullable|string',
+
+            // Semua file hanya boleh PDF, JPG, JPEG, PNG max 5MB
+            'file_ktp_pihak_pertama'   => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_ktp_pihak_kedua'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kk_pihak_pertama'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kk_pihak_kedua'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+
+            'file_pernyataan_materai'  => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_sertifikat'          => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_pbb'                 => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kwitansi'            => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_keterangan_waris'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_pernyataan_waris'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kuasa_waris'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kematian'            => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_kia'                 => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+
+        // SIMPAN DATA
+        $pengajuan = new Pengajuan();
+        $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
+        $pengajuan->status            = $request->status;
+        $pengajuan->jenisLayanan      = $request->jenisLayanan;
+
+        $pengajuan->id_ppat = Auth::id(); // id user login
+
+        // DATA WAJIB PAJAK
+        $pengajuan->nama_wajib_pajak  = $request->nama_wajib_pajak;
+        $pengajuan->nik               = $request->nik;
+        $pengajuan->kelurahan_desa_wp = $request->kelurahan_desa_wp;
+        $pengajuan->rt_rw_wp          = $request->rt_rw_wp;
+        $pengajuan->kecamatan_wp      = $request->kecamatan_wp;
+        $pengajuan->kabupaten_kota_wp = $request->kabupaten_kota_wp;
+        $pengajuan->kode_pos          = $request->kode_pos;
+        $pengajuan->nomor_tlp         = $request->nomor_tlp;
+        $pengajuan->npwp              = $request->npwp;
+        $pengajuan->alamat_wp         = $request->alamat_wp;
+
+        // ===== UPLOAD FILE GENERAL HANDLER =====
+        $fileFields = [
+            'file_ktp_pihak_pertama',
+            'file_ktp_pihak_kedua',
+            'file_kk_pihak_pertama',
+            'file_kk_pihak_kedua',
+            'file_blanko',
+            'file_pernyataan_materai',
+            'file_sertifikat',
+            'file_pbb',
+            'file_kwitansi',
+            'file_keterangan_waris',
+            'file_pernyataan_waris',
+            'file_kuasa_waris',
+            'file_kematian',
+            'file_kia'
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $path = $request->file($field)->store('uploads/pengajuan', 'public');
+                $pengajuan->$field = $path;
             }
-
-            // Ambil data input non-file
-            $inputData = $request->except(array_merge(['_token'], $fileFields));
-
-            // Gabungkan data
-            $data = array_merge($inputData, $uploadedFiles);
-
-            // Simpan ke session
-            session(['pengajuan_data' => $data]);
-
-            // Redirect back dengan session untuk modal dan pesan sukses
-            return back()->with([
-                'show_modal' => true,
-                'success' => 'Pengajuan berhasil! Silakan preview PDF.'
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Error in pengajuan: ' . $e->getMessage());
-            return back()->withErrors('Terjadi kesalahan: ' . $e->getMessage())->withInput();
-        }
-    }
-
-    // Method untuk preview PDF (GET, dari session)
-    public function previewPDF()
-    {
-        $data = session('pengajuan_data');
-        if (!$data) {
-            return back()->withErrors('Data PDF tidak ditemukan. Harap isi formulir terlebih dahulu.');
         }
 
-        $pdf = Pdf::loadView('pdf.sspd_bphtb', compact('data'));
-        return $pdf->stream('SSPD-BPHTB.pdf');
+        $pengajuan->save();
+
+        $pdf = PDF::loadView('pdf.sspd_bphtb', ['data' => $pengajuan]);
+
+        $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
+        $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
+
+        if (!file_exists(storage_path('app/public/pdf_pengajuan'))) {
+            mkdir(storage_path('app/public/pdf_pengajuan'), 0777, true);
+        }
+
+        $pdf->save($pdfPath);
+        $pengajuan->update([
+            'file_blanko' => $pdfName
+        ]);
+
+        return back()->with([
+            'show_modal' => true,
+            'data' => $data
+        ]);
     }
 
     public function downloadPDF(Request $request)
