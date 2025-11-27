@@ -33,8 +33,8 @@
                 <h3 class="text-start mb-4">Pilih Layanan</h3><hr>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="layanan" class="form-label">Jenis Layanan:</label>
-                        <select class="form-control" id="layanan" name="layanan" required>
+                        <label for="jenisLayanan" class="form-label">Jenis Layanan:</label>
+                        <select class="form-control" id="jenisLayanan" name="jenisLayanan" required>
                             <option value="" disabled selected>Pilih Layanan</option>
                             <option value="jual_beli">Jual Beli</option>
                             <option value="hibah">Hibah</option>
@@ -576,7 +576,7 @@
                                     <label class="btn-choose-file" for="file_keterangan_waris">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_keterangan_waris" id="file_keterangan_waris" required 
+                                    <input type="file" name="file_keterangan_waris" id="file_keterangan_waris"  
                                         onchange="updateFileName(this, 'name_keterangan_waris')">
                                     <span id="name_keterangan_waris" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -589,7 +589,7 @@
                                     <label class="btn-choose-file" for="file_pernyataan_waris">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" required
+                                    <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" 
                                         onchange="updateFileName(this, 'name_pernyataan_waris')">
                                     <span id="name_pernyataan_waris" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -618,7 +618,7 @@
                                     <label class="btn-choose-file" for="file_pbb">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pbb" id="file_pbb" required
+                                    <input type="file" name="file_pbb" id="file_pbb" 
                                         onchange="updateFileName(this, 'name_pbb')">
                                     <span id="name_pbb" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -663,7 +663,7 @@
                                     <label class="btn-choose-file" for="file_sertifikat">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_sertifikat" id="file_sertifikat" required
+                                    <input type="file" name="file_sertifikat" id="file_sertifikat" 
                                         onchange="updateFileName(this, 'name_sertifikat')">
                                     <span id="name_sertifikat" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -676,7 +676,7 @@
                                     <label class="btn-choose-file" for="file_pernyataan_materai">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" required
+                                    <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" 
                                         onchange="updateFileName(this, 'name_pernyataan_materai')">
                                     <span id="name_pernyataan_materai" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -692,7 +692,7 @@
                                     <label class="btn-choose-file" for="file_ktp_kk">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_ktp_kk" id="file_ktp_kk" required
+                                    <input type="file" name="file_ktp_kk" id="file_ktp_kk" 
                                         onchange="updateFileName(this, 'name_ktp_kk')">
                                     <span id="name_ktp_kk" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -701,6 +701,7 @@
                     </div>
 
                 </div>
+                
                 <div class="d-flex justify-content-end mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">Ajukan Permohonan</button>
                 </div>
@@ -898,7 +899,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Script untuk menampilkan file upload berdasarkan layanan yang dipilih
 document.addEventListener('DOMContentLoaded', function() {
-    const layananSelect = document.getElementById('layanan');
+    const layananSelect = document.getElementById('jenisLayanan');
     const fileSections = document.querySelectorAll('.file-section');
 
     function showFileSection(selectedValue) {
