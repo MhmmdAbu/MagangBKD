@@ -54,8 +54,8 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 // Halaman PPAT
 Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
-    Route::post('/pengajuan', [PPATController::class, 'pengajuan'])->name('pengajuan.submit');
-    Route::get('/pengajuan/preview-pdf', [PPATController::class, 'previewPDF'])->name('pdf.preview'); 
+    Route::post('/PPAT/pengajuan/preview', [PPATController::class, 'preview'])->name('pengajuan.preview');
+    Route::post('/PPAT/pengajuan/kirim', [PPATController::class, 'kirim'])->name('pengajuan.kirim');
     Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
 });
 
@@ -77,9 +77,4 @@ Route::middleware(['auth', 'role:koordinator_survey'])->prefix('koordinator_surv
     Route::GET('/kordinator/survey', [kordinatorController::class, 'surveyBerkas'])->name('kordinator.survey');
     Route::GET('/kordinator/panduan', [kordinatorController::class, 'panduan'])->name('kordinator.panduan');
     Route::GET('/kordinator/profile', [kordinatorController::class, 'profile'])->name('kordinator.profile');
-    Route::post('/survey/submit', [KordinatorController::class, 'submit'])->name('kordinator.submit');
-    Route::post('/survey/save-pdf', [KordinatorController::class, 'savePDF'])->name('kordinator.savePdf');
-    Route::get('/survey/download-pdf', [KordinatorController::class, 'downloadPDF'])->name('kordinator.downloadPdf');
-
-
 });

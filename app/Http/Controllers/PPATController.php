@@ -20,7 +20,6 @@ class PPATController extends Controller
     {
         $request->validate([
             'nomor_surat_masuk' => 'required|string',
-            'status'            => 'required|string',
             'jenisLayanan'      => 'required|string',
 
             // Data Wajib Pajak
@@ -56,7 +55,7 @@ class PPATController extends Controller
         // SIMPAN DATA
         $pengajuan = new Pengajuan();
         $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
-        $pengajuan->status            = $request->status;
+        $pengajuan->status            = "Menunggu Verifikasi";
         $pengajuan->jenisLayanan      = $request->jenisLayanan;
 
         $pengajuan->id_ppat = Auth::id(); // id user login
@@ -79,7 +78,6 @@ class PPATController extends Controller
             'file_ktp_pihak_kedua',
             'file_kk_pihak_pertama',
             'file_kk_pihak_kedua',
-            'file_blanko',
             'file_pernyataan_materai',
             'file_sertifikat',
             'file_pbb',
@@ -94,13 +92,13 @@ class PPATController extends Controller
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
                 $path = $request->file($field)->store('uploads/pengajuan', 'public');
-                $pengajuan->$field = $path;
+                $pengajuan->{$field . '_path'} = $path; // simpan PATH STRING
             }
         }
 
         $pengajuan->save();
 
-        $pdf = PDF::loadView('pdf.sspd_bphtb', ['data' => $pengajuan]);
+        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
 
         $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
         $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
@@ -116,18 +114,100 @@ class PPATController extends Controller
 
         return back()->with([
             'show_modal' => true,
-            'data' => $data
+            'message' => "Pengajuan berhasil diajukan",
+            'data' => $pengajuan
         ]);
     }
 
-    public function downloadPDF(Request $request)
+    public function preview(Request $request)
     {
-        $data = json_decode($request->data, true);
-        if (!$data) {
-            return back()->withErrors('Data tidak valid.');
+        // Validasi sama seperti pengajuan, kecuali file tidak wajib
+        $request->validate([
+            'nomor_surat_masuk' => 'required',
+            'jenisLayanan' => 'required',
+            'nama_wajib_pajak' => 'required',
+            'nik' => 'required',
+        ]);
+
+        // Simpan input ke session (tanpa file)
+        $data = $request->except([
+            'file_ktp_pihak_pertama',
+            'file_ktp_pihak_kedua',
+            'file_kk_pihak_pertama',
+            'file_kk_pihak_kedua',
+            'file_pernyataan_materai',
+            'file_sertifikat',
+            'file_pbb',
+            'file_kwitansi',
+            'file_keterangan_waris',
+            'file_pernyataan_waris',
+            'file_kuasa_waris',
+            'file_kematian',
+            'file_kia',
+        ]);
+
+        session(['preview_data' => $data]);
+
+        // Simpan file ke folder temp dan catat pathnya
+        $tempFiles = [];
+        foreach ($request->files as $key => $file) {
+            if ($file) {
+                $path = $file->store('temp/berkas', 'public');
+                $tempFiles[$key] = $path;
+            }
         }
 
-        $pdf = Pdf::loadView('pdf.sspd_bphtb', compact('data'));
-        return $pdf->download('Pengajuan-BPHTB.pdf');
+        session(['preview_files' => $tempFiles]);
+
+        // Generate PDF
+        $pdf = Pdf::loadView('PDF.sspd_bphtb', [
+            'data' => $data,
+            'files' => $tempFiles
+        ]);
+
+        $fileName = 'preview_' . time() . '.pdf';
+        Storage::put('public/temp_pdf/' . $fileName, $pdf->output());
+
+        return response()->json([
+            'pdf_url' => asset('storage/temp_pdf/' . $fileName)
+        ]);
+    }
+
+    public function kirim()
+    {
+        $data  = session('preview_data');
+        $files = session('preview_files');
+
+        if (!$data) return back()->with('error', 'Preview kadaluarsa, lakukan kembali');
+
+        // Tambah data tambahan
+        $data['id_ppat'] = Auth::id();
+        $data['status'] = "Menunggu Verifikasi";
+
+        // Simpan ke DB
+        $pengajuan = Pengajuan::create($data);
+
+        // Pindahkan file dari temp → pengajuan
+        if ($files) {
+            foreach ($files as $key => $tempPath) {
+                $finalPath = str_replace('temp/berkas', 'pengajuan/berkas', $tempPath);
+                Storage::move($tempPath, $finalPath);
+
+                $pengajuan->{$key . '_path'} = $finalPath;
+            }
+            $pengajuan->save();
+        }
+
+        // Bersihkan session preview
+        session()->forget(['preview_data','preview_files']);
+
+        return redirect()->back()->with('success', 'Pengajuan berhasil diajukan!');
+    }
+
+    public function downloadPDF($id)
+    {
+        $pengajuan = Pengajuan::findOrFail($id);
+        $pdf = Pdf::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
+        return $pdf->download("Blanko-BPHTB-$pengajuan->nama_wajib_pajak.pdf");
     }
 }

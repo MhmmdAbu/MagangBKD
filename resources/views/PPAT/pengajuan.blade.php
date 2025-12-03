@@ -10,7 +10,9 @@
     
 </head>
 <body>
+
 @include('navigation.navbar')
+
 <section class="hero pengajuan-hero">
     <div class="hero-content">
     </div>
@@ -25,14 +27,14 @@
         </div>
         <!-- Form  -->
         <div class="form-container" id="form-ajukan">
-            <form action="{{ route('pengajuan.submit') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('pengajuan.preview') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Pilih Layanan -->
                 <h3 class="text-start mb-4">Pilih Layanan</h3><hr>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="layanan" class="form-label">Jenis Layanan:</label>
-                        <select class="form-control" id="layanan" name="layanan" required>
+                        <label for="jenisLayanan" class="form-label">Jenis Layanan:</label>
+                        <select class="form-control" id="jenisLayanan" name="jenisLayanan" required>
                             <option value="" disabled selected>Pilih Layanan</option>
                             <option value="jual_beli">Jual Beli</option>
                             <option value="hibah">Hibah</option>
@@ -574,7 +576,7 @@
                                     <label class="btn-choose-file" for="file_keterangan_waris">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_keterangan_waris" id="file_keterangan_waris" required 
+                                    <input type="file" name="file_keterangan_waris" id="file_keterangan_waris"  
                                         onchange="updateFileName(this, 'name_keterangan_waris')">
                                     <span id="name_keterangan_waris" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -587,7 +589,7 @@
                                     <label class="btn-choose-file" for="file_pernyataan_waris">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" required
+                                    <input type="file" name="file_pernyataan_waris" id="file_pernyataan_waris" 
                                         onchange="updateFileName(this, 'name_pernyataan_waris')">
                                     <span id="name_pernyataan_waris" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -616,7 +618,7 @@
                                     <label class="btn-choose-file" for="file_pbb">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pbb" id="file_pbb" required
+                                    <input type="file" name="file_pbb" id="file_pbb" 
                                         onchange="updateFileName(this, 'name_pbb')">
                                     <span id="name_pbb" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -661,7 +663,7 @@
                                     <label class="btn-choose-file" for="file_sertifikat">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_sertifikat" id="file_sertifikat" required
+                                    <input type="file" name="file_sertifikat" id="file_sertifikat" 
                                         onchange="updateFileName(this, 'name_sertifikat')">
                                     <span id="name_sertifikat" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -674,7 +676,7 @@
                                     <label class="btn-choose-file" for="file_pernyataan_materai">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" required
+                                    <input type="file" name="file_pernyataan_materai" id="file_pernyataan_materai" 
                                         onchange="updateFileName(this, 'name_pernyataan_materai')">
                                     <span id="name_pernyataan_materai" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -690,7 +692,7 @@
                                     <label class="btn-choose-file" for="file_ktp_kk">
                                         Choose File
                                     </label>
-                                    <input type="file" name="file_ktp_kk" id="file_ktp_kk" required
+                                    <input type="file" name="file_ktp_kk" id="file_ktp_kk" 
                                         onchange="updateFileName(this, 'name_ktp_kk')">
                                     <span id="name_ktp_kk" class="file-name-display">No File Choosen</span>
                                 </div>
@@ -699,8 +701,9 @@
                     </div>
 
                 </div>
+                
                 <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Ajukan Permohonan</button>
+                    <button type="button" id="btnPreview" class="btn btn-primary">Ajukan Permohonan</button>
                 </div>
             </form>
         </div>
@@ -775,45 +778,24 @@
         {{ session('success') }}
     </div>
 @endif
-@if(session('show_modal'))
-<div class="modal fade show" id="modalSSPD" style="display:block;" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Preview Blanko SSPD BPHTB</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Embed PDF untuk preview -->
-                <iframe src="{{ route('pdf.preview') }}" width="100%" height="600px" frameborder="0"></iframe>
-            </div>
-            <div class="modal-footer">
-                <form action="{{ route('pdf.pengajuan_bphtb') }}" method="POST" target="_blank">
-                    @csrf
-                    <input type="hidden" name="data" value="{{ json_encode(session('pengajuan_data')) }}">
-                    <button type="submit" class="btn btn-success">Download PDF</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kirim</button>
-            </div>
-        </div>
+<div class="modal fade" id="previewModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Preview Blanko</h5></div>
+      <div class="modal-body">
+        <iframe id="iframePreviewPDF" style="width:100%; height:600px;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <form action="{{ route('pengajuan.kirim') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-success">Kirim</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
-@endif
-<!-- Modal Preview -->
-<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Preview File</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img id="previewImage" src="" style="max-width:100%; display:none;">
-                <iframe id="previewPDF" style="width:100%;height:500px; display:none;" frameborder="0"></iframe>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -836,6 +818,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.getElementById('btnPreview').addEventListener('click', function () {
+    let form = document.getElementById('formPengajuan'); // pastikan ID tepat
+    let formData = new FormData(form);
+
+    fetch("{{ route('pengajuan.preview') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("iframePreviewPDF").src = data.pdf_url;
+        new bootstrap.Modal(document.getElementById("previewModal")).show();
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Gagal memuat preview");
+    });
+});
+
 
 document.querySelectorAll('input[type="file"]').forEach(input => {
     input.addEventListener('change', function() {
@@ -893,8 +898,10 @@ document.addEventListener('DOMContentLoaded', function() {
         activateTab(tabRiwayat, formRiwayat, tabAjukan, formAjukan);
     });
 });
+
+// Script untuk menampilkan file upload berdasarkan layanan yang dipilih
 document.addEventListener('DOMContentLoaded', function() {
-    const layananSelect = document.getElementById('layanan');
+    const layananSelect = document.getElementById('jenisLayanan');
     const fileSections = document.querySelectorAll('.file-section');
 
     function showFileSection(selectedValue) {
@@ -902,6 +909,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fileSections.forEach(section => {
             section.style.display = 'none';
         });
+
+        // Tampilkan file section yang sesuai
         if (selectedValue) {
             const targetSection = document.getElementById('files-' + selectedValue);
             if (targetSection) {
@@ -909,9 +918,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Event listener untuk perubahan dropdown
     layananSelect.addEventListener('change', function() {
         showFileSection(this.value);
     });
+
+    // Inisialisasi: sembunyikan semua jika belum ada yang dipilih
     showFileSection(layananSelect.value);
 });
 </script>
