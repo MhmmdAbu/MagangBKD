@@ -16,6 +16,7 @@ return new class extends Migration
         
             $table->string('nomor_surat_masuk');
             $table->string('status');
+            $table->string('statusPublic');
             $table->string('jenisLayanan');
             $table->unsignedBigInteger('id_ppat');
             $table->foreign('id_ppat')->references('id')->on('users')->onDelete('cascade');

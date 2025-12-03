@@ -88,6 +88,7 @@ class PPATController extends Controller
         $pengajuan = new Pengajuan();
         $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
         $pengajuan->status            = "Menunggu Verifikasi";
+        $pengajuan->statusPublic      = "Verifikasi";
         $pengajuan->jenisLayanan      = $request->jenisLayanan;
         $pengajuan->id_ppat = Auth::id(); // id user login
 
