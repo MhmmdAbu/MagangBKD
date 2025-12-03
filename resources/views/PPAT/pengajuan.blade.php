@@ -13,12 +13,28 @@
 
 @include('navigation.navbar')
 
+
+
 <section class="hero pengajuan-hero">
     <div class="hero-content">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
     </div>
 </section>
 
 <!-- Halaman Utama -->
+ 
 <section class="content-section">
     <div class="container">
         <div class="tab-section">
@@ -710,19 +726,25 @@
 
         <!-- Riwayat Permohonan -->
         <div class="form-container" id="form-riwayat" style="display: none;">
-            <div class="filter-controls">
-                <div class="input-group">
-                    <input type="date" class="form-control" placeholder="Tanggal" aria-label="Tanggal" >
+            <form id="filterForm" method="GET" action="{{ route('pengajuan') }}">
+                <div class="filter-controls">
+                    <div class="input-group">
+                        <input type="date" name="tanggal" id="filterTanggal" class="form-control">
+                    </div>
+
+                    <input type="search" name="search" id="filterSearch"
+                        class="form-control search-input" placeholder="Cari ...">
+
+                    <select class="form-select" name="status" id="filterStatus">
+                        <option value="">Status</option>
+                        <option value="Pendaftaran">Pendaftaran</option>
+                        <option value="Survey">Survey</option>
+                        <option value="Selesai">Selesai</option>
+                    </select>
                 </div>
-                <input type="search" class="form-control search-input" placeholder="Cari ...">
-                <select class="form-select" aria-label="Status Filter">
-                    <option selected>Status</option>
-                    <option value="1">Pendaftaran</option>
-                    <option value="2">Survey</option>
-                    <option value="3">Selesai</option>
-                </select>
-            </div>
-            <div class="table-responsive">
+            </form>
+
+            <div class="table-responsive" id='riwayat-container'>
                 <table class="table table-hover table-riwayat">
                     <thead>
                         <tr>
@@ -733,75 +755,75 @@
                             <th style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <tr>
-                            <td>1.</td>
-                            <td>001/A/SURAT/X/2025</td>
-                            <td>22 Oktober 2025</td>
-                            <td>Pendaftaran</td>
-                            <td class="aksi"><a href="#">Lihat Surat</a></td>
-                        </tr>
-                        <tr>
-                            <td>2.</td>
-                            <td>002/A/SURAT/X/2025</td>
-                            <td>22 Oktober 2025</td>
-                            <td>Survey</td>
-                            <td class="aksi"><a href="#">Lihat Surat</a></td>
-                        </tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
-                        <tr><td colspan="5">&nbsp;</td></tr>
+                        @forelse ($riwayat as $index => $item)
+                            <tr>
+                                <td>{{ ($riwayat->currentPage()-1) * $riwayat->perPage() + ($index+1) }}</td>
+                                <td>{{ $item->nomor_surat_masuk }}</td>
+                                <td>{{ $item->created_at->format('d F Y') }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>
+                                    <a href="{{ route('pdf.preview', ['namaPDF'=>$item->file_blanko]) }}" target="_blank">
+                                        Lihat Surat
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Belum ada data</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+
+                <div class="mt-3">
+                    {{ $riwayat->links() }}
+                </div>
+
             </div>
         </div>
     </div>   
-
-    
 </section> 
 
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 @if(session('show_modal'))
 <div class="modal fade show" id="modalSSPD" style="display:block;" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Preview Blanko SSPD BPHTB</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <form action="{{ route('modal.close') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-close"></button>
+                </form>
             </div>
             <div class="modal-body">
                 <!-- Embed PDF untuk preview -->
-                <iframe src="{{ route('pdf.preview') }}" width="100%" height="600px" frameborder="0"></iframe>
+                @if(session('namaPDF'))
+                    <iframe 
+                        src="{{ route('pdf.preview', ['namaPDF' => session('namaPDF')]) }}" 
+                        width="100%" 
+                        height="600px">
+                    </iframe>
+                @else
+                    <p class="text-danger">Gagal memuat PDF — namaPDF tidak ditemukan.</p>
+                @endif
             </div>
             <div class="modal-footer">
-                <form action="{{ route('pdf.pengajuan_bphtb') }}" method="POST" target="_blank">
-                    @csrf
-                    <input type="hidden" name="data" value="{{ json_encode(session('pengajuan_data')) }}">
-                    <button type="submit" class="btn btn-success">Download PDF</button>
+                <form action="{{ route('pdf.download', ['namaPDF' => session('namaPDF')]) }}" method="POST" target="_blank"> 
+                    @csrf 
+                    <button type="submit" class="btn btn-success">Download PDF</button> 
                 </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kirim</button>
+                <form action="{{ route('hapus.pengajuan') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary">Batal</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endif
+
 <!-- Modal Preview -->
 <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -820,6 +842,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('modalSSPD');
     const btnClose = modal.querySelector('.btn-close');
@@ -840,6 +863,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Script untuk menampilkan berkas yang telah diupload
 document.querySelectorAll('input[type="file"]').forEach(input => {
     input.addEventListener('change', function() {
         const fileName = this.files.length > 0 ? this.files[0].name : 'No File Choosen';
@@ -875,6 +899,7 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
     });
 });
 
+// Script Untuk Mengatasi Switch Tombol
 document.addEventListener('DOMContentLoaded', function() {
     const tabAjukan = document.getElementById('tab-ajukan');
     const tabRiwayat = document.getElementById('tab-riwayat');
@@ -888,12 +913,28 @@ document.addEventListener('DOMContentLoaded', function() {
         inactiveForm.style.display = 'none';
     }
 
+    // ===========================
+    // 1️⃣ CHECK TAB YANG TERAKHIR AKTIF
+    // ===========================
+    const savedTab = localStorage.getItem('activeTab');
+
+    if (savedTab === 'riwayat') {
+        activateTab(tabRiwayat, formRiwayat, tabAjukan, formAjukan);
+    } else {
+        activateTab(tabAjukan, formAjukan, tabRiwayat, formRiwayat);
+    }
+
+    // ===========================
+    // 2️⃣ SIMPAN TAB KETIKA DIKLIK
+    // ===========================
     tabAjukan.addEventListener('click', () => {
         activateTab(tabAjukan, formAjukan, tabRiwayat, formRiwayat);
+        localStorage.setItem('activeTab', 'ajukan');
     });
 
     tabRiwayat.addEventListener('click', () => {
         activateTab(tabRiwayat, formRiwayat, tabAjukan, formAjukan);
+        localStorage.setItem('activeTab', 'riwayat');
     });
 });
 
@@ -924,5 +965,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inisialisasi: sembunyikan semua jika belum ada yang dipilih
     showFileSection(layananSelect.value);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const filterForm = document.getElementById('filterForm');
+    const searchInput = document.getElementById('filterSearch');
+    const dateInput   = document.getElementById('filterTanggal');
+    const statusInput = document.getElementById('filterStatus');
+
+    let typingTimer;
+    const debounceTime = 500; // ms
+
+    // 1. Auto filter saat mengetik
+    searchInput.addEventListener('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            filterForm.submit();
+        }, debounceTime);
+    });
+
+    // 2. Auto filter saat pilih tanggal
+    dateInput.addEventListener('change', function () {
+        filterForm.submit();
+    });
+
+    // 3. Auto filter saat pilih status
+    statusInput.addEventListener('change', function () {
+        filterForm.submit();
+    });
+
 });
 </script>

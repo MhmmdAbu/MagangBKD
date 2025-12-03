@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -11,12 +12,34 @@ use App\Models\Pengajuan;
 
 class PPATController extends Controller
 {
-    public function showPengajuan() {
-        $pengajuan = Pengajuan::where('id_ppat', Auth::id())->get();
-        return view('PPAT.pengajuan', compact('pengajuan'));
+    public function showPengajuan(Request $request)
+    {
+        $query = Pengajuan::where('id_ppat', Auth::id());
+
+        // Filter Tanggal
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Filter Pencarian (nomor surat)
+        if ($request->filled('search')) {
+            $query->where('nomor_surat_masuk', 'like', '%'.$request->search.'%');
+        }
+
+        // Filter Status
+        if ($request->filled('status') && $request->status != 'Status') {
+            $query->where('status', $request->status);
+        }
+
+        // Pagination
+        $riwayat = $query->paginate(10)->appends($request->query());
+
+        return view('PPAT.pengajuan', compact('riwayat'));
     }
 
-    public function pengajuan(Request $request)
+
+
+    public function membuatPengajuan(Request $request)
     {
         $request->validate([
             'nomor_surat_masuk' => 'required|string',
@@ -51,13 +74,21 @@ class PPATController extends Controller
             'file_kia'                 => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
+        $data = $request->all();
+        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $data]);
+
+        $pdfName = 'Pengajuan-BPHTB-' . $data['nama_wajib_pajak'] . time() . '.pdf';
+
+        // Path relatif ke storage/app/public
+        $pdfPath = 'pdf_pengajuan/' . $pdfName;
+        Storage::disk('public')->makeDirectory('pdf_pengajuan');
+        Storage::disk('public')->put($pdfPath, $pdf->output());
 
         // SIMPAN DATA
         $pengajuan = new Pengajuan();
         $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
         $pengajuan->status            = "Menunggu Verifikasi";
         $pengajuan->jenisLayanan      = $request->jenisLayanan;
-
         $pengajuan->id_ppat = Auth::id(); // id user login
 
         // DATA WAJIB PAJAK
@@ -71,6 +102,7 @@ class PPATController extends Controller
         $pengajuan->nomor_tlp         = $request->nomor_tlp;
         $pengajuan->npwp              = $request->npwp;
         $pengajuan->alamat_wp         = $request->alamat_wp;
+        $pengajuan->file_blanko       = $pdfName;
 
         // ===== UPLOAD FILE GENERAL HANDLER =====
         $fileFields = [
@@ -95,37 +127,60 @@ class PPATController extends Controller
                 $pengajuan->$field = $path;
             }
         }
-
         $pengajuan->save();
 
-        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
 
-        $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
-        $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
-
-        if (!file_exists(storage_path('app/public/pdf_pengajuan'))) {
-            mkdir(storage_path('app/public/pdf_pengajuan'), 0777, true);
-        }
-
-        $pdf->save($pdfPath);
-        $pengajuan->update([
-            'file_blanko' => $pdfName
-        ]);
-
-        return back()->with([
+        session([
             'show_modal' => true,
-            'data' => $pengajuan
+            'namaPDF'    => $pdfName,
         ]);
+
+        return redirect()->route('pengajuan');
     }
 
-    public function downloadPDF(Request $request)
+    public function previewPDF($namaPDF)
     {
-        $data = json_decode($request->data, true);
-        if (!$data) {
-            return back()->withErrors('Data tidak valid.');
+        $path = Storage::disk('public')->path("pdf_pengajuan/$namaPDF");
+        return response()->file($path);
+    }
+
+    public function downloadPDF($namaPDF)
+    {
+        $path = Storage::disk('public')->path("pdf_pengajuan/$namaPDF");
+        return response()->download($path);
+    }
+
+    public function closeModal()
+    {
+        // hapus session modal
+        session()->forget(['show_modal', 'namaPDF']);
+
+        // redirect ulang halaman pengajuan tanpa modal
+        return redirect()->route('pengajuan');
+    }
+
+    public function hapusBlanko(Request $request)
+    {
+        $namaPDF = session('namaPDF');
+
+        if (!$namaPDF) {
+            return back()->with('error', 'Tidak ada file blanko yang ditemukan untuk dihapus.');
+        }
+        $filePath = "pdf_pengajuan/$namaPDF";
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
         }
 
-        $pdf = Pdf::loadView('pdf.sspd_bphtb', compact('data'));
-        return $pdf->download('Pengajuan-BPHTB.pdf');
+        // HAPUS DATA dari database
+        $pengajuan = Pengajuan::where('file_blanko', $namaPDF)->where('id_ppat', Auth::id())->first();
+        if ($pengajuan) {
+            $pengajuan->delete();
+        }
+         // Clear session setelah dihapus
+        session()->forget(['namaPDF', 'show_modal']);
+        return redirect()->route('pengajuan')->with('success', 'Pengajuan berhasil dibatalkan dan dihapus.');
     }
+
+
+
 }
