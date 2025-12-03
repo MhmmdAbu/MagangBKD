@@ -810,10 +810,9 @@
                 @endif
             </div>
             <div class="modal-footer">
-                <form action="{{ route('pdf.download', ['namaPDF' => session('namaPDF')]) }}" method="POST" target="_blank"> 
-                    @csrf 
-                    <button type="submit" class="btn btn-success">Download PDF</button> 
-                </form>
+                <a href="{{ route('pdf.download', ['namaPDF' => session('namaPDF')]) }}" target="_blank" class="btn btn-success">
+                    Download PDF
+                </a>
                 <form action="{{ route('hapus.pengajuan') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-secondary">Batal</button>
