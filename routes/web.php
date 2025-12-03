@@ -54,9 +54,13 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 // Halaman PPAT
 Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
-    Route::post('/PPAT/pengajuan/preview', [PPATController::class, 'preview'])->name('pengajuan.preview');
-    Route::post('/PPAT/pengajuan/kirim', [PPATController::class, 'kirim'])->name('pengajuan.kirim');
-    Route::post('/pengajuan/pdf', [PPATController::class, 'downloadPDF'])->name('pdf.pengajuan_bphtb');
+    Route::get('/pdf/preview/{namaPDF}', [PPATController::class, 'previewPDF'])->name('pdf.preview');
+    Route::get('/pdf/download/{namaPDF}', [PPATController::class, 'downloadPDF'])->name('pdf.download');
+
+    Route::post('/modal-close', [PPATController::class, 'closeModal'])->name('modal.close');
+    Route::post('/pengajuan-proses', [PPATController::class, 'membuatPengajuan'])->name('pengajuan.submit');
+    Route::post('/pengajuan-delete-blanko', [PPATController::class, 'hapusBlanko'])->name('hapus.pengajuan');
+
 });
 
 // Halaman Admin

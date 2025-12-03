@@ -12,6 +12,7 @@ class Pengajuan extends Model
         // Data dasar
         'nomor_surat_masuk',
         'status',
+        'statusPublic',
         'jenisLayanan',
         'id_ppat',
 

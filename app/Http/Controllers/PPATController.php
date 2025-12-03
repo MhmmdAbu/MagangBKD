@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -11,12 +12,34 @@ use App\Models\Pengajuan;
 
 class PPATController extends Controller
 {
-    public function showPengajuan() {
-        $pengajuan = Pengajuan::where('id_ppat', Auth::id())->get();
-        return view('PPAT.pengajuan', compact('pengajuan'));
+    public function showPengajuan(Request $request)
+    {
+        $query = Pengajuan::where('id_ppat', Auth::id());
+
+        // Filter Tanggal
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        // Filter Pencarian (nomor surat)
+        if ($request->filled('search')) {
+            $query->where('nomor_surat_masuk', 'like', '%'.$request->search.'%');
+        }
+
+        // Filter Status
+        if ($request->filled('status') && $request->status != 'Status') {
+            $query->where('status', $request->status);
+        }
+
+        // Pagination
+        $riwayat = $query->paginate(10)->appends($request->query());
+
+        return view('PPAT.pengajuan', compact('riwayat'));
     }
 
-    public function pengajuan(Request $request)
+
+
+    public function membuatPengajuan(Request $request)
     {
         $request->validate([
             'nomor_surat_masuk' => 'required|string',
@@ -51,13 +74,22 @@ class PPATController extends Controller
             'file_kia'                 => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
+        $data = $request->all();
+        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $data]);
+
+        $pdfName = 'Pengajuan-BPHTB-' . $data['nama_wajib_pajak'] . time() . '.pdf';
+
+        // Path relatif ke storage/app/public
+        $pdfPath = 'pdf_pengajuan/' . $pdfName;
+        Storage::disk('public')->makeDirectory('pdf_pengajuan');
+        Storage::disk('public')->put($pdfPath, $pdf->output());
 
         // SIMPAN DATA
         $pengajuan = new Pengajuan();
         $pengajuan->nomor_surat_masuk = $request->nomor_surat_masuk;
         $pengajuan->status            = "Menunggu Verifikasi";
+        $pengajuan->statusPublic      = "Verifikasi";
         $pengajuan->jenisLayanan      = $request->jenisLayanan;
-
         $pengajuan->id_ppat = Auth::id(); // id user login
 
         // DATA WAJIB PAJAK
@@ -71,6 +103,7 @@ class PPATController extends Controller
         $pengajuan->nomor_tlp         = $request->nomor_tlp;
         $pengajuan->npwp              = $request->npwp;
         $pengajuan->alamat_wp         = $request->alamat_wp;
+        $pengajuan->file_blanko       = $pdfName;
 
         // ===== UPLOAD FILE GENERAL HANDLER =====
         $fileFields = [
@@ -95,119 +128,60 @@ class PPATController extends Controller
                 $pengajuan->{$field . '_path'} = $path; // simpan PATH STRING
             }
         }
-
         $pengajuan->save();
 
-        $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
 
-        $pdfName = 'Pengajuan-BPHTB-' . $pengajuan->nama_wajib_pajak. time() . '.pdf';
-        $pdfPath = storage_path('app/public/pdf_pengajuan/' . $pdfName);
-
-        if (!file_exists(storage_path('app/public/pdf_pengajuan'))) {
-            mkdir(storage_path('app/public/pdf_pengajuan'), 0777, true);
-        }
-
-        $pdf->save($pdfPath);
-        $pengajuan->update([
-            'file_blanko' => $pdfName
-        ]);
-
-        return back()->with([
+        session([
             'show_modal' => true,
-            'message' => "Pengajuan berhasil diajukan",
-            'data' => $pengajuan
+            'namaPDF'    => $pdfName,
         ]);
+
+        return redirect()->route('pengajuan');
     }
 
-    public function preview(Request $request)
+    public function previewPDF($namaPDF)
     {
-        // Validasi sama seperti pengajuan, kecuali file tidak wajib
-        $request->validate([
-            'nomor_surat_masuk' => 'required',
-            'jenisLayanan' => 'required',
-            'nama_wajib_pajak' => 'required',
-            'nik' => 'required',
-        ]);
+        $path = Storage::disk('public')->path("pdf_pengajuan/$namaPDF");
+        return response()->file($path);
+    }
 
-        // Simpan input ke session (tanpa file)
-        $data = $request->except([
-            'file_ktp_pihak_pertama',
-            'file_ktp_pihak_kedua',
-            'file_kk_pihak_pertama',
-            'file_kk_pihak_kedua',
-            'file_pernyataan_materai',
-            'file_sertifikat',
-            'file_pbb',
-            'file_kwitansi',
-            'file_keterangan_waris',
-            'file_pernyataan_waris',
-            'file_kuasa_waris',
-            'file_kematian',
-            'file_kia',
-        ]);
+    public function downloadPDF($namaPDF)
+    {
+        $path = Storage::disk('public')->path("pdf_pengajuan/$namaPDF");
+        return response()->download($path);
+    }
 
-        session(['preview_data' => $data]);
+    public function closeModal()
+    {
+        // hapus session modal
+        session()->forget(['show_modal', 'namaPDF']);
 
-        // Simpan file ke folder temp dan catat pathnya
-        $tempFiles = [];
-        foreach ($request->files as $key => $file) {
-            if ($file) {
-                $path = $file->store('temp/berkas', 'public');
-                $tempFiles[$key] = $path;
-            }
+        // redirect ulang halaman pengajuan tanpa modal
+        return redirect()->route('pengajuan');
+    }
+
+    public function hapusBlanko(Request $request)
+    {
+        $namaPDF = session('namaPDF');
+
+        if (!$namaPDF) {
+            return back()->with('error', 'Tidak ada file blanko yang ditemukan untuk dihapus.');
+        }
+        $filePath = "pdf_pengajuan/$namaPDF";
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
         }
 
-        session(['preview_files' => $tempFiles]);
-
-        // Generate PDF
-        $pdf = Pdf::loadView('PDF.sspd_bphtb', [
-            'data' => $data,
-            'files' => $tempFiles
-        ]);
-
-        $fileName = 'preview_' . time() . '.pdf';
-        Storage::put('public/temp_pdf/' . $fileName, $pdf->output());
-
-        return response()->json([
-            'pdf_url' => asset('storage/temp_pdf/' . $fileName)
-        ]);
-    }
-
-    public function kirim()
-    {
-        $data  = session('preview_data');
-        $files = session('preview_files');
-
-        if (!$data) return back()->with('error', 'Preview kadaluarsa, lakukan kembali');
-
-        // Tambah data tambahan
-        $data['id_ppat'] = Auth::id();
-        $data['status'] = "Menunggu Verifikasi";
-
-        // Simpan ke DB
-        $pengajuan = Pengajuan::create($data);
-
-        // Pindahkan file dari temp → pengajuan
-        if ($files) {
-            foreach ($files as $key => $tempPath) {
-                $finalPath = str_replace('temp/berkas', 'pengajuan/berkas', $tempPath);
-                Storage::move($tempPath, $finalPath);
-
-                $pengajuan->{$key . '_path'} = $finalPath;
-            }
-            $pengajuan->save();
+        // HAPUS DATA dari database
+        $pengajuan = Pengajuan::where('file_blanko', $namaPDF)->where('id_ppat', Auth::id())->first();
+        if ($pengajuan) {
+            $pengajuan->delete();
         }
-
-        // Bersihkan session preview
-        session()->forget(['preview_data','preview_files']);
-
-        return redirect()->back()->with('success', 'Pengajuan berhasil diajukan!');
+         // Clear session setelah dihapus
+        session()->forget(['namaPDF', 'show_modal']);
+        return redirect()->route('pengajuan')->with('success', 'Pengajuan berhasil dibatalkan dan dihapus.');
     }
 
-    public function downloadPDF($id)
-    {
-        $pengajuan = Pengajuan::findOrFail($id);
-        $pdf = Pdf::loadView('PDF.sspd_bphtb', ['data' => $pengajuan]);
-        return $pdf->download("Blanko-BPHTB-$pengajuan->nama_wajib_pajak.pdf");
-    }
+
+
 }
