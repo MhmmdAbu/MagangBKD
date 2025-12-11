@@ -222,7 +222,7 @@ use Illuminate\Support\Facades\Storage;
     <hr>
 
     <div class="modal-footer">
-        @if($status == 'Menunggu Verifikasi') 
+        @if($status == 'Menunggu Verifikasi')
             <button class="btn btn-Tdkvalid" data-bs-toggle="modal" data-bs-target="#modalInvalid">
                 <i class="fas fa-times"></i> Tidak Valid
             </button>

@@ -36,10 +36,12 @@ class AdministratorController extends Controller
 
 
     // Daftar Berkas
-    public function daftarBerkas(Request $request) {
+    public function daftarBerkas(Request $request) 
+    {
         $query = Pengajuan::query();
+        $query->whereNotIn('status', ['Cermati', 'Selesai']);
+
         $searchableColumns = [
-            // Data dasar
             'nomor_surat_masuk',
             'statusPublic',
             'jenisLayanan',
@@ -60,6 +62,7 @@ class AdministratorController extends Controller
             $query->whereDate('created_at', $request->tanggal);
         }
 
+        // Filter Search
         if ($request->filled('search')) {
             $search = $request->search;
 
@@ -70,15 +73,17 @@ class AdministratorController extends Controller
             });
         }
 
-        // Filter Status
+        // Filter Status (selain Cermati & Selesai)
         if ($request->filled('status') && $request->status != 'Status') {
             $query->where('status', $request->status);
         }
 
         // Pagination
         $berkas = $query->paginate(10)->appends($request->query());
+
         return view('Administrator.berkas', compact('berkas'));
     }
+
 
     public function previewBerkasKelengkapan($namaPDF)
     {
