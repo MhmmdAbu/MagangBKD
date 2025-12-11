@@ -18,6 +18,7 @@ Route::get('/kontak', [LandingController::class, 'kontak'])->name('kontak');
 // Auth
 Route::GET('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::POST('/login-proses', [AuthController::class, 'login'])->name('login.proses');
+Route::POST('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::POST('/register-proses', [AuthController::class, 'register'])->name('register.proses');
 Route::GET('/register', function () {
     return view('auth.register');
@@ -26,11 +27,16 @@ Route::GET('/register', function () {
 
 // Halaman Administrator
 Route::middleware(['auth', 'role:Administrator'])->prefix('Administrator')->group(function(){    
-    Route::GET('/administrator', [AdministratorController::class, 'index'])->name('administrator.dashboard');
-    Route::GET('/administrator/berkas', [AdministratorController::class, 'daftarBerkas'])->name('administrator.berkas_terdaftar');
-    Route::GET('/administrator/arsip', [AdministratorController::class, 'arsipBerkas'])->name('administrator.arsip_berkas');
-    Route::GET('/administrator/panduan', [AdministratorController::class, 'panduan'])->name('administrator.panduan');
-    Route::GET('/administrator/profile', [AdministratorController::class, 'profile'])->name('administrator.profile');
+    Route::GET('/', [AdministratorController::class, 'index'])->name('administrator.dashboard');
+    Route::GET('/berkas', [AdministratorController::class, 'daftarBerkas'])->name('administrator.berkas_terdaftar');
+    Route::GET('/preview/{namaPDF}', [AdministratorController::class, 'previewBerkas'])->name('preview.berkas');
+    Route::GET('/preview/kelengkapan/{namaPDF}', [AdministratorController::class, 'previewBerkasKelengkapan'])->name('preview.kelengkapan');
+    Route::GET('/arsip', [AdministratorController::class, 'arsipBerkas'])->name('administrator.arsip_berkas');
+    Route::GET('/panduan', [AdministratorController::class, 'panduan'])->name('administrator.panduan');
+    Route::GET('/profile', [AdministratorController::class, 'profile'])->name('administrator.profile');
+
+    Route::POST('/{id}/valid', [AdministratorController::class, 'setValid'])->name('validasi');
+    Route::POST('/{id}/invalid', [AdministratorController::class, 'setInvalid'])->name('invalidasi');
 });
 
 // Halaman KA UPTD
@@ -55,12 +61,12 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
     Route::get('/pdf/preview/{namaPDF}', [PPATController::class, 'previewPDF'])->name('pdf.preview');
+    Route::get('/pdf/preview/berkas/{namaBerkas}/{namaPDF}', [PPATController::class, 'berkasPDF'])->name('pdf.berkas');
     Route::get('/pdf/download/{namaPDF}', [PPATController::class, 'downloadPDF'])->name('pdf.download');
 
     Route::post('/modal-close', [PPATController::class, 'closeModal'])->name('modal.close');
     Route::post('/pengajuan-proses', [PPATController::class, 'membuatPengajuan'])->name('pengajuan.submit');
     Route::post('/pengajuan-delete-blanko', [PPATController::class, 'hapusBlanko'])->name('hapus.pengajuan');
-
 });
 
 // Halaman Admin

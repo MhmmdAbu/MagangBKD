@@ -15,15 +15,36 @@ class PPATController extends Controller
     public function showPengajuan(Request $request)
     {
         $query = Pengajuan::where('id_ppat', Auth::id());
+        $searchableColumns = [
+            // Data dasar
+            'nomor_surat_masuk',
+            'statusPublic',
+            'jenisLayanan',
+            'nama_wajib_pajak',
+            'nik',
+            'kelurahan_desa_wp',
+            'rt_rw_wp',
+            'kecamatan_wp',
+            'kabupaten_kota_wp',
+            'kode_pos',
+            'nomor_tlp',
+            'npwp',
+            'alamat_wp',
+        ];
 
         // Filter Tanggal
         if ($request->filled('tanggal')) {
             $query->whereDate('created_at', $request->tanggal);
         }
 
-        // Filter Pencarian (nomor surat)
         if ($request->filled('search')) {
-            $query->where('nomor_surat_masuk', 'like', '%'.$request->search.'%');
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search, $searchableColumns) {
+                foreach ($searchableColumns as $col) {
+                    $q->orWhere($col, 'LIKE', "%$search%");
+                }
+            });
         }
 
         // Filter Status
@@ -41,6 +62,7 @@ class PPATController extends Controller
 
     public function membuatPengajuan(Request $request)
     {
+        
         $request->validate([
             'nomor_surat_masuk' => 'required|string',
             'jenisLayanan'      => 'required|string',
@@ -57,7 +79,6 @@ class PPATController extends Controller
             'npwp'              => 'nullable|string',
             'alamat_wp'         => 'nullable|string',
 
-            // Semua file hanya boleh PDF, JPG, JPEG, PNG max 5MB
             'file_ktp_pihak_pertama'   => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'file_ktp_pihak_kedua'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'file_kk_pihak_pertama'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
@@ -106,7 +127,96 @@ class PPATController extends Controller
         $pengajuan->file_blanko       = $pdfName;
 
         // ===== UPLOAD FILE GENERAL HANDLER =====
-        $fileFields = [
+        $mapping = [
+            // Jual Beli
+            'file_ktp_penjual'           => 'file_ktp_pihak_pertama',
+            'file_ktp_pembeli'           => 'file_ktp_pihak_kedua',
+            'file_kk_penjual'            => 'file_kk_pihak_pertama',
+            'file_kk_pembeli'            => 'file_kk_pihak_kedua',
+            'file_pernyataan_jual_beli'  => 'file_pernyataan_materai',
+            'file_sertifikat_jual_beli'  => 'file_sertifikat',
+            'file_pbb_jual_beli'         => 'file_pbb',
+            'file_kwitansi_jual_beli'    => 'file_kwitansi',
+
+            // Hibah
+            'file_ktp_penjual_hibah'     => 'file_ktp_pihak_pertama',
+            'file_ktp_pembeli_hibah'     => 'file_ktp_pihak_kedua',
+            'file_kk_penjual_hibah'      => 'file_kk_pihak_pertama',
+            'file_kk_pembeli_hibah'      => 'file_kk_pihak_kedua',
+            'file_sertifikat_hibah'      => 'file_sertifikat',
+            'file_pbb_hibah'             => 'file_pbb',
+            'file_pernyataan_hibah'      => 'file_pernyataan_materai',
+
+            // PTSL
+            'file_ktp_penjual_ptsl'      => 'file_ktp_pihak_pertama',
+            'file_ktp_pembeli_ptsl'      => 'file_ktp_pihak_kedua',
+            'file_kk_penjual_ptsl'       => 'file_kk_pihak_pertama',
+            'file_kk_pembeli_ptsl'       => 'file_kk_pihak_kedua',
+            'file_sertifikat_ptsl'       => 'file_sertifikat',
+            'file_pbb_ptsl'              => 'file_pbb',
+            'file_pernyataan_ptsl'       => 'file_pernyataan_materai',
+
+            // Waris
+            'file_ktp_kk'                => 'file_ktp_pihak_pertama',
+            'file_pernyataan_waris'      => 'file_pernyataan_waris',
+            'file_keterangan_waris'      => 'file_keterangan_waris',
+            'file_kuasa_waris'           => 'file_kuasa_waris',
+            'file_kematian'              => 'file_kematian',
+            'file_kia'                   => 'file_kia',
+        ];
+
+        foreach ($mapping as $input => $dbField) {
+            if ($request->hasFile($input)) {
+                $path = $request->file($input)->store('uploads/pengajuan', 'public');
+                $pengajuan->$dbField = $path;
+            }
+        }
+
+        $pengajuan->save();
+
+
+        session([
+            'show_modal' => true,
+            'namaPDF'    => $pdfName,
+        ]);
+
+        return redirect()->route('pengajuan');
+    }
+
+    public function berkasPDF($namaPDF, $namaBerkas)
+    {
+        // Mapping jenis file ke label manusiawi
+        $fileLabels = [
+            'file_ktp_pihak_pertama' => 'KTP PIHAK PERTAMA',
+            'file_ktp_pihak_kedua' => 'KTP PIHAK KEDUA',
+            'file_kk_pihak_pertama' => 'KK PIHAK PERTAMA',
+            'file_kk_pihak_kedua' => 'KK PIHAK KEDUA',
+            'file_pernyataan_materai' => 'PERNYATAAN MATERAI',
+            'file_sertifikat' => 'SERTIFIKAT',
+            'file_pbb' => 'PBB',
+            'file_kwitansi' => 'KWITANSI',
+            'file_keterangan_waris' => 'KETERANGAN WARIS',
+            'file_pernyataan_waris' => 'PERNYATAAN WARIS',
+            'file_kuasa_waris' => 'KUASA WARIS',
+            'file_kematian' => 'AKTA KEMATIAN',
+            'file_kia' => 'KIA',
+        ];
+
+        // Ambil label manusiawi atau gunakan nama asli jika tidak ada mapping
+        $labelBerkas = $fileLabels[$namaBerkas] ?? $namaBerkas;
+
+        return view('PPAT.berkas', [
+            'filePDF' => $namaPDF,
+            'namaBerkas' => $labelBerkas, 
+        ]);
+    }
+
+
+    public function previewPDF($namaPDF)
+    {
+        $pengajuan = Pengajuan::where('file_blanko', $namaPDF)->firstOrFail();
+
+        $fileColumns = [
             'file_ktp_pihak_pertama',
             'file_ktp_pihak_kedua',
             'file_kk_pihak_pertama',
@@ -119,30 +229,25 @@ class PPATController extends Controller
             'file_pernyataan_waris',
             'file_kuasa_waris',
             'file_kematian',
-            'file_kia'
+            'file_kia',
         ];
 
-        foreach ($fileFields as $field) {
-            if ($request->hasFile($field)) {
-                $path = $request->file($field)->store('uploads/pengajuan', 'public');
-                $pengajuan->$field = $path;
+        $kelengkapan = [];
+
+        foreach ($fileColumns as $col) {
+            if (!empty($pengajuan->$col)) {
+
+                $kelengkapan[] = [
+                    'nama_kolom' => $col,
+                    'nama_file'  => $pengajuan->$col,
+                ];
             }
         }
-        $pengajuan->save();
 
-
-        session([
-            'show_modal' => true,
-            'namaPDF'    => $pdfName,
+        return view('PPAT.preview_kelengkapan', [
+            'pdfUtama' => $namaPDF,
+            'kelengkapan' => $kelengkapan,
         ]);
-
-        return redirect()->route('pengajuan');
-    }
-
-    public function previewPDF($namaPDF)
-    {
-        $path = Storage::disk('public')->path("pdf_pengajuan/$namaPDF");
-        return response()->file($path);
     }
 
     public function downloadPDF($namaPDF)
@@ -181,7 +286,5 @@ class PPATController extends Controller
         session()->forget(['namaPDF', 'show_modal']);
         return redirect()->route('pengajuan')->with('success', 'Pengajuan berhasil dibatalkan dan dihapus.');
     }
-
-
 
 }

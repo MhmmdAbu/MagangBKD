@@ -28,7 +28,17 @@
                     <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}" href="{{ route('kontak') }}">Kontak</a>
                 </li>
             </ul>
-            <a href="{{ route('login') }}" class="btn-login ms-3">Login</a>
+            {{-- Tombol Login / Logout --}}
+            @guest
+                <a href="{{ route('login') }}" class="btn-login ms-3">Login</a>
+            @endguest
+
+            @auth
+                <form action="{{ route('logout') }}" method="POST" class="d-inline ms-3">
+                    @csrf
+                    <button type="submit" class="btn-login">Logout</button>
+                </form>
+            @endauth
         </div>
     </div>
 </nav>

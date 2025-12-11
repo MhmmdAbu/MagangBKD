@@ -29,8 +29,48 @@ class KtuController extends Controller
         return view('KTU.dashboard', compact('summary', 'permohonanPerTahun', 'permohonanMasuk'));
     }
 
-    public function daftarBerkas() {
-        return view('KTU.berkas_terdaftar');
+    public function daftarBerkas(Request $request) {
+        $query = Pengajuan::query();
+        $searchableColumns = [
+            // Data dasar
+            'nomor_surat_masuk',
+            'statusPublic',
+            'jenisLayanan',
+            'nama_wajib_pajak',
+            'nik',
+            'kelurahan_desa_wp',
+            'rt_rw_wp',
+            'kecamatan_wp',
+            'kabupaten_kota_wp',
+            'kode_pos',
+            'nomor_tlp',
+            'npwp',
+            'alamat_wp',
+        ];
+
+        // Filter Tanggal
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search, $searchableColumns) {
+                foreach ($searchableColumns as $col) {
+                    $q->orWhere($col, 'LIKE', "%$search%");
+                }
+            });
+        }
+
+        // Filter Status
+        if ($request->filled('status') && $request->status != 'Status') {
+            $query->where('status', $request->status);
+        }
+
+        // Pagination
+        $berkas = $query->paginate(10)->appends($request->query());
+        return view('Administrator.berkas', compact('berkas'));
     }
 
     public function arsipBerkas() {

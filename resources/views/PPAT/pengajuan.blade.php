@@ -762,7 +762,7 @@
                                 <td>{{ ($riwayat->currentPage()-1) * $riwayat->perPage() + ($index+1) }}</td>
                                 <td>{{ $item->nomor_surat_masuk }}</td>
                                 <td>{{ $item->created_at->format('d F Y') }}</td>
-                                <td>{{ $item->status }}</td>
+                                <td>{{ $item->statusPublic }}</td>
                                 <td>
                                     <a href="{{ route('pdf.preview', ['namaPDF'=>$item->file_blanko]) }}" target="_blank">
                                         Lihat Surat

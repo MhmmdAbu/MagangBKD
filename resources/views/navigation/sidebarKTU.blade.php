@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\Route;
+@endphp
 <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 <div class="sidebar">
     <div class="logo-section">
