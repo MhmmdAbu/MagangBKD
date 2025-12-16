@@ -153,42 +153,134 @@
 <br><br>
 <h4>Berkas Persyaratan yang Diupload:</h4>
 <table>
+@if($data['jenisLayanan'] == 'Waris')
     <tr>
-        <td>Keterangan Ahli Waris</td>
-        <td class="box">{{ basename($data['file_keterangan_waris_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Keterangan Ahli Waris Asli Telah Dilegalisir</td>
+        <td class="box">{{ basename($data['file_keterangan_waris'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>Pernyataan Ahli Waris</td>
-        <td class="box">{{ basename($data['file_pernyataan_waris_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Pernyataan Ahli Waris Asli Telah Dilegalisir</td>
+        <td class="box">{{ basename($data['file_pernyataan_waris'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>Kuasa Ahli Waris</td>
-        <td class="box">{{ basename($data['file_kuasa_waris_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Kuasa Ahli Waris Asli Telah Dilegalisir</td>
+        <td class="box">{{ basename($data['file_kuasa_waris'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>KTP dan KK</td>
-        <td class="box">{{ basename($data['file_ktp_kk_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan PBB Tahun Terakhir</td>
+        <td class="box">{{ basename($data['file_pbb'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>Surat Keterangan Kematian</td>
-        <td class="box">{{ basename($data['file_kematian_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Surat Keterangan Kematian (Jika Telah Meninggal)</td>
+        <td class="box">{{ basename($data['file_kematian'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>KIA</td>
-        <td class="box">{{ basename($data['file_kia_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan KIA (Jika Dibawah Umur)</td>
+        <td class="box">{{ basename($data['file_kia'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>Sertifikat</td>
-        <td class="box">{{ basename($data['file_sertifikat_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Sertifikat</td>
+        <td class="box">{{ basename($data['file_sertifikat'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>PBB Tahun Terakhir</td>
-        <td class="box">{{ basename($data['file_pbb_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan Surat Pernyataan Bermaterai</td>
+        <td class="box">{{ basename($data['file_pernyataan_materai'] ?? 'Tidak ada') }}</td>
     </tr>
     <tr>
-        <td>Surat Pernyataan Bermaterai</td>
-        <td class="box">{{ basename($data['file_pernyataan_materai_path'] ?? 'Tidak ada') }}</td>
+        <td>Scan KTP dan KK (Semua Ahli Waris)</td>
+        <td class="box">{{ basename($data['file_ktp_kk'] ?? 'Tidak ada') }}</td>
     </tr>
+@endif
+@if($data['jenisLayanan'] == 'Jual Beli')
+    <tr>
+        <td>Scan KTP Penjual</td>
+        <td class="box">{{ basename($data['file_ktp_penjual'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan KTP Pembeli</td>
+        <td class="box">{{ basename($data['file_ktp_pembeli'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kartu Keluarga Penjual</td>
+        <td class="box">{{ basename($data['file_kk_penjual'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Surat Pernyataan Bermaterai</td>
+        <td class="box">{{ basename($data['file_pernyataan_jual_beli'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Sertifikat Induk/Hasil Pemecahan</td>
+        <td class="box">{{ basename($data['file_sertifikat_jual_beli'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan PBB Tahun Terakhir</td>
+        <td class="box">{{ basename($data['file_pbb_jual_beli'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kwitansi Asli</td>
+        <td class="box">{{ basename($data['file_kwitansi_jual_beli'] ?? 'Tidak ada') }}</td>
+    </tr>
+@endif
+@if($data['jenisLayanan'] == 'Hibah')
+    <tr>
+        <td>Scan KTP Penjual</td>
+        <td class="box">{{ basename($data['file_ktp_penjual_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan KTP Pembeli</td>
+        <td class="box">{{ basename($data['file_ktp_pembeli_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kartu Keluarga Penjual</td>
+        <td class="box">{{ basename($data['file_kk_penjual_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kartu Keluarga Pembeli</td>
+        <td class="box">{{ basename($data['file_kk_pembeli_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Sertifikat</td>
+        <td class="box">{{ basename($data['file_sertifikat_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan PBB</td>
+        <td class="box">{{ basename($data['file_pbb_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Surat Pernyataan Bermaterai</td>
+        <td class="box">{{ basename($data['file_pernyataan_hibah'] ?? 'Tidak ada') }}</td>
+    </tr>
+@endif
+@if($data['jenisLayanan'] == 'ptsl')
+    <tr>
+        <td>Scan KTP Penjual</td>
+        <td class="box">{{ basename($data['file_ktp_penjual_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan KTP Pembeli</td>
+        <td class="box">{{ basename($data['file_ktp_pembeli_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kartu Keluarga Penjual</td>
+        <td class="box">{{ basename($data['file_kk_penjual_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Kartu Keluarga Pembeli</td>
+        <td class="box">{{ basename($data['file_kk_pembeli_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Sertifikat PTSL/PRONA</td>
+        <td class="box">{{ basename($data['file_sertifikat_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan PBB Tahun Terakhir</td>
+        <td class="box">{{ basename($data['file_pbb_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+    <tr>
+        <td>Scan Surat Pernyataan Bermaterai</td>
+        <td class="box">{{ basename($data['file_pernyataan_ptsl'] ?? 'Tidak ada') }}</td>
+    </tr>
+@endif
 </table>
 </body>
 </html>

@@ -486,50 +486,45 @@
                             <div class="file-group">
                                 <label for="file_ktp_penjual_ptsl">Scan KTP Penjual:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_ktp_penjual_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_ktp_penjual_ptsl">Choose File</label>
                                     <input type="file" name="file_ktp_penjual_ptsl" id="file_ktp_penjual_ptsl" 
                                         onchange="updateFileName(this, 'name_ktp_penjual_ptsl')">
                                     <span id="name_ktp_penjual_ptsl" class="file-name-display">No File Choosen</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_ktp_pembeli_ptsl">Scan KTP Pembeli:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_ktp_pembeli_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_ktp_pembeli_ptsl">Choose File</label>
                                     <input type="file" name="file_ktp_pembeli_ptsl" id="file_ktp_pembeli_ptsl" 
-                                        onchange="updateFileName(this, 'name_ktp_penjual_ptsl')">
-                                    <span id="name_ktp_penjual_ptsl" class="file-name-display">No File Choosen</span>
+                                        onchange="updateFileName(this, 'name_ktp_pembeli_ptsl')">
+                                    <span id="name_ktp_pembeli_ptsl" class="file-name-display">No File Choosen</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_kk_penjual_ptsl">Scan Kartu Keluarga Penjual:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_kk_penjual_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_kk_penjual_ptsl">Choose File</label>
                                     <input type="file" name="file_kk_penjual_ptsl" id="file_kk_penjual_ptsl" 
                                         onchange="updateFileName(this, 'name_kk_penjual_ptsl')">
                                     <span id="name_kk_penjual_ptsl" class="file-name-display">No File Choosen</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_kk_pembeli_ptsl">Scan Kartu Keluarga Pembeli:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_kk_pembeli_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_kk_pembeli_ptsl">Choose File</label>
                                     <input type="file" name="file_kk_pembeli_ptsl" id="file_kk_pembeli_ptsl" 
                                         onchange="updateFileName(this, 'name_kk_pembeli_ptsl')">
                                     <span id="name_kk_pembeli_ptsl" class="file-name-display">No File Choosen</span>
@@ -537,27 +532,25 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_sertifikat_ptsl">Scan Sertifikat PTSL/PRONA:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_sertifikat_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_sertifikat_ptsl">Choose File</label>
                                     <input type="file" name="file_sertifikat_ptsl" id="file_sertifikat_ptsl"
                                         onchange="updateFileName(this, 'name_sertifikat_ptsl')">
                                     <span id="name_sertifikat_ptsl" class="file-name-display">No File Choosen</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_pbb_ptsl">Scan PBB Tahun Terakhir:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_pbb_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_pbb_ptsl">Choose File</label>
                                     <input type="file" name="file_pbb_ptsl" id="file_pbb_ptsl"
                                         onchange="updateFileName(this, 'name_pbb_ptsl')">
                                     <span id="name_pbb_ptsl" class="file-name-display">No File Choosen</span>
@@ -565,14 +558,13 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="file-group">
                                 <label for="file_pernyataan_ptsl">Scan Surat Pernyataan Bermaterai:</label>
                                 <div class="custom-file-input-group">
-                                    <label class="btn-choose-file" for="file_pernyataan_ptsl">
-                                        Choose File
-                                    </label>
+                                    <label class="btn-choose-file" for="file_pernyataan_ptsl">Choose File</label>
                                     <input type="file" name="file_pernyataan_ptsl" id="file_pernyataan_ptsl"
                                         onchange="updateFileName(this, 'name_pernyataan_ptsl')">
                                     <span id="name_pernyataan_ptsl" class="file-name-display">No File Choosen</span>
@@ -581,6 +573,7 @@
                         </div>
                     </div>
                 </div>
+                
 
                 <!-- File untuk Ahli Waris -->
                 <div id="files-waris" class="file-section" style="display: none;">

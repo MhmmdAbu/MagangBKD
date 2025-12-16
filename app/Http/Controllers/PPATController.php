@@ -75,8 +75,8 @@ class PPATController extends Controller
         ]);
 
         $data = $request->all();
+        $data['jenisLayanan'] = $request->jenisLayanan;
         $pdf = PDF::loadView('PDF.sspd_bphtb', ['data' => $data]);
-
         $pdfName = 'Pengajuan-BPHTB-' . $data['nama_wajib_pajak'] . time() . '.pdf';
 
         // Path relatif ke storage/app/public
@@ -125,7 +125,7 @@ class PPATController extends Controller
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
                 $path = $request->file($field)->store('uploads/pengajuan', 'public');
-                $pengajuan->$field = $path;
+                $pengajuan->{$field . '_path'} = $path; // simpan PATH STRING
             }
         }
         $pengajuan->save();
