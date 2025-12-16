@@ -25,40 +25,34 @@
         </div>
 
         <div class="right-panel">
-            <h2>Langkah-Langkah Pengajuan Permohonan</h2>
+            <h2>Proses Pengajuan Permohonan dan Penyelesaian BPHTB</h2>
 
-            <div class="step">
-                <div class="step-number">1. PPATK Input Data & Upload Berkas</div>
-                <p class="step-description">
-                    Pemohon (melalui PPATK/Notaris) mengisi formulir data diri, objek pajak, dan mengunggah semua dokumen persyaratan.
-                </p>
+            <div class="langkah-item">
+                <h3>1. PPAT/PPATS Input Data & Upload Berkas</h3>
+                <p>- PPAT/PPATS mengisi formulir berupa data diri pemohon (wajib pajak), objek pajak, nilai permohonan BPHTB dan mengunggah semua dokumen dimaksud pada website UPTD PBB BPHTB.</p>
+                <p>- Seluruh dokumen yang diunggah oleh PPAT/PPATS akan diproses jika telah memenuhi persyaratan.</p>
+                <p>- Dokumen upload yang tidak memenuhi persyaratan akan disampaikan melalui catatan/keterangan untuk dilakukan upload ulang dokumen.</p>
             </div>
-
-            <div class="step">
-                <div class="step-number">2. Pengecekan Kelengkapan Data</div>
-                <p class="step-description">
-                    Sistem/staf memverifikasi apakah semua data dan berkas yang di unggah sudah lengkap. (Jika tidak lengkap: kembali ke langkah 1).
-                </p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">3. Disposisi</div>
-                <p class="step-description">
-                    Berkas diteruskan untuk disposisi persetujuan internal. (Jika tidak disetujui: Kembali ke langkah 1).
-                </p>
-            </div>
-
-            <div class="step">
-                <div class="step-number">4. Survey Lapangan</div>
-                <p class="step-description">
-                    Tim melakukan survey lokasi dan memvalidasi hasil survey terhadap data permohonan. (Jika Tidak Sesuai: Pemohon dipanggil untuk Klarifikasi).
-                </p>
-            </div>
-            <div class="step">
-                <div class="step-number">5. Penanda Tanganan</div>
-                <p class="step-description">
-                    Jika semua data sesuai, berkas diproses untuk ditandatangani oleh Pimpinan BKD.
-                </p>
+            <div class="langkah-item">
+                <h3>2. UPTD PBB & BPHTB Proses Permohonan dan Penyelesaian</h3>
+                <p>UPTD memverifikasi apakah semua data dan berkas yang di unggah sudah lengkap dan memenuhi persyaratan penyelesaian BPHTB</p>
+                <p>a. Proses Validasi BPHTB Terklarifikasi</p>
+                <p>- Proses pengadministrasian(penomoran dokumen).</p>
+                <p>- Proses Survey.</p>
+                <p>- Verifikasi Nilai Permohonan BPHTB.</p>
+                <p>- Proses Validasi (paraf KTU UPTD, Kepala UPTD).</p>
+                <p>- Proses validasi (sekretaris BKD, Kepala BKD).</p>
+                <p>- Pencetakan NTPD (Nomor Transaksi Penerimaan Daerah).</p>
+                <p>b. Proses Validasi BPHTB Tidak Terklarifikasi</p>
+                <p>- Proses pengadministrasian(penomoran dokumen).</p>
+                <p>- Proses Survey.</p>
+                <p>- Klarifikasi Kesesuaian Nilai dan Hasil Survey Objek BPHTB.</p>
+                <p>- Penyampaian hasil klarifikasi ke PPAT/PPATS.</p>
+                <p>- PPAT/PPATS Mengajukan Jawaban/Catatan Atas Hasil Klarifikasi UPTD PBB & BPHTB.</p>
+                <p>- Klarifikasi Jawaban yang disetujui oleh PPAT/PPATS akan diproses validasi (poin a titik 3).</p>
+                <p>- Klarifikasi jawaban yang tidak disetujui oleh PPAT/PPATS akan diajukan pencermatan lebih lanjut ke Kepala BKD.</p>
+                <p>- Hasil pencermatan Kepala BKD akan disampaikan kembali kepada PPAT/PPATS melalui UPTD PBB & BPHTB.</p>
+                <p>- Penyelesaian hasil klarifikasi yang telah dicermati dan disetujui oleh PPAT/PPATS selanjutnya akan diproses validasi (poin a titik 3).</p>
             </div>
         </div>
     </div>
