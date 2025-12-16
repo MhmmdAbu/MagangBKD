@@ -15,10 +15,10 @@ class AdministratorController extends Controller
         $totalSemua = Pengajuan::count();
 
         // Berkas Selesai
-        $totalSelesai = Pengajuan::where('status', 'Selesai')->count();
+        $totalSelesai = Pengajuan::where('status', 'Ditolak', 'Selesai')->count();
 
         // Berkas Menunggu (selain Selesai & Cermati)
-        $totalMenunggu = Pengajuan::whereNotIn('status', ['Selesai', 'Cermati'])->count();
+        $totalMenunggu = Pengajuan::whereNotIn('status', ['Selesai', 'Ditolak' ,'Cermati'])->count();
 
         // Permohonan Per Tahun
         $permohonanPerTahun = Pengajuan::selectRaw('YEAR(created_at) as tahun, COUNT(*) as total')
@@ -39,7 +39,7 @@ class AdministratorController extends Controller
     public function daftarBerkas(Request $request) 
     {
         $query = Pengajuan::query();
-        $query->whereNotIn('status', ['Cermati', 'Selesai']);
+        $query->whereNotIn('status', ['Cermati', 'Ditolak','Selesai']);
 
         $searchableColumns = [
             'nomor_surat_masuk',
@@ -109,11 +109,13 @@ class AdministratorController extends Controller
             'file_kuasa_waris',
             'file_kematian',
             'file_kia',
+            'file_disposisi',
         ];
 
         $id                = $pengajuan->id;
         $status            = $pengajuan->status;
         $statusPublic      = $pengajuan->statusPublic;
+        $catatan           = $pengajuan->catatan;
         $kelengkapan = [];
 
         foreach ($fileColumns as $col) {
@@ -127,6 +129,7 @@ class AdministratorController extends Controller
         }
 
         return view('Administrator.component.review', [
+            'catatan'      => $catatan,
             'pdfUtama'     => $namaPDF,
             'kelengkapan'  => $kelengkapan,
             'status'       => $status,
@@ -145,13 +148,27 @@ class AdministratorController extends Controller
         return back()->with('success', 'Berkas telah divalidasi.');
     }
 
-    public function setInvalid(Request $request, $id)
+    public function formCatatan($id)
     {
         $pengajuan = Pengajuan::findOrFail($id);
-        $pengajuan->status = 'Tidak Valid';
-        $pengajuan->save();
 
-        return back()->with('success', 'Berkas ditandai tidak valid.');
+        return view('Administrator.component.catatan', compact('pengajuan'));
+    }
+
+    public function simpanCatatan(Request $request, $id)
+    {
+        $request->validate([
+            'catatan' => 'required|string|min:5',
+        ]);
+
+        $pengajuan = Pengajuan::findOrFail($id);
+
+        // update status
+        $pengajuan->status = 'Ditolak';
+        $pengajuan->statusPublic = 'Ditolak';
+        $pengajuan->catatan = $request->catatan;
+        $pengajuan->save();
+        return redirect()->route('administrator.berkas_terdaftar')->with('success', 'Berkas berhasil ditandai tidak valid.');
     }
 
 
@@ -159,7 +176,7 @@ class AdministratorController extends Controller
     public function arsipBerkas(Request $request)
     {
         // Ambil hanya berkas yang statusnya SELESAI
-        $query = Pengajuan::where('status', 'Selesai');
+        $query = Pengajuan::where('status', 'Ditolak','Selesai');
 
         $searchableColumns = [
             'nomor_surat_masuk',

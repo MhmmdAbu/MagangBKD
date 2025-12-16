@@ -28,7 +28,7 @@
                 <span class="profile-icon">
                     <i class="fas fa-user"></i>
                 </span>
-                Aisyah
+                {{ auth()->user()->name }}
             </a>
         </div>
         <div class="nav-item">

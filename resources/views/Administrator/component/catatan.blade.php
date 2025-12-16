@@ -53,63 +53,30 @@ use Illuminate\Support\Facades\Storage;
         font-size: 1.5em;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
-    .iframe-container {
-        position: relative;
+    .form-group {
+        margin-bottom: 20px;
     }
-    iframe {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        height: 600px;
-        transition: opacity 0.5s ease;
-    }
-    .loading-spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2em;
-        color: #4a90e2;
-        display: none; /* Tampilkan saat loading */
-    }
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    li {
-        background: rgba(249, 249, 249, 0.8);
-        margin: 15px 0;
-        padding: 20px;
-        border-radius: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        border-left: 5px solid #4a90e2;
-    }
-    li:hover {
-        background: rgba(232, 244, 253, 0.9);
-        transform: translateX(5px);
-    }
-    .icon {
-        margin-right: 15px;
-        color: #4a90e2;
-        font-size: 1.2em;
-    }
-    a {
-        color: #4a90e2;
-        text-decoration: none;
+    label {
+        display: block;
         font-weight: 600;
-        transition: all 0.3s ease;
-        padding: 8px 12px;
-        border-radius: 8px;
+        color: #4a90e2;
+        margin-bottom: 8px;
     }
-    a:hover {
-        color: #fff;
-        background: #4a90e2;
-        text-decoration: none;
+    textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1em;
+        resize: vertical;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    textarea:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
     }
     hr {
         border: none;
@@ -131,6 +98,8 @@ use Illuminate\Support\Facades\Storage;
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        border: none;
+        cursor: pointer;
     }
     .btn::before {
         content: '';
@@ -148,15 +117,13 @@ use Illuminate\Support\Facades\Storage;
         width: 300px;
         height: 300px;
     }
-    .btn-Tdkvalid {
+    .btn-batal {
         background: linear-gradient(135deg, #ff6b6b, #ee5a52);
         color: #fff;
-        border: none;
     }
-    .btn-valid {
+    .btn-selesai {
         background: linear-gradient(135deg, #4caf50, #45a049);
         color: #fff;
-        border: none;
     }
     .page-footer {
         text-align: center;
@@ -186,8 +153,6 @@ use Illuminate\Support\Facades\Storage;
     @media (max-width: 768px) {
         body { padding: 10px; }
         .card { padding: 15px; margin-bottom: 15px; }
-        iframe { height: 400px; }
-        li { flex-direction: column; align-items: flex-start; padding: 15px; }
         .modal-footer { flex-direction: column; gap: 10px; }
         h3 { font-size: 1.2em; }
     }
@@ -195,41 +160,27 @@ use Illuminate\Support\Facades\Storage;
 
 <div class="container">
     <div class="card">
-        <h3><i class="fas fa-file-pdf"></i> Preview Surat Utama</h3>
-        <div class="iframe-container">
-            <iframe src="{{ Storage::url('pdf_pengajuan/'.$pdfUtama) }}" title="Preview PDF Utama" onload="hideSpinner()"></iframe>
-        </div>
-    </div>
+        <h3><i class="fas fa-edit"></i> Form Catatan</h3>
+        <form action="{{ route('simpan.catatan', $pengajuan->id) }}" method="POST">
+            @csrf
 
-    <div class="card">
-        <h3><i class="fas fa-list-ul"></i> Daftar Berkas Kelengkapan</h3>
-        <ul>
-            @if($kelengkapan)
-                @foreach ($kelengkapan as $file)
-                    <li>
-                        <span><i class="fas fa-file-alt icon"></i> {{ ucwords(str_replace('_', ' ', $file['nama_kolom'])) }}</span>
-                        <a href="{{ route('ktu.preview.kelengkapan', ['namaPDF'=>basename($file['nama_file']) ]) }}" target="_blank">
-                            <i class="fas fa-eye"></i> Lihat Surat
-                        </a>
-                    </li>
-                @endforeach
-            @else
-                <li><i class="fas fa-exclamation-triangle icon"></i> Tidak ada berkas kelengkapan.</li>
-            @endif
-        </ul>
-    </div>
+            <div class="form-group">
+                <label for="catatan">Catatan:</label>
+                <textarea name="catatan" rows="6" required>
+                    {{ old('catatan', $pengajuan->catatan ?? '') }}
+                </textarea>
+            </div>
 
-    <hr>
-
-    <div class="modal-footer">
-        @if($status == 'Disposisi KTU')
-            <form action="{{ route('ktu.validasi', $id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin memvalidasi berkas ini?')">
-                @csrf
-                <button type="submit" class="btn btn-valid ">
-                    <i class="fas fa-check"></i> SETUJU
+            <div class="modal-footer">
+                <button type="button" class="btn btn-batal" onclick="window.history.back()">
+                    Batal
                 </button>
-            </form>
-        @endif
+
+                <button type="submit" class="btn btn-selesai">
+                    Simpan
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 

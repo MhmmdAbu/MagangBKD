@@ -39,17 +39,6 @@
 </tr>
 </table>
 
-<div class="section-title">Terlampir dokumen sebagai berikut:</div>
-<ul>
-    <li class="check">☑ Fotocopy SPPT/STS/Struk ATM bukti pembayaran PBB</li>
-    <li class="check">☑ Fotocopy identitas (KK/KTP)</li>
-    <li>☑ Surat kuasa dari wajib pajak</li>
-    <li>☑ Fotocopy NPWP</li>
-    <li>☑ Kwitansi pembelian</li>
-    <li class="check">☑ Surat pernyataan</li>
-    <li>☑ Dokumen lainnya</li>
-</ul>
-
 <div class="section-title">A. Jenis Perolehan/Peralihan Hak :</div>
 <span class="filled">[Data terisi bila ada]</span>
 

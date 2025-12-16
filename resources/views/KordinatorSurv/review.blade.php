@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Storage;
         transform: translateY(-8px) scale(1.02);
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     }
-    h3 {
+    h2 {
         color: #4a90e2;
         font-weight: 700;
         margin-bottom: 20px;
@@ -110,6 +110,58 @@ use Illuminate\Support\Facades\Storage;
         color: #fff;
         background: #4a90e2;
         text-decoration: none;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 8px;
+    }
+    select, input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    select:focus, input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
+    }
+    .btn-survey {
+        background: linear-gradient(135deg, #4a90e2, #357abd);
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .btn-survey::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transition: width 0.6s, height 0.6s;
+        transform: translate(-50%, -50%);
+    }
+    .btn-survey:hover::before {
+        width: 300px;
+        height: 300px;
     }
     hr {
         border: none;
@@ -195,7 +247,11 @@ use Illuminate\Support\Facades\Storage;
 
 <div class="container">
     <div class="card">
-        <h3><i class="fas fa-file-pdf"></i> Preview Surat Utama</h3>
+        <h2><i class="fas fa-file-pdf"></i> Preview Surat Utama</h2>
+        <h3>Nomor Wajib Pajak : {{ $nomorWP }}</h3>
+        @if($status === 'Sedang Disurvey')
+            <h3>Nama Surveyor : {{ $namaSurveyor }}</h3>
+        @endif
         <div class="iframe-container">
             <iframe src="{{ Storage::url('pdf_pengajuan/'.$pdfUtama) }}" title="Preview PDF Utama" onload="hideSpinner()"></iframe>
         </div>
@@ -208,7 +264,7 @@ use Illuminate\Support\Facades\Storage;
                 @foreach ($kelengkapan as $file)
                     <li>
                         <span><i class="fas fa-file-alt icon"></i> {{ ucwords(str_replace('_', ' ', $file['nama_kolom'])) }}</span>
-                        <a href="{{ route('ktu.preview.kelengkapan', ['namaPDF'=>basename($file['nama_file']) ]) }}" target="_blank">
+                        <a href="{{ route('kordinator.preview.kelengkapan', ['namaPDF'=>basename($file['nama_file']) ]) }}" target="_blank">
                             <i class="fas fa-eye"></i> Lihat Surat
                         </a>
                     </li>
@@ -219,18 +275,76 @@ use Illuminate\Support\Facades\Storage;
         </ul>
     </div>
 
-    <hr>
+    @if(isset($catatan) && !empty($catatan))
+        <div class="card">
+            <h3><i class="fas fa-sticky-note"></i> Catatan Pengajuan</h3>
+                <div class="catatan-content">
+                    {{ $catatan }}
+                </div>
+        </div>
+    @endif
 
-    <div class="modal-footer">
-        @if($status == 'Disposisi KTU')
-            <form action="{{ route('ktu.validasi', $id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin memvalidasi berkas ini?')">
+    <!-- Card baru untuk menambahkan dan memilih surveyor -->
+    @if($status == "Menunggu Surveyor")
+        <div class="card">
+            <h3><i class="fas fa-user-check"></i> Pilih Surveyor</h3>
+            <form action="{{ route('simpan.surveyor', $id) }}" method="POST"> <!-- Ganti route sesuai kebutuhan -->
                 @csrf
-                <button type="submit" class="btn btn-valid ">
-                    <i class="fas fa-check"></i> SETUJU
+                <div class="form-group">
+                    <label for="surveyor"><i class="fas fa-users icon"></i> Pilih Surveyor:</label>
+                    <select id="surveyor" name="surveyor_id" required>
+                        <option value="">-- Pilih Surveyor --</option>
+                        @if(isset($surveyors) && count($surveyors) > 0)
+                            @foreach($surveyors as $surveyor)
+                                <option value="{{ $surveyor->id }}" {{ old('surveyor_id') == $surveyor->id ? 'selected' : '' }}>
+                                    {{ $surveyor->name }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="" disabled>Tidak ada surveyor tersedia</option>
+                        @endif
+                    </select>
+                </div>
+                <button type="submit" class="btn-survey" onclick="return confirm('Apakah Anda yakin ingin menyimpan surveyor ini?')">
+                    <i class="fas fa-save"></i> Simpan Surveyor
                 </button>
             </form>
-        @endif
-    </div>
+        </div>
+    @elseif($status === 'Sedang Disurvey')
+        <div class="card">
+            <h3><i class="fas fa-user-check"></i> Pilih Surveyor</h3>
+            <form action="{{ route('simpan.surveyor', $id) }}" method="POST"> <!-- Ganti route sesuai kebutuhan -->
+                @csrf
+                <div class="form-group">
+                    <label for="surveyor"><i class="fas fa-users icon"></i> Pilih Surveyor:</label>
+                    <select id="surveyor" name="surveyor_id" required>
+                        <option value="{{$IdSurveyor}}">{{$namaSurveyor}}</option>
+                        @if(isset($surveyors) && count($surveyors) > 0)
+                            @foreach($surveyors as $surveyor)
+                                @if($namaSurveyor != $surveyor->name )
+                                    <option value="{{ $surveyor->id }}" {{ old('surveyor_id') == $surveyor->id ? 'selected' : '' }}>
+                                        {{ $surveyor->name }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        @else
+                            <option value="" disabled>Tidak ada surveyor tersedia</option>
+                        @endif
+                    </select>
+                </div>
+                <button type="submit" class="btn-survey" onclick="return confirm('Apakah Anda yakin ingin menyimpan surveyor ini?')">
+                    <i class="fas fa-save"></i> Simpan Surveyor
+                </button>
+            </form>
+        </div>
+    @endif
+    @if($status === 'Sedang Disurvey' && auth()->id() == $IdSurveyor )
+            <form action="{{ route('kordinator.surveyForm', $id) }}" method="GET"style="display: flex; justify-content: center;">
+                <button type="submit" class="btn-survey">
+                    <i class="fas fa-pen"></i> Mulai / Isi Survey
+                </button>
+            </form>
+    @endif
 </div>
 
 <div class="page-footer">

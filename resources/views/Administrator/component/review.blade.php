@@ -219,14 +219,25 @@ use Illuminate\Support\Facades\Storage;
         </ul>
     </div>
 
+    @if(isset($catatan) && !empty($catatan))
+        <div class="card">
+            <h3><i class="fas fa-sticky-note"></i> Catatan Pengajuan</h3>
+                <div class="catatan-content">
+                    {{ $catatan }}
+                </div>
+        </div>
+    @endif
+
     <hr>
 
     <div class="modal-footer">
         @if($status == 'Menunggu Verifikasi')
-            <button class="btn btn-Tdkvalid" data-bs-toggle="modal" data-bs-target="#modalInvalid">
-                <i class="fas fa-times"></i> Tidak Valid
-            </button>
-
+            <form action="{{ route('form.catatan', $id) }}" method="GET" onsubmit="return confirm('Apakah Anda yakin ingin menolak berkas ini?')">
+                @csrf
+                <button type="submit" class="btn btn-Tdkvalid">
+                    <i class="fas fa-times"></i> Tidak Valid
+                </button>
+            </form>
             <form action="{{ route('validasi', $id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin memvalidasi berkas ini?')">
                 @csrf
                 <button type="submit" class="btn btn-valid ">

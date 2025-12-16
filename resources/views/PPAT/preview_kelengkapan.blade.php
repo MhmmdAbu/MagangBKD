@@ -66,6 +66,14 @@ use Illuminate\Support\Facades\Storage;
         margin-right: 10px;
         color: #4a90e2;
     }
+    .catatan-content {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-style: italic;
+        color: #555;
+    }
     hr {
         border: none;
         height: 2px;
@@ -112,6 +120,18 @@ use Illuminate\Support\Facades\Storage;
                 <li>Tidak ada berkas kelengkapan.</li>
             @endif
         </ul>
+    </div>
+
+    <!-- Card baru untuk menampilkan catatan jika ada -->
+    <div class="card">
+        <h3>Catatan Pengajuan</h3>
+        @if(isset($catatan) && !empty($catatan))
+            <div class="catatan-content">
+                {{ $catatan }}
+            </div>
+        @else
+            <p style="text-align: center; color: #6c757d; font-style: italic;">Tidak ada catatan.</p>
+        @endif
     </div>
 
     <hr>

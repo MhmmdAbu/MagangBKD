@@ -186,17 +186,17 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="luas*njop_pbb_tanah" class="form-label">Luas x NJOP PBB:</label>
-                        <input type="text" class="form-control" id="luas_njop_pbb_tanah" name="luas_njop_pbb_tanah">
+                        <input type="text" class="form-control" id="luas_njop_pbb_tanah" name="luas_njop_pbb_tanah" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="luas*njop_pbb_bangunan" class="form-label">Luas x NJOP PBB:</label>
-                        <input type="text" class="form-control" id="luas_njop_pbb_bangunan" name="luas_njop_pbb_bangunan">
+                        <input type="text" class="form-control" id="luas_njop_pbb_bangunan" name="luas_njop_pbb_bangunan" readonly>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="njop_pbb" class="form-label">NJOP PBB/m2:</label>
-                        <input type="text" class="form-control" id="njop_pbb" name="njop_pbb">
+                        <label for="njop_pbb" class="form-label">Total NJOP PBB/m2 (Tanah x Banguan):</label>
+                        <input type="text" class="form-control" id="njop_pbb" name="njop_pbb" readonly>
                     </div>
                     <div class="col-md-6">
                         <label for="harga_transaksi" class="form-label">Harga Transaksi Nilai Pasar</label>
@@ -206,7 +206,13 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="jenis_perolehan_hak" class="form-label">Jenis Perolehan hak atas tanah atau dan bangunan</label>
-                        <input type="text" class="form-control" id="jenis_perolehan_hak" name="jenis_perolehan_hak">
+                        <select class="form-control" id="jenis_perolehan_hak" name="jenis_perolehan_hak" required>
+                            <option value="" disabled selected>Pilih Jenis Perolehan Hak</option>
+                            <option value="jual_beli">Jual Beli</option>
+                            <option value="hibah">Hibah</option>
+                            <option value="waris">Waris</option>
+                            <option value="ptsl">PTSL</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <label for="Nomor Sertifikat" class="form-label">Nomor Sertifikat</label>
@@ -218,23 +224,23 @@
                 <h3 class="text-start mb-4">Penghitungan PBB</h3><hr>
                 <div class="row mb-3">
                     <label for="npop" class="form-label">Nilai Perolehan Objek Pajak (NPOP)</label>
-                    <input type="text" class="form-control" id="npop" name="npop">
+                    <input type="text" class="form-control" id="npop" name="npop" readonly>
                 </div>
                 <div class="row mb-3">
                     <label for="npoptkp" class="form-label">Nilai Perolehan Objek Pajak Tidak Kena Pajak (NPOPTKP)</label>
-                    <input type="text" class="form-control" id="npoptkp" name="npoptkp">
+                    <input type="text" class="form-control" id="npoptkp" name="npoptkp" readonly>
                 </div>
                 <div class="row mb-3">
                     <label for="npopkp" class="form-label">Nilai Perolehan Objek Pajak Kena Pajak (NPOPKP)</label>
-                    <input type="text" class="form-control" id="npopkp" name="npopkp">
+                    <input type="text" class="form-control" id="npopkp" name="npopkp" readonly>
                 </div>
                 <div class="row mb-3">
                     <label for="bphtb_terutang" class="form-label">Bea Perolehan hak atas tanah dan bangunan yang terutang</label>
-                    <input type="text" class="form-control" id="bphtb_terutang" name="bphtb_terutang">
+                    <input type="text" class="form-control" id="bphtb_terutang" name="bphtb_terutang" readonly>
                 </div>
                 <div class="row mb-3">
                     <label for="pengenaan15%" class="form-label">Pengenaan 15% karena Wasiat/Hibah Wasiat/Pemberian Hak Pengelolaan</label>
-                    <input type="text" class="form-control" id="pengenaan15" name="pengenaan15">
+                    <input type="text" class="form-control" id="pengenaan15" name="pengenaan15" readonly>
                 </div>
                 <div class="row mb-3">
                     <label for="bphtb_bayar" class="form-label">Bea Perolehan Hak atas Tanah dan Bangunan yang harus dibayar</label>
@@ -993,6 +999,55 @@ document.addEventListener("DOMContentLoaded", function() {
     statusInput.addEventListener('change', function () {
         filterForm.submit();
     });
-
 });
+
+    let totalNJOP = 0;
+    function toNumber(value) {
+        return parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+    }
+
+    function formatRupiah(angka) {
+        return angka.toLocaleString('id-ID');
+    }
+
+    function hitungNJOP() {
+        const luasTanah = toNumber(document.getElementById('luas_tanah').value);
+        const luasBangunan = toNumber(document.getElementById('luas_bangunan').value);
+
+        const njopTanah = toNumber(document.getElementById('njop_pbb_tanah').value);
+        const njopBangunan = toNumber(document.getElementById('njop_pbb_bangunan').value);
+
+        const totalTanah = luasTanah * njopTanah;
+        const totalBangunan = luasBangunan * njopBangunan;
+        totalNJOP = totalTanah * totalBangunan;
+
+        document.getElementById('luas_njop_pbb_tanah').value = formatRupiah(totalTanah);
+        document.getElementById('luas_njop_pbb_bangunan').value = formatRupiah(totalBangunan);
+        document.getElementById('njop_pbb').value = formatRupiah(totalNJOP);
+        hitungNPOP();
+    }
+
+    const fields = [
+        'luas_tanah',
+        'luas_bangunan',
+        'njop_pbb_tanah',
+        'njop_pbb_bangunan'
+    ];
+
+    fields.forEach(id => {
+        document.getElementById(id).addEventListener('input', hitungNJOP);
+    })
+    
+    function hitungNPOP() {
+        const hargaTransaksi = toNumber(document.getElementById('harga_transaksi').value);
+
+        const npop = Math.max(totalNJOP, hargaTransaksi);
+
+        document.getElementById('npop').value =
+            npop > 0 ? formatRupiah(npop) : '';
+    }
+
+    document.getElementById('harga_transaksi')
+        .addEventListener('input', hitungNPOP);
+    
 </script>

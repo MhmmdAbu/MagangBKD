@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pengajuan', function (Blueprint $table) {
             $table->id();
-        
             $table->string('nomor_surat_masuk');
             $table->string('status');
             $table->string('statusPublic');
@@ -32,6 +31,7 @@ return new class extends Migration
             $table->string('kode_pos')->nullable();
             $table->string('nomor_tlp')->nullable();
             $table->string('npwp')->nullable();
+            $table->string('nop')->nullable();
             $table->text('alamat_wp')->nullable();
 
             // Upload File
@@ -50,9 +50,7 @@ return new class extends Migration
             $table->string('file_kuasa_waris')->nullable();
             $table->string('file_kematian')->nullable();
             $table->string('file_disposisi')->nullable();
-            $table->string('file_survey')->nullable();
             $table->string('file_kia')->nullable();
-
             $table->timestamps();
         });
     }

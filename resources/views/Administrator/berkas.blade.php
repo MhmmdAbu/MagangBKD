@@ -72,54 +72,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Detail Berkas -->
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailModalLabel">Detail Berkas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Nomor Surat:</strong> <span id="modal-nomor-surat"></span></p>
-                    <p><strong>Tanggal Dikirim:</strong> <span id="modal-tanggal"></span></p>
-                    <p><strong>Nama Wajib Pajak:</strong> <span id="modal-nama"></span></p>
-                    <p><strong>Status Surat:</strong> <span id="modal-status"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-Tdkvalid" id="btnTidakValid" data-bs-dismiss="modal">Tidak Valid</button>
-                    <button type="button" class="btn btn-valid" data-bs-dismiss="modal">Valid</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Alasan Tidak Valid -->
-    <div class="modal fade" id="invalidReasonModal" tabindex="-1" aria-labelledby="invalidReasonModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="invalidReasonModalLabel">Alasan Tidak Valid</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="invalidReasonForm">
-                        <div class="mb-3">
-                            <label for="alasanTextarea" class="form-label">Masukkan Alasan:</label>
-                            <textarea class="form-control" id="alasanTextarea" rows="4" placeholder="Jelaskan alasan berkas tidak valid..." required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="btnKirimAlasan">Kirim</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     // Event listener untuk mengisi modal detail saat dibuka
     const detailModal = document.getElementById('detailModal');

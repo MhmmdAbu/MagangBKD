@@ -28,6 +28,7 @@ class Pengajuan extends Model
         'nomor_tlp',
         'npwp',
         'alamat_wp',
+        'nop',
 
         // Upload File
         'file_ktp_pihak_pertama',
@@ -49,4 +50,9 @@ class Pengajuan extends Model
         'file_survey',
         'file_kia',
     ];
+    public function survey()
+    {
+        return $this->hasOne(Survey::class);
+    }
+
 }

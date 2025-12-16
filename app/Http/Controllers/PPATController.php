@@ -124,6 +124,7 @@ class PPATController extends Controller
         $pengajuan->nomor_tlp         = $request->nomor_tlp;
         $pengajuan->npwp              = $request->npwp;
         $pengajuan->alamat_wp         = $request->alamat_wp;
+        $pengajuan->nop               = $request->nop_PBB;
         $pengajuan->file_blanko       = $pdfName;
 
         // ===== UPLOAD FILE GENERAL HANDLER =====
@@ -233,6 +234,7 @@ class PPATController extends Controller
         ];
 
         $kelengkapan = [];
+        $catatan = $pengajuan->catatan;
 
         foreach ($fileColumns as $col) {
             if (!empty($pengajuan->$col)) {
@@ -245,6 +247,7 @@ class PPATController extends Controller
         }
 
         return view('PPAT.preview_kelengkapan', [
+            'catatan' => $catatan,
             'pdfUtama' => $namaPDF,
             'kelengkapan' => $kelengkapan,
         ]);
@@ -286,5 +289,4 @@ class PPATController extends Controller
         session()->forget(['namaPDF', 'show_modal']);
         return redirect()->route('pengajuan')->with('success', 'Pengajuan berhasil dibatalkan dan dihapus.');
     }
-
 }

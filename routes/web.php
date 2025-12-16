@@ -36,7 +36,8 @@ Route::middleware(['auth', 'role:Administrator'])->prefix('Administrator')->grou
     Route::GET('/profile', [AdministratorController::class, 'profile'])->name('administrator.profile');
 
     Route::POST('/{id}/valid', [AdministratorController::class, 'setValid'])->name('validasi');
-    Route::POST('/{id}/invalid', [AdministratorController::class, 'setInvalid'])->name('invalidasi');
+    Route::get('/berkas/{id}/catatan', [AdministratorController::class, 'formCatatan'])->name('form.catatan');
+    Route::post('/berkas/{id}/catatan', [AdministratorController::class, 'simpanCatatan'])->name('simpan.catatan');
 });
 
 // Halaman KA UPTD
@@ -50,11 +51,15 @@ Route::middleware(['auth', 'role:kepala_uptd'])->prefix('kepala_uptd')->group(fu
 
 // Halaman KTU
 Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
-    Route::GET('/ktu', [KtuController::class, 'index'])->name('ktu.dashboard');
-    Route::GET('/ktu/berkas', [KtuController::class, 'daftarBerkas'])->name('ktu.berkas');
-    Route::GET('/ktu/arsip', [KtuController::class, 'arsipBerkas'])->name('ktu.arsip');
-    Route::GET('/ktu/panduan', [KtuController::class, 'panduan'])->name('ktu.panduan');
-    Route::GET('/ktu/profile', [KtuController::class, 'profile'])->name('ktu.profile');
+    Route::GET('/', [KtuController::class, 'index'])->name('ktu.dashboard');
+    Route::GET('/berkas', [KtuController::class, 'daftarBerkas'])->name('ktu.berkas');
+    Route::GET('/preview/{namaPDF}', [KtuController::class, 'previewBerkas'])->name('ktu.preview.berkas');
+    Route::GET('/preview/kelengkapan/{namaPDF}', [KTUController::class, 'previewBerkasKelengkapan'])->name('ktu.preview.kelengkapan');
+    Route::GET('/arsip', [KtuController::class, 'arsipBerkas'])->name('ktu.arsip');
+    Route::GET('/panduan', [KtuController::class, 'panduan'])->name('ktu.panduan');
+    Route::GET('/profile', [KtuController::class, 'profile'])->name('ktu.profile');
+
+    Route::POST('/{id}/valid', [KtuController::class, 'setValid'])->name('ktu.validasi');
 });
 
 // Halaman PPAT
@@ -82,9 +87,17 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function() {
 
 // Halaman Kordinator survey
 Route::middleware(['auth', 'role:koordinator_survey'])->prefix('koordinator_survey')->group(function(){    
-    Route::GET('/kordinator', [kordinatorController::class, 'index'])->name('kordinator.dashboard');
-    Route::GET('/kordinator/berkas', [kordinatorController::class, 'daftarBerkas'])->name('kordinator.berkas');
-    Route::GET('/kordinator/survey', [kordinatorController::class, 'surveyBerkas'])->name('kordinator.survey');
-    Route::GET('/kordinator/panduan', [kordinatorController::class, 'panduan'])->name('kordinator.panduan');
-    Route::GET('/kordinator/profile', [kordinatorController::class, 'profile'])->name('kordinator.profile');
+    Route::GET('/', [kordinatorController::class, 'index'])->name('kordinator.dashboard');
+    Route::GET('/berkas', [kordinatorController::class, 'daftarBerkas'])->name('kordinator.berkas');
+    
+    Route::GET('/preview/{namaPDF}', [kordinatorController::class, 'previewBerkas'])->name('kordinator.preview.berkas');
+    Route::GET('/preview/kelengkapan/{namaPDF}', [kordinatorController::class, 'previewBerkasKelengkapan'])->name('kordinator.preview.kelengkapan');
+    
+    Route::GET('/survey', [kordinatorController::class, 'surveyBerkas'])->name('kordinator.survey');
+    Route::GET('/survey-form/{id}', [kordinatorController::class, 'surveyForm'])->name('kordinator.surveyForm');
+    Route::GET('/panduan', [kordinatorController::class, 'panduan'])->name('kordinator.panduan');
+    Route::GET('/profile', [kordinatorController::class, 'profile'])->name('kordinator.profile');
+
+    Route::POST('/pengajuan/{id}/pilih-surveyor',[kordinatorController::class, 'simpanSurveyor'])->name('simpan.surveyor');
+    Route::POST('/submit-survey/{id}', [kordinatorController::class, 'submitForm'])->name('proses.surveyForm');
 });
