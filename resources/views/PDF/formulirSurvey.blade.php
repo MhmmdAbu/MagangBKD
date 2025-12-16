@@ -2,16 +2,18 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Formulir Penelitian SPPD-BPHTB</title>
 <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    .title { text-align: center; font-size: 20px; font-weight: bold; margin-bottom: 25px; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    td { padding: 5px; vertical-align: top; }
-    .filled { font-weight: bold; }
-    .section-title { margin-top: 20px; font-weight: bold; }
-    .line { border-bottom: 1px dotted #000; display: inline-block; width: 250px; }
-    .check { font-weight: bold; }
+    body { font-family: Arial, sans-serif; font-size: 13px; margin: 32px; }
+    .title { text-align: center; font-size: 19px; font-weight: bold; margin-bottom: 15px; }
+
+    table { width: 100%; border-collapse: collapse; }
+    td { vertical-align: top; padding: 3px 0; }
+
+    /* garis input dinamis */
+    .input-line { display: inline-block; min-width: 180px; border-bottom: 1px dotted #000; }
+
+    /* format judul bagian */
+    .section { margin-top: 14px; font-weight: bold; }
 </style>
 </head>
 <body>
@@ -21,60 +23,84 @@
 <table>
 <tr>
     <td width="50%">
-        Lampiran : <b>BPHTB</b><br>
-        Hal : <span class="filled">Verifikasi</span><br><br>
-
-        Tanggal Terima : <span class="filled">17/10/2025</span><br>
-        Nama Wajib Pajak : <span class="filled">[Nama terisi]</span><br>
-        NPWP : <span class="filled">[NPWP terisi]</span>
+        <table>
+            <tr><td width="150px">Lampiran</td><td width="10px">:</td><td>BPHTB</td></tr>
+            <tr><td>Hal</td><td>:</td><td>Verifikasi</td></tr>
+            <tr><td>Tanggal Terima</td><td>:</td><td><span class="input-line">{{ $data['tgl_terima'] }}</span></td></tr>
+            <tr><td>Nama Wajib Pajak</td><td>:</td><td><span class="input-line">{{ $data['nama_wajib_pajak'] }}</span></td></tr>
+            <tr><td>NPWP</td><td>:</td><td><span class="input-line">{{ $data['npwp'] }}</span></td></tr>
+        </table>
     </td>
 
     <td width="50%">
-        NOP : <span class="filled">73.72.xxx.xxx.xxx.xxx</span><br>
-        Alamat : <span class="filled">Jl. ———</span><br>
-        Desa/Kelurahan : <span class="filled">wat... (sesuai foto)</span><br>
-        Kecamatan : <span class="filled">Soreang</span><br>
-        PPAT/Notaris : <span class="filled">C. Soreang</span>
+        <table>
+            <tr><td width="150px">NOP</td><td width="10px">:</td><td><span class="input-line">{{ $data['nop'] }}</span></td></tr>
+            <tr><td>Alamat</td><td>:</td><td><span class="input-line">{{ $data['alamat'] }}</span></td></tr>
+            <tr><td>Desa/Kelurahan</td><td>:</td><td><span class="input-line">{{ $data['desa_kelurahan'] }}</span></td></tr>
+            <tr><td>Kecamatan</td><td>:</td><td><span class="input-line">{{ $data['kecamatan'] }}</span></td></tr>
+            <tr><td>PPAT/Notaris</td><td>:</td><td><span class="input-line">{{ $data['ppatk_ppats'] }}</span></td></tr>
+        </table>
     </td>
 </tr>
 </table>
 
-<div class="section-title">A. Jenis Perolehan/Peralihan Hak :</div>
-<span class="filled">[Data terisi bila ada]</span>
+<div class="section">Adapun gambaran umum (deskripsi) tanah dan bangunan sebagai berikut:</div>
 
-<div class="section-title">B. Tanah :</div>
-Luas Tanah : <span class="filled">___ m²</span><br>
-Letak / Posisi strategis Tanah :<br>
-<div class="filled">
-    ..................................................................................<br>
-    ..................................................................................<br>
-</div>
+<div class="section">A. Jenis Perolehan/Peralihan Hak :</div>
 
-<div class="section-title">C. Bangunan :</div>
-1. Luas Bangunan : <span class="filled">___ m²</span><br>
-2. Jenis / Type Bangunan : <span class="filled">________________</span><br>
-3. Jumlah Lantai : <span class="filled">___ lantai</span><br>
-4. Kondisi Umum Fisik Bangunan :<br>
-<div class="filled">
-    ..................................................................................<br>
-    ..................................................................................
-</div>
+<div class="section">B. Tanah :</div>
+<table style="margin-left: 15px;">
+    <tr>
+        <td width="200px">1. Luas Tanah</td>
+        <td width="10px">:</td>
+        <td><span class="input-line">{{ $data['luas_tanah'] }} m²</span></td>
+    </tr>
+    <tr>
+        <td>2. Letak / Posisi strategis Tanah</td>
+        <td>:</td>
+        <td><span class="input-line" style="min-width: 450px;">{{ $data['posisiStrategis'] }}</span></td>
+    </tr>
+</table>
+<br>
 
-<div class="section-title">D. Catatan Khusus :</div>
-<span class="filled">(RTSL / Warisan / Jual Beli / APHB / Lelang / Perumahan / Hibah)</span>
+<div class="section">C. Bangunan :</div>
+<table style="margin-left: 15px;">
+    <tr>
+        <td width="200px">1. Luas Bangunan</td>
+        <td width="10px">:</td>
+        <td><span class="input-line">{{ $data['luas_bangunan'] }} m²</span></td>
+    </tr>
+    <tr>
+        <td>2. Jenis/Type Bangunan</td>
+        <td>:</td>
+        <td><span class="input-line">{{ $data['tipeBangunan'] }}</span></td>
+    </tr>
+    <tr>
+        <td>3. Jumlah Lantai</td>
+        <td>:</td>
+        <td><span class="input-line">{{ $data['jmlhLantai'] }}</span></td>
+    </tr>
+    <tr>
+        <td>4. Kondisi Umum Fisik Bangunan</td>
+        <td>:</td>
+        <td><span class="input-line" style="min-width: 450px;">{{ $data['kondisiBangunan'] }}</span></td>
+    </tr>
+</table>
 
+<div class="section">D. Catatan Khusus :</div>
+<span class="input-line" style="min-width: 600px;">{{ $data['catatanKhusus'] }}</span>
 <br><br><br>
 
-<table>
+<table style="margin-top: 25px;">
 <tr>
-    <td width="50%">
-        Pemohon/Pihak Lainnya/Penunjuk Lokasi:<br><br><br>
-        ______________________________
+    <td width="50%" style="text-align:center;">
+        Pemohon/Pihak Lainnya/Penunjuk Lokasi<br><br><br><br>
+        _____________________________
     </td>
-    <td width="50%">
-        Parepare, __________________<br>
-        Tim Survey:<br><br><br>
-        ______________________________
+    <td width="50%" style="text-align:center;">
+        Parepare, {{ $data['tgl_survey'] ?? '__________________' }}<br>
+        Tim Survey<br><br><br><br>
+        _____________________________
     </td>
 </tr>
 </table>

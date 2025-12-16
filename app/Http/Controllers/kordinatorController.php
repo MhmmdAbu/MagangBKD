@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Models\Pengajuan;
 use App\Models\Survey;
 use App\Models\User;
+=======
+use Barryvdh\DomPDF\Facade\Pdf;
+
+>>>>>>> 80dcb705f74c2c5381ddebc1db3dbd1b11e14d0c
 
 class kordinatorController extends Controller
 {
@@ -294,4 +299,50 @@ class kordinatorController extends Controller
      public function profile() {
         return view('KordinatorSurv.profile');
     }
+
+    public function submit(Request $request)
+    {
+        $data = $request->only([
+            'tgl_terima', 'nama_wajib_pajak', 'npwp', 'nop', 'alamat', 'desa_kelurahan',
+            'kecamatan', 'ppatk_ppats', 'luas_tanah', 'posisiStrategis', 'luas_bangunan',
+            'tipeBangunan', 'jmlhLantai', 'kondisiBangunan', 'catatanKhusus', 'tgl_survey'
+        ]);
+
+        // generate PDF
+        $pdf = Pdf::loadView('PDF.formulirSurvey', compact('data'));
+        $pdfBase64 = base64_encode($pdf->output());
+
+        // simpan sementara data form ke session agar nanti bisa di-save ke database
+        session(['surveyPDF' => $pdfBase64, 'surveyData' => $data]);
+
+        // balik ke halaman form dengan memunculkan modal preview
+        return redirect()->back()->with('previewPDF', true);
+    }
+
+
+    // 2️⃣ Setelah user tekan tombol Download/Setujui → Simpan PDF ke database
+    public function savePDF()
+    {
+        $pdfBase64 = session('surveyPDF');
+        $data = session('surveyData');
+
+        $fileName = 'BPHTB_'.time().'.pdf';
+        Storage::put("public/pdf/$fileName", base64_decode($pdfBase64));
+
+        SurveyPDF::create([
+            'nama_wajib_pajak' => $data['nama_wajib_pajak'],
+            'file_pdf' => $fileName
+        ]);
+
+        return redirect()->back()->with('success', 'PDF berhasil disimpan ke database!');
+    }
+
+    public function downloadPDF()
+    {
+        $pdfBase64 = session('surveyPDF');
+        return response(base64_decode($pdfBase64))
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="BPHTB_Formulir.pdf"');
+    }
+
 }
