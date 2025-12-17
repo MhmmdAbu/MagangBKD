@@ -93,32 +93,58 @@
 .progress {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .step {
+    position: relative;
     flex: 1;
     text-align: center;
     font-size: 12px;
     color: #ccc;
-    position: relative;
 }
 
-.step::before {
-    content: "●";
+/* GARIS */
+.step::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #bbb;
+    z-index: 1;
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+/* TITIK */
+.step span {
     display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
+    width: 12px;
+    height: 12px;
+    margin: 0 auto 8px;
+    background: #ccc;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
 }
 
-.step.done {
-    color: #4caf50;
+/* STATUS */
+.step.done span {
+    background: #4caf50;
 }
 
-.step.active {
-    color: #ffc107;
-    font-weight: bold;
+.step.active span {
+    background: #ffc107;
 }
+
+.step.done::after {
+    background: #4caf50;
+}
+
 
 .current-status {
     font-size: 16px;
@@ -158,12 +184,12 @@
 
             <!-- PROGRESS -->
             <div class="progress">
-                <div class="step done">Pendaftaran</div>
-                <div class="step done">Disposisi</div>
-                <div class="step active">Survey</div>
-                <div class="step">Klarifikasi</div>
-                <div class="step">Tanda Tangan</div>
-                <div class="step">Selesai</div>
+                <div class="step done"><span></span>Pendaftaran</div>
+                <div class="step done"><span></span>Disposisi</div>
+                <div class="step active"><span></span>Survey</div>
+                <div class="step"><span></span>Klarifikasi</div>
+                <div class="step"><span></span>Tanda Tangan</div>
+                <div class="step"><span></span>Selesai</div>
             </div>
 
             <p class="current-status">
