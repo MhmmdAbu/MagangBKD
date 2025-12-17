@@ -33,6 +33,12 @@ return new class extends Migration
             $table->string('npwp')->nullable();
             $table->string('nop')->nullable();
             $table->text('alamat_wp')->nullable();
+            
+            // Data Subjek Pajak
+            $table->string('kelurahanDesaSP')->nullable();
+            $table->string('kecamatanSP')->nullable();
+            $table->string('kabupatenKotaSP')->nullable();
+            $table->string('alamatSP')->nullable();
 
             // Upload File
             $table->string('file_ktp_pihak_pertama')->nullable();

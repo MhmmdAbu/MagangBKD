@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KtuController extends Controller
 {
@@ -141,7 +142,30 @@ class KtuController extends Controller
         $pengajuan->statusPublic = 'Survey';
         $pengajuan->save();
 
-        return back()->with('success', 'Berkas telah divalidasi.');
+        // Data yang dikirim ke view PDF
+        $data = [
+            'pengajuan' => $pengajuan,
+        ];
+
+        // Nama file aman
+        $safeName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $pengajuan->fileDisposisi);
+        $fileName = 'PDF.' . $safeName . '_' . time() . '.pdf';
+
+        // ⛔ WAJIB huruf kecil
+        $pdf = Pdf::loadView('pdf.fileDisposisi', $data);
+
+        // ⛔ GUNAKAN DISK PUBLIC
+        $directory = 'uploads/pengajuan';
+        Storage::disk('public')->makeDirectory($directory);
+
+        $path = $directory . '/' . $fileName;
+        Storage::disk('public')->put($path, $pdf->output());
+
+        // (Opsional) simpan path ke database
+        $pengajuan->file_disposisi = $fileName;
+        $pengajuan->save();
+
+        return back()->with('success', 'Berkas telah divalidasi dan PDF disposisi berhasil dibuat.');
     }
     
 

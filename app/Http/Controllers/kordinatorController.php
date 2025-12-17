@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Models\Pengajuan;
 use App\Models\Survey;
 use App\Models\User;
-=======
-use Barryvdh\DomPDF\Facade\Pdf;
-
->>>>>>> 80dcb705f74c2c5381ddebc1db3dbd1b11e14d0c
 
 class kordinatorController extends Controller
 {

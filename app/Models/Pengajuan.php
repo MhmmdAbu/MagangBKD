@@ -30,6 +30,12 @@ class Pengajuan extends Model
         'alamat_wp',
         'nop',
 
+        // Data Subjek Pajak
+        'kelurahanDesaSP',
+        'kecamatanSP',
+        'kabupatenKotaSP',
+        'alamatSP',
+
         // Upload File
         'file_ktp_pihak_pertama',
         'file_ktp_pihak_kedua',
