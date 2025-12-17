@@ -13,6 +13,7 @@ class Pengajuan extends Model
         'nomor_surat_masuk',
         'status',
         'statusPublic',
+        'catatan',
         'jenisLayanan',
         'id_ppat',
 
@@ -27,6 +28,13 @@ class Pengajuan extends Model
         'nomor_tlp',
         'npwp',
         'alamat_wp',
+        'nop',
+
+        // Data Subjek Pajak
+        'kelurahanDesaSP',
+        'kecamatanSP',
+        'kabupatenKotaSP',
+        'alamatSP',
 
         // Upload File
         'file_ktp_pihak_pertama',
@@ -44,6 +52,13 @@ class Pengajuan extends Model
         'file_pernyataan_waris',
         'file_kuasa_waris',
         'file_kematian',
+        'file_diposisi',
+        'file_survey',
         'file_kia',
     ];
+    public function survey()
+    {
+        return $this->hasOne(Survey::class);
+    }
+
 }

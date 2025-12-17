@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('pengajuan', function (Blueprint $table) {
             $table->id();
-        
             $table->string('nomor_surat_masuk');
             $table->string('status');
             $table->string('statusPublic');
+            $table->string('catatan')->nullable();
             $table->string('jenisLayanan');
             $table->unsignedBigInteger('id_ppat');
             $table->foreign('id_ppat')->references('id')->on('users')->onDelete('cascade');
@@ -31,10 +31,16 @@ return new class extends Migration
             $table->string('kode_pos')->nullable();
             $table->string('nomor_tlp')->nullable();
             $table->string('npwp')->nullable();
+            $table->string('nop')->nullable();
             $table->text('alamat_wp')->nullable();
+            
+            // Data Subjek Pajak
+            $table->string('kelurahanDesaSP')->nullable();
+            $table->string('kecamatanSP')->nullable();
+            $table->string('kabupatenKotaSP')->nullable();
+            $table->string('alamatSP')->nullable();
 
             // Upload File
-
             $table->string('file_ktp_pihak_pertama')->nullable();
             $table->string('file_ktp_pihak_kedua')->nullable();
             $table->string('file_kk_pihak_pertama')->nullable();
@@ -49,8 +55,8 @@ return new class extends Migration
             $table->string('file_pernyataan_waris')->nullable();
             $table->string('file_kuasa_waris')->nullable();
             $table->string('file_kematian')->nullable();
+            $table->string('file_disposisi')->nullable();
             $table->string('file_kia')->nullable();
-
             $table->timestamps();
         });
     }

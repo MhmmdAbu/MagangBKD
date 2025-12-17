@@ -44,17 +44,6 @@
 </tr>
 </table>
 
-<div class="section">Terlampir dokumen sebagai berikut:</div>
-<table>
-<tr><td>Fotocopy SPPT/STS/Struk ATM bukti pembayaran PBB</td></tr>
-<tr><td>Fotocopy identitas (KK/KTP)</td></tr>
-<tr><td>Surat kuasa dari wajib pajak</td></tr>
-<tr><td>Fotocopy NPWP</td></tr>
-<tr><td>Kwitansi pembelian</td></tr>
-<tr><td>Surat pernyataan</td></tr>
-<tr><td>Dokumen lainnya</td></tr>
-</table>
-
 <div class="section">Adapun gambaran umum (deskripsi) tanah dan bangunan sebagai berikut:</div>
 
 <div class="section">A. Jenis Perolehan/Peralihan Hak :</div>
