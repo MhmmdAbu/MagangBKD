@@ -1,0 +1,116 @@
+
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    background: url('/img/icon/Document.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 900px;
+    padding: 40px 20px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero h1 span {
+    color: #eaeaea;
+}
+
+.hero p {
+    line-height: 1.7;
+}
+
+/* CARD */
+.status-card {
+    background: rgba(255,255,255,0.15);
+    margin-top: 35px;
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.status-card h3 {
+    color: #00c3ff;
+    margin-bottom: 10px;
+}
+
+/* PROGRESS TRACKER */
+.progress-tracker {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 35px 0;
+}
+
+.progress-tracker::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #bbb;
+}
+
+.step {
+    position: relative;
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+    flex: 1;
+}
+
+.step::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    position: relative;
+    z-index: 2;
+}
+
+.step.done::before {
+    background: #4caf50;
+}
+
+.step.active::before {
+    background: #ffc107;
+}
+
+.current-status {
+    font-size: 16px;
+}
+
+.current-status span {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.detail-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}

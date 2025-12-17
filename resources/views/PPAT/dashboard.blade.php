@@ -3,203 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Permohonan</title>
-    <link rel="stylesheet" href="style.css">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
 
-/* NAVBAR */
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #0b3a63;
-    padding: 12px 30px;
-    color: #fff;
-}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
 
-.logo {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.nav-menu {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-}
-
-.nav-menu li {
-    cursor: pointer;
-}
-
-.nav-menu .active {
-    color: #ffc107;
-    font-weight: bold;
-}
-
-.profile {
-    width: 35px;
-    height: 35px;
-    background: #ddd;
-    border-radius: 50%;
-}
-
-/* HERO */
-.hero {
-    background: url('/img/icon/Document.jpg') center/cover no-repeat;
-    height: calc(100vh - 60px);
-    position: relative;
-}
-
-.hero-overlay {
-    background: rgba(0,0,0,0.55);
-    height: 100%;
-    padding: 60px;
-    color: #fff;
-}
-
-.hero h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.hero h1 span {
-    color: #eaeaea;
-}
-
-.hero p {
-    max-width: 700px;
-    line-height: 1.6;
-}
-
-/* STATUS CARD */
-.status-card {
-    background: rgba(255,255,255,0.15);
-    margin-top: 30px;
-    padding: 25px;
-    border-radius: 10px;
-}
-
-.status-card h3 {
-    color: #00c3ff;
-    margin-bottom: 10px;
-}
-
-.progress {
-    display: flex;
-    justify-content: space-between;
-    margin: 30px 0;
-}
-
-.step {
-    position: relative;
-    flex: 1;
-    text-align: center;
-    font-size: 12px;
-    color: #ccc;
-}
-
-/* GARIS */
-.step::after {
-    content: "";
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    width: 100%;
-    height: 2px;
-    background: #bbb;
-    z-index: 1;
-}
-
-.step:last-child::after {
-    display: none;
-}
-
-/* TITIK */
-.step span {
-    display: block;
-    width: 12px;
-    height: 12px;
-    margin: 0 auto 8px;
-    background: #ccc;
-    border-radius: 50%;
-    position: relative;
-    z-index: 2;
-}
-
-/* STATUS */
-.step.done span {
-    background: #4caf50;
-}
-
-.step.active span {
-    background: #ffc107;
-}
-
-.step.done::after {
-    background: #4caf50;
-}
-
-
-.current-status {
-    font-size: 16px;
-}
-
-.current-status span {
-    color: #ffc107;
-    font-weight: bold;
-}
-
-.detail-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #fff;
-    text-decoration: none;
-}
-</style>
+    <link rel="stylesheet" href="{{ asset('css/DashboardPPAT.css') }}">
 </head>
 <body>
 
-<!-- NAVBAR -->
 @include('navigation.navbar')
 
-<!-- HERO -->
 <section class="hero">
-    <div class="hero-overlay">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
         <h1>Selamat Datang, <span>St. Nur Aisyah. S</span></h1>
         <p>
-            Ikuti setiap tahapan alur kerja anda, mulai dari input hingga
+            Ikuti setiap tahapan alur kerja Anda, mulai dari input hingga
             penandatanganan pimpinan, demi penyelesaian yang efisien dan sah.
         </p>
 
-        <!-- STATUS CARD -->
         <div class="status-card">
             <h3>Status Permohonan Terakhir Anda</h3>
             <p>Nomor Registrasi: <strong>BPHTB-2025-0012</strong></p>
 
-            <!-- PROGRESS -->
-            <div class="progress">
-                <div class="step done"><span></span>Pendaftaran</div>
-                <div class="step done"><span></span>Disposisi</div>
-                <div class="step active"><span></span>Survey</div>
-                <div class="step"><span></span>Klarifikasi</div>
-                <div class="step"><span></span>Tanda Tangan</div>
-                <div class="step"><span></span>Selesai</div>
+            <div class="progress-tracker">
+                <div class="step done">Pendaftaran</div>
+                <div class="step done">Disposisi</div>
+                <div class="step active">Survey</div>
+                <div class="step">Klarifikasi</div>
+                <div class="step">Tanda Tangan</div>
+                <div class="step">Selesai</div>
             </div>
 
             <p class="current-status">
                 Status Saat Ini: <span>Sedang Dalam Proses Survey</span>
             </p>
 
-            <a href="#" class="detail-link">Lihat Selengkapnya &gt;&gt;</a>
+            <a href="#" class="detail-link">Lihat Selengkapnya &raquo;</a>
         </div>
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

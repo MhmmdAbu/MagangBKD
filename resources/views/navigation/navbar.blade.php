@@ -35,6 +35,9 @@
             @auth
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('ppat.dashboard') ? 'active' : '' }}" href="{{ route('ppat.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('requirement') ? 'active' : '' }}" href="{{ route('requirement') }}">Panduan & Persyaratan</a>
                     </li>
                     <li class="nav-item">
