@@ -8,18 +8,14 @@
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="filter-controls">
-                <div class="input-group" style="max-width: 200px;">
-                    <input type="date" class="form-control border-start-0" placeholder="Tanggal">
+            <form id="filterForm" method="GET" action="{{ route('ktu.arsip') }}" class="filter-controls">
+                <div class="input-group" style="max-width: 200px; margin-right: 10px;">
+                    <input type="date" name="tanggal" class="form-control border-start-0" 
+                        value="{{ request('tanggal') }}" placeholder="Tanggal">
                 </div>
-                <input type="search" class="form-control search-input" placeholder="Cari ...">
-                <select class="form-select" aria-label="Status Filter" style="max-width: 150px;">
-                    <option selected>Status</option>
-                    <option value="1">Pendaftaran</option>
-                    <option value="2">Survey</option>
-                    <option value="3">Selesai</option>
-                </select>
-            </div>
+                <input type="search" name="search" class="form-control search-input" 
+                    placeholder="Cari ..." value="{{ request('search') }}" style="margin-right: 10px;">
+            </form>
         </div>
     </div>
 
@@ -39,67 +35,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td>001/A/SURAT/X/2025</td>
-                                    <td>22 Oktober 2025</td>
-                                    <td>St. Nur Aisyah. S</td>
-                                    <td class="aksi">
-                                        <button 
-                                            class="btn btn-warning btn-sm btn-detail"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetail"
-                                            data-nomor="001/A/SURAT/X/2025"
-                                            data-tanggal="22 Oktober 2025"
-                                            data-nama="St. Nur Aisyah. S"
-                                        >Lihat</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td>002/A/SURAT/X/2025</td>
-                                    <td>22 Oktober 2025</td>
-                                    <td>Muh. Abubakar</td>
-                                    <td class="aksi">
-                                        <button 
-                                            class="btn btn-warning btn-sm btn-detail"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalDetail"
-                                            data-nomor="002/A/SURAT/X/2025"
-                                            data-tanggal="22 Oktober 2025"
-                                            data-nama="Muh. Abubakar"
-                                        >Lihat</button>
-                                    </td>
-                                </tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
-                                <tr><td colspan="5">&nbsp;</td></tr>
+                                    @forelse ($berkas as $index => $item)
+                                        <tr>
+                                            <td>{{ ($berkas->currentPage()-1) * $berkas->perPage() + ($index+1) }}</td>
+                                            <td>{{ $item->nomor_surat_masuk }}</td>
+                                            <td>{{ $item->created_at->format('d F Y') }}</td>
+                                            <td>{{ $item->nama_wajib_pajak }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm">
+                                                    <a href="{{ route('ktu.preview.berkas', ['namaPDF'=>$item->file_blanko]) }}" target="_blank">
+                                                        Lihat Surat
+                                                    </a>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">Belum ada data</td>
+                                        </tr>
+                                    @endforelse
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            {{ $berkas->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal Detail -->
-<div class="modal fade" id="modalDetail" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Detail Berkas</h5>
-      </div>
-      <div class="modal-body">
-        <p><strong>Nomor Surat:</strong> <span id="detailNomor"></span></p>
-        <p><strong>Tanggal Dikirim:</strong> <span id="detailTanggal"></span></p>
-        <p><strong>Nama Wajib Pajak:</strong> <span id="detailNama"></span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-      </div>
-    </div>
-  </div>
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -113,6 +77,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+    const filterForm = document.getElementById('filterForm');
+
+    // Submit saat tanggal berubah
+    filterForm.querySelector('input[name="tanggal"]').addEventListener('change', function() {
+        filterForm.submit();
+    });
+
+    // Submit saat search diketik (dengan delay supaya tidak terlalu sering)
+    let searchTimeout;
+    filterForm.querySelector('input[name="search"]').addEventListener('keyup', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            filterForm.submit();
+        }, 500); // 500ms delay
+    });
 </script>
 
 @endsection

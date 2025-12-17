@@ -30,7 +30,7 @@
     <div class="user-profile-section">
         <div class="nav-item mb-2">
             <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">
-                <span class="profile-icon"><i class="fas fa-user"></i></span> Aisyah
+                <span class="profile-icon"><i class="fas fa-user"></i></span> {{ auth()->user()->name }}
             </a>
         </div>
         <div class="nav-item">

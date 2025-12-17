@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <title>Lembar Disposisi</title>
 <style>
-body{
-    font-family:"Times New Roman", serif;
-    font-size:12px;
+body {
+    font-family: "Times New Roman", serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
 }
 .container {
-    width: 21.5cm;        /* LEBAR F4 */
-    min-height: 33cm;     /* TINGGI F4 */
-    margin: auto;
-    border: 1px solid #000;
-    padding: 1cm;
+    width: 100%;
     box-sizing: border-box;
+    border: 1px solid #000;
+    padding: 0.8cm;
 }
 .header{
     text-align:center;
@@ -52,7 +52,7 @@ td,th{
 .signature{height:70px;}
 
 @page {
-    size: 21.5cm 33cm;    /* F4 */
+    size: 21.5cm 33cm; /* F4 */
     margin: 1cm;
 }
 </style>
@@ -126,7 +126,6 @@ td,th{
         </td>
     </tr>
 </table>
-
 
 <!-- DISPOSISI -->
 <table>
