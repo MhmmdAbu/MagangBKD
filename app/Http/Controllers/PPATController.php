@@ -12,6 +12,11 @@ use App\Models\Pengajuan;
 
 class PPATController extends Controller
 {
+    public function index()
+    {
+        return view('PPAT.dashboard');
+    }
+    
     public function showPengajuan(Request $request)
     {
         $query = Pengajuan::where('id_ppat', Auth::id());

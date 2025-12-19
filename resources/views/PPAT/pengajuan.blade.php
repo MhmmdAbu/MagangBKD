@@ -13,8 +13,6 @@
 
 @include('navigation.navbar')
 
-
-
 <section class="hero pengajuan-hero">
     <div class="hero-content">
         @if(session('success'))
@@ -150,7 +148,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="letak_tnh" class="form-label">Alamat Wajib Pajak:</label>
+                    <label for="letak_tnh" class="form-label">Letak Tanah dan Bangunan:</label>
                     <input type="text" class="form-control" id="letak_tnh" name="letak_tnh" required>
                 </div>
 
@@ -175,11 +173,11 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="njop_pbb_tanah" class="form-label">NJOP PBB/m2:</label>
+                        <label for="njop_pbb_tanah" class="form-label">NJOP PBB/m²:</label>
                         <input type="text" class="form-control" id="njop_pbb_tanah" name="njop_pbb_tanah" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="njop_pbb_bangunan" class="form-label">NJOP PBB/m2:</label>
+                        <label for="njop_pbb_bangunan" class="form-label">NJOP PBB/m²:</label>
                         <input type="text" class="form-control" id="njop_pbb_bangunan" name="njop_pbb_bangunan" required>
                     </div>
                 </div>
@@ -195,7 +193,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="njop_pbb" class="form-label">Total NJOP PBB/m2 (Tanah x Banguan):</label>
+                        <label for="njop_pbb" class="form-label">Total NJOP PBB/m² (Tanah x Banguan):</label>
                         <input type="text" class="form-control" id="njop_pbb" name="njop_pbb" readonly>
                     </div>
                     <div class="col-md-6">

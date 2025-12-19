@@ -64,6 +64,7 @@ Route::middleware(['auth', 'role:KTU'])->prefix('KTU')->group(function() {
 
 // Halaman PPAT
 Route::middleware(['auth', 'role:PPAT'])->prefix('PPAT')->group(function() {
+    Route::get('/', [PPATController::class, 'index'])->name('ppat.dashboard');
     Route::get('/pengajuan', [PPATController::class, 'showPengajuan'])->name('pengajuan');
     Route::get('/pdf/preview/{namaPDF}', [PPATController::class, 'previewPDF'])->name('pdf.preview');
     Route::get('/pdf/preview/berkas/{namaBerkas}/{namaPDF}', [PPATController::class, 'berkasPDF'])->name('pdf.berkas');

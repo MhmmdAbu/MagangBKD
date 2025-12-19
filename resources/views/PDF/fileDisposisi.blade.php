@@ -4,61 +4,91 @@
 <meta charset="UTF-8">
 <title>Lembar Disposisi</title>
 <style>
+@page {
+    size: F4;
+    margin: 1cm;
+}
+
 body {
     font-family: "Times New Roman", serif;
     font-size: 12px;
     margin: 0;
     padding: 0;
 }
+
+/* WRAPPER HALAMAN */
+.page {
+    padding: 0;
+}
+
+/* ISI DOKUMEN */
 .container {
-    width: 100%;
     box-sizing: border-box;
     border: 1px solid #000;
     padding: 0.8cm;
 }
-.header{
-    text-align:center;
-    border-bottom:2px solid #000;
-    padding-bottom:6px;
-}
-.header h3,.header h4{margin:2px 0;}
-.title{
-    text-align:center;
-    font-weight:bold;
-    margin:10px 0;
-    text-decoration:underline;
-}
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-td,th{
-    border:1px solid #000;
-    padding:4px;
-    vertical-align:top;
-}
-.no-border td{
-    border:none;
-    padding:2px;
-}
-.center{text-align:center;}
-.checkbox{
-    display:inline-block;
-    width:12px;
-    height:12px;
-    border:1px solid #000;
-    margin-right:6px;
-}
-.signature{height:70px;}
 
-@page {
-    size: 21.5cm 33cm; /* F4 */
-    margin: 1cm;
+/* HEADER */
+.header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 6px;
+}
+.header h3, .header h4 {
+    margin: 2px 0;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+    text-decoration: underline;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #000;
+    padding: 4px;
+    vertical-align: top;
+}
+
+.no-border td {
+    border: none;
+    padding: 2px;
+}
+
+.center { text-align: center; }
+
+.checkbox {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #000;
+    margin-right: 6px;
+}
+
+.signature {
+    height: 5cm;
+}
+
+/* PRINT */
+@media print {
+    table, tr, td {
+        page-break-inside: avoid;
+    }
 }
 </style>
+
 </head>
 
 <body>
+
+<div class="page">
 <div class="container">
 
 <!-- HEADER -->
@@ -147,6 +177,14 @@ td,th{
         <tr><td colspan="3">Catatan:<br><br></td></tr>
     </table>
 </td>
+<!-- CATATAN TAMBAHAN -->
+<table>
+    <tr>
+        <td width="50%" style="height:4cm;"></td>
+        <td width="50%" style="height:4cm;"></td>
+    </tr>
+</table>
+
 </tr>
 </table>
 
